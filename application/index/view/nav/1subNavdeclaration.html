@@ -1,0 +1,23 @@
+<ul class="sdms_second_nav">
+<h3>入出仓</h3>
+<if condition="$subNav eq 'inwarehouse'">
+<li><a href="/Index/Declaration/inwarehouse" class="a">商品入仓单</a></li>
+<else />
+<li><a href="/Index/Declaration/inwarehouse">商品入仓单</a></li>
+</if>
+<if condition="$subNav eq 'oweList'">
+<li><a href="/Index/Declaration/oweList" class="a">欠货单</a></li>
+<else />
+<li><a href="/Index/Declaration/oweList">欠货单</a></li>
+</if>
+<if condition="$subNav eq 'batch'">
+<li><a href="/Index/Declaration/batch" class="a">QC批次</a></li>
+<else />
+<li><a href="/Index/Declaration/batch">QC批次</a></li>
+</if>
+<if condition="$subNav eq 'addBatch'">
+<li><a href="/Index/Declaration/addBatch" class="a">QC批次新增</a></li>
+<else />
+<li><a href="/Index/Declaration/addBatch">QC批次新增</a></li>
+</if>
+</ul>

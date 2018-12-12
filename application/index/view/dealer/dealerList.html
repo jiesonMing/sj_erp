@@ -1,0 +1,94 @@
+<include file="public/header" title="客户列表" />
+<include file="nav/nav" />
+<include file="nav/subNav" />
+<div class="sdms_main">
+	<div class="title_name clearfloat">
+    	<h2>客户管理 &nbsp;<span>SDMS / 客户 / 列表</span></h2>
+        <p>
+        	<a href="./?deleted=1" class="a_del"><i class="fa fa-trash-o"></i> 回收站</a>
+            <a href="" class="a_re"><i class="fa fa-refresh"></i> 刷新</a>
+        </p>
+    </div>
+    
+    <div class="button_search clearfloat">
+    
+        <ul class="dropdown_menu">
+            <li><a href="#"><i class="fa fa-cog"></i>&nbsp;&nbsp;操作&nbsp;&nbsp;<i class="fa fa-caret-down"></i></a>
+                <ul>
+                    <li class="li"><a href="#"><i class="fa fa-plus"></i>&nbsp;&nbsp;新增</a></li>
+                    <li class="li"><a href="#"><i class="fa fa-times-circle-o"></i>&nbsp;&nbsp;禁用商户</a></li>
+                </ul>
+            </li>
+        </ul>
+        <input type="text" name="search" class="input_search" />
+        <input value="搜索" class="button button-primary input_search_b" type="submit">
+    </div>
+    
+    <table class="table order_table table_color" border='0' cellspacing="0" cellpadding="0">
+    	<thead>
+            <tr>
+                <td class="w35"><input type="checkbox" id="checkbox_a0" class="chk_1"/><label for="checkbox_a0"></label></td>
+                <td class="w35">ID</td>
+                <td>公司（个体）名称</td>
+                <td class="w100">简称</td>
+                <td class="w150">联系人\电话</td>
+                <td class="w150">邮箱</td>
+                <td class="w100">办公地区</td>
+                <td class="w50">等级</td>
+                <td class="w130">登记时间</td>
+                <td class="w130">最近登录</td>
+                <td class="text_center w75">状态</td>
+                <td class="text_center w45">操作</td>
+            </tr>
+        </thead>
+        
+        <tbody>
+            <tr class="tr1">
+                <td><input type="checkbox" id="checkbox_a1" class="chk_1" checked/><label for="checkbox_a1"></label></td>
+                <td>1</td>
+                <td>深圳市柏威国际货运代理有限公司</td>
+                <td>柏威国际</td>
+                <td>聂中玉 / 13923442510</td>
+                <td>710555347@qq.com</td>
+                <td>广东省深圳市</td>
+                <td>vip1</td>
+                <td>2016-08-01 13:30:15</td>
+                <td>2016-08-23 20:32:56</td>
+                <td class="text_center"><span class="status b_28b5d6 C_FFF">启用</span></td>
+                <td class="text_center p_right_10">
+                	<a href="/dealer.details.php?tabs=1"  class="a_list c_1785c8" title="查看"><i class="fa fa-search"></i></a>
+                </td>
+            </tr>
+            
+            <tr class="tr1">
+                <td><input type="checkbox" id="checkbox_a2" class="chk_1"/><label for="checkbox_a2"></label></td>
+                <td>2</td>
+                <td>深圳市前海萌牛科技有限公司</td>
+                <td>萌牛科技</td>
+                <td>裘胜 / 13510181201</td>
+                <td>5985939@qq.com</td>
+                <td>广东省深圳市</td>
+                <td>vip2</td>
+                <td>2016-08-01 13:30:15</td>
+                <td>2016-08-23 20:32:56</td>
+                <td class="text_center"><span class="status b_ddd">未启用</span></td>
+                <td class="text_center p_right_10">
+                	<a href="/dealer.details.php?tabs=1"  class="a_list c_1785c8" title="查看"><i class="fa fa-search"></i></a>
+                </td>
+            </tr>
+
+            
+            
+        </tbody>
+    
+    </table>
+    <div class="page_size">
+    	<div class="button">
+            <a href="#"><i class="fa fa-times-circle-o"></i> 加入黑名单</a>
+            <a href="#"><i class="fa fa-plus"></i> 新增</a>
+        </div>
+    </div>
+    
+
+</div>
+<include file="public/foot" />

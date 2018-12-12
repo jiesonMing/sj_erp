@@ -1,0 +1,83 @@
+<include file="public/header" title="商品SKU" />
+<include file="nav/nav" />
+<include file="nav/subNav" />
+<link href="__JS__/select/select2.min.css" rel="stylesheet" type="text/css">
+<script src="__JS__/select/select2.min.js"></script>
+<style type="text/css">.goods_sku td{padding: 0px 4px;}</style>
+<div class="sdms_main">
+	<div class="title_name">
+        <h2>商品 &nbsp;&nbsp;<span>SDMS SE / 商品 / 商品SKU</span></h2>
+        <p>
+            <a href="javascript:location.reload();" class="a_re"><i class="fa fa-refresh"></i> 刷新</a>
+            
+        </p>
+    </div>
+    <form action="/Index/Goods/goodsSKU" method="post">
+	    <div class="button_search">
+	        <ul class="dropdown_menu m_r_10">
+	            <li><a href="javascript:void(0);"><i class="fa fa-cog"></i>&nbsp;&nbsp;操作&nbsp;&nbsp;<i class="fa fa-caret-down"></i></a>
+	                <ul>
+	                    <li class="li"></li>
+	                </ul>
+	            </li>
+	        </ul>
+	        <select class="select2 w100" name='port'>
+				<option value="" selected="selected">0.全部</option>
+				<option>1.南沙宜婴宝</option>
+				<option>2.重庆新永</option>
+				<option>3.南沙新怡</option>
+			</select>
+	        <input type="text" placeholder="搜索..." name="search_sku" value="{$search_sku}" class="input_search" />
+	        <input value="搜索" class="button button-primary input_search_b" type="submit" />   	
+	    </div>
+    </form>
+    <table class="table" border='0' cellspacing="0" cellpadding="0">
+		<thead class="font_b border_top">
+			<tr>
+				<td class="w30 text_center"><input type="checkbox" id="checkbox_a0" class="chk_3"/><label for="checkbox_a0"></label></td>
+				<td class="w30 text_center">序号</td>
+				<td class="w120">商品代码</td>
+				<td class="w120">仓库对应SKU编码</td>
+				<td><a href="" class="a_c_1785c8">商品名称</a></td>
+				<td class="w100">电商企业</td>
+				<td class="w100"><a href="" class="a_c_1785c8">仓储企业</a></td>
+				<td class="w50">关区</td>
+				<td class="w130"><a href="" class="a_c_1785c8">更新时间</a></td>
+				<td class="w50 text_center">操作</td>
+			</tr>
+		</thead>
+		<tbody>
+			<volist name="goodsSku" id="v">
+			<tr class="tr1 goods_sku">
+				<td class="text_center"><input type="checkbox" id="checkbox_a1" class="chk_3"/><label for="checkbox_a1"></label></td>
+				<td class="text_center">{$key+1}</td>
+				<td>{$v.goodsCode}</td>
+				<td class="editGoodsSKU_input" title='{$v.id}'>{$v.sku}</td>
+				<td>{$v.goodsName}</td>
+				<td>{$v.companyShortName}</td>
+				<td>{$v.warehouseName}</td>
+				<td>南沙</td>
+				<td>{$v.createTime|date="Y-m-d H:i:s",###}</td>
+				<td class="text_center">{$button.editSku}</td>
+			</tr>
+			</volist>
+		</tbody>
+	</table>
+	<div class="page_size">
+		<div class="button">
+			{$button.delGoodsSKU}
+			<!-- <a href="#"><i class="fa fa-sign-out fa-rotate-270"></i>对应SKU导出</a> -->
+			
+		</div>
+		<div class="page order_1 flex_end">
+            {$goodsSku->render()}
+        </div>
+	</div>
+</div>
+<script type="text/javascript">
+ 	$('.select2').select2({
+        language: "zh-CN"
+    });
+</script>
+<include file="public/foot" />
+<script type="text/javascript" src="/public/static/functionJS/goods.js"></script>

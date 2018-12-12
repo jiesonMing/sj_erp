@@ -1,0 +1,18 @@
+<ul class="sdms_second_nav">
+<h3>权限</h3>
+<if condition="$subNav eq 'modularList'">
+<li><a href="/Index/Auth/modularList" class="a">模块管理</a></li>
+<else />
+<li><a href="/Index/Auth/modularList">模块管理</a></li>
+</if>
+<if condition="$subNav eq 'authsList'">
+<li><a href="/Index/Auth/authsList" class="a">权限管理</a></li>
+<else />
+<li><a href="/Index/Auth/authsList">权限管理</a></li>
+</if>
+<if condition="$subNav eq 'test'">
+<li><a href="/Index/Auth/test" class="a">测试</a></li>
+<else />
+<li><a href="/Index/Auth/test">测试</a></li>
+</if>
+</ul>

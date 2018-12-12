@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>关联采购单</title>
+    <link rel="stylesheet" href="__CSS__/font-awesome.min.css">
+    <link rel="stylesheet" href="__CSS__/open.css">
+</head>
+<body>
+    <ul class="loading_ul">
+        <li class="m_b_15">
+            <table class="open_table w_100" border='0' cellspacing="0" cellpadding="0">
+                <thead>
+                <tr>
+                    <td class="w35">序号</td>
+                    <td class="w130">批次号</td>
+                    <td class="w130">商品编码</td>
+                    <td>商品名称</td>
+                    <td class="w35">总数量</td>
+                    <td class="w35">可上架</td>
+                    <td class="w35">可用</td>
+                    <td class="w35">占用</td>
+                    <td class="w35">状态</td>
+                    <td class="w100">有效期</td>
+                </tr>
+                </thead>
+                <tbody>
+                <empty name="data">
+                    <tr><td colspan="10">没有符合条件的数据</td></tr>
+                <else />
+                    <tr>
+                        <td class="w25">1</td>
+                        <td>{$data.batch}</td>
+                        <td>{$data.goodsCode}</td>
+                        <td>{$data.goodsName}</td>
+                        <td>{$data.amount}</td>
+                        <td>{$data.shelves}</td>
+                        <td>{$data.bSurStock}</td>
+                        <td>{$data.bUsingStock}</td>
+                        <td class="c00">{$batchTypeArr[$data.type]}</td>
+                        <td>{$data.expireDate}</td>
+                    </tr>
+                </empty>
+                </tbody>
+            </table>
+
+        </li>
+        <li>
+            <table class="table w_100 type_pic text_center" border='0' cellspacing="0" cellpadding="0">
+                <empty name="encls">
+                    <tr><td colspan="2">没有符合条件的附件</td></tr>
+                <else />
+                    <volist name="encls" id="encl">
+                        <tr>
+                            <td><img src="{$encl.enclUrl}" /></td>
+                            <td>{$encl.enclName}</td>
+                        </tr>
+                    </volist>
+                </empty>
+            </table>
+        </li>
+    </ul>
+</body>
+</html>

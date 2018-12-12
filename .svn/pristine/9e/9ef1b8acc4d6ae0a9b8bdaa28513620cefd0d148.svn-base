@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>新增商品Boom</title>
+    <link rel="stylesheet" href="/public/static/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/public/static/css/Manage.font.css">
+    <script type="application/x-javascript" src="/public/static/js/jquery-3.2.1.min.js"></script>
+    <script type="application/x-javascript" src="/public/static/js/layer/layer.js"></script>
+    <script type="text/javascript" src="/public/static/js/tipso.min.js"></script>
+    <script type="text/javascript" src="/public/static/js/sdms.js"></script>
+    <link href="/public/static/js/select/select2.min.css" rel="stylesheet" type="text/css">
+	<script src="/public/static/js/select/select2.min.js"></script>
+	<style type="text/css">.border_left{border-left: 1px solid #e9e9e9;}</style>
+</head>
+<body>
+<div class="sdms_main" style="border-bottom: 0px">  
+    <div class="button_search">
+        <form action="/Index/Goods/addGoodsBoom_open" method='post'>
+        	<input type="text" placeholder="搜索..." value="{$search_goods}" class="input_search" name="search_goods"/>
+        	<input value="搜索" class="button button-primary input_search_b" type="submit" />
+    	</form>
+    </div>
+    <table class="table" border='0' cellspacing="0" cellpadding="0" style="width: 55%;min-width: 0px;float: left;padding-right: 10px;">
+		<thead>
+			<tr>
+				<td class="w20 border_left"><input type="checkbox" id="checkbox_a0" class="chk_3"/><label for="checkbox_a"></label>
+				</td>
+				<td class="w35">ID</td>
+				<td class="w100">商品编码</td>
+				<td class="w180">商品名称</td>
+				<td class="w120">品牌</td>
+				<td class="w60">规格型号</td>
+				<td class="w35 text_center">单位</td>
+			</tr>
+		</thead>
+
+		<tbody>
+			<volist name="goodsList" id='v'>
+				<tr class="tr1">
+					<td class="border_left"><input type="checkbox" id="checkbox_a{$v.id}" title="{$v.id}" class="chk_3 choose_childGoods"/><label for="checkbox_a{$v.id}"></label></td>
+					<td>{$key+1}</td>
+					<td>{$v.goodsCode}</td>
+					<td class="td1">{$v.goodsName}</td>
+					<td>{$v.brand}</td>
+					<td>{$v.specType}</td>
+					<td class="text_center">{$v.unitName}</td>
+				</tr>
+			</volist>
+		</tbody>
+	</table>
+	<!-- <div class="page_size">
+			<div class="page order_1 flex_end">
+	            {$goodsList->render()}
+	        </div>
+		</div> -->
+	<!-- 已选择的 -->
+	<form>
+	<table class="table checked_table" border='0' cellspacing="0" cellpadding="0" style="width: 38%;min-width: 0px;float: left;padding-right: 10px;">
+		<thead>
+			<tr>
+				<td class="w20 border_left">ID</td>
+				<td class="w180">商品名称</td>
+				<td class="w35 text_center">数量</td>
+			</tr>
+		</thead>
+		<tbody>
+		</tbody>
+	</table>
+	</form>
+</div>
+<div class="sdms_save" style="margin-top: -30px">
+    <a href="javascript:void(0)" class="addGoodsBoom_child_submit">保存</a>
+</div>
+<script type="text/javascript" src="/public/static/functionJS/goods.js"></script>
+</body>

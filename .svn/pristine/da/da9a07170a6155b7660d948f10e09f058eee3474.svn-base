@@ -1,0 +1,18 @@
+<ul class="sdms_second_nav">
+<h3>订单</h3>
+<if condition="$subNav eq 'b2c'">
+<li><a href="/Index/Order/b2c" class="a">b2c订单</a></li>
+<else />
+<li><a href="/Index/Order/b2c">b2c订单</a></li>
+</if>
+<if condition="$subNav eq 'bbc'">
+<li><a href="/Index/Order/bbc" class="a">bbc订单</a></li>
+<else />
+<li><a href="/Index/Order/bbc">bbc订单</a></li>
+</if>
+<if condition="$subNav eq 'bc'">
+<li><a href="/Index/Order/bc" class="a">bc订单</a></li>
+<else />
+<li><a href="/Index/Order/bc">bc订单</a></li>
+</if>
+</ul>

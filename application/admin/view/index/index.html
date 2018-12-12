@@ -1,0 +1,157 @@
+<include file="public/header" title="公司管理" />
+<include file="public/nav" />
+<div class="sdms_main">
+    <div class="title_name">
+        <h2>公司管理 &nbsp;&nbsp;<span>SDMS SE / 公司 / 列表</span></h2>
+        <p>
+            <a href="javascript:location.reload();" class="a_re"><i class="fa fa-refresh"></i> 刷新</a>
+            <a href="/Admin/Index/companyDelList" class="a_del"><i class="fa fa-trash-o"></i> 回收站</a>
+        </p>
+    </div>
+    <div class="button_search">
+        <ul class="dropdown_menu">
+            <li><a href="javascript:void(0);"><i class="fa fa-cog"></i>&nbsp;&nbsp;操作&nbsp;&nbsp;<i class="fa fa-caret-down"></i></a>
+                <ul>
+                    <li class="li"><a href="/Admin/Index/addCompany" class="a_button_green"><i class="fa fa-plus"></i> 新增公司</a></li>
+                </ul>
+            </li>
+        </ul>
+        <input type="text" value="{$value}" class="input_search" />
+        <a class="a_button_white mg_left_5 search">搜索</a>
+    </div>
+    <table class='table' border="0" cellpadding="0" cellspacing="0">
+        <thead>
+        <tr>
+            <td class="w20"><input type="checkbox" id="checkbox_a0" class="chk_3 checkbox0"/><label for="checkbox_a0"></label></td>
+            <td class="w30 text_center">编号</td>
+            <td class="w100 text_center">公司名称</td>
+            <td class="w130 text_center">公司简称</td>
+            <td class="w100 text_center">公司英文名称</td>
+            <td class="w100 text_center">备注</td>
+            <td class="w100 text_center">添加时间</td>
+            <td class="w45 text_center">操作</td>
+        </tr>
+        </thead>
+        <tbody>
+        <volist name="list" id="company">
+            <tr class="tr1">
+                <td><input type="checkbox" id="checkbox_a{$company.companyId}" class="chk_3" /><label for="checkbox_a{$company.companyId}"></label></td>
+                <td class="text_center">{$company.companyId}</td>
+                <td class="text_center">{$company.companyName}</td>
+                <td class="text_center">{$company.companyShortName}</td>
+                <td class="text_center">{$company.companyEnName}</td>
+                <td class="text_center">{$company.remark}</td>
+                <td class="text_center">{$company.createTime}</td>
+                <td class="text_center">
+                    <a href="/Admin/Index/editCompany/id/{$company.companyId}" class="a_list c_1785c8 m_r_10"><i class="fa fa-pencil-square"></i></a>
+                    <a href="javascript:del({$company.companyId});" class="a_list c_1785c8"><i class="fa fa-trash-o"></i></a>
+                </td>
+            </tr>
+        </volist>
+        </tbody>
+    </table>
+    <div class="page_size">
+        <div class="tbutton">
+
+        </div>
+        <div class="page">
+            {$list->render()}
+        </div>
+    </div>
+</div>
+<script>
+    $(".search").click(function(){
+        var value=$(".input_search").val();
+        var url='/Admin/Index/index';
+        if(value){
+        url+='/value/'+value;
+        }
+        location.href=url;
+    });
+    $(".edit").each(function(edindex,item){
+        $(this).click(function(){
+            var userId=$(".userId").eq(edindex).val();
+            location.href='/Index/Ucenter/editUser/id/'+userId;
+        });
+    });
+    function del(companyId){
+        if(companyId){
+            var index=layer.confirm('确定删除当前公司吗', {icon: 3, title:'提示'}, function(i){
+                var postdata={companyId:companyId,status:0};
+                $.ajax({
+                    type : 'POST',
+                    url : "/Admin/Index/delCompany",
+                    dataType : 'json',
+                    data : postdata,
+                    success : function(el){
+                        if(el.statusCode==200){
+                            var index=layer.open({
+                                type:0,
+                                icon:'1',
+                                title:'成功提示信息：',
+                                content:'删除成功',
+                                end: function(){
+                                    location.reload();
+                                }
+                            });
+                            layer.style(index,{
+                                width:'500px',
+                                top:'120px'
+                            });
+                        }else{
+                            isSubmit=true;
+                            var index=layer.open({
+                                type:0,
+                                icon:'2',
+                                title:'错误提示信息：',
+                                content:el.retMessage,
+                                end: function(){
+                                    location.reload();
+                                }
+                            });
+                            layer.style(index,{
+                                width:'400px',
+                                top:'120px'
+                            });
+                        }
+                    },
+                    error: function(el){
+                        var index=layer.open({
+                            type:0,
+                            icon:'2',
+                            title:'错误提示信息：',
+                            content:'操作失败，请刷新重试',
+                            end: function(){
+                                location.reload();
+                            }
+                        });
+                        layer.style(index,{
+                            width:'400px',
+                            top:'120px'
+                        });
+                    }
+                });
+            });
+            layer.style(index,{
+                width:'400px',
+                top:'120px'
+            });
+        }else{
+            var index=layer.open({
+                type:0,
+                icon:'2',
+                title:'失败提示信息：',
+                content:'公司信息有误',
+                end: function(){
+                    location.reload();
+                }
+            });
+            layer.style(index,{
+                width:'500px',
+                top:'120px'
+            });
+        }
+    }
+
+</script>
+<include file="public/foot" />

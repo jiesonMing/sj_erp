@@ -1,0 +1,77 @@
+<?php
+namespace app\admin\controller;
+
+use think\Exception;
+use think\Db;
+use app\admin\model\Company;
+
+class IndexController extends BaseController
+{
+    //作者：于明明
+    //功能：公司列表
+    public function index()
+    {
+        $value=request()->param('value/s')?request()->param('value/s'):'';
+        $where='(status=1)';
+        if($value){
+            $where.=" and (companyName='{$value}' or companyShortName='{$value}' or companyEnName='{$value}')";
+        }
+        $list=db('company')->where($where)->paginate();
+
+        $this->assign('nav','index');
+        $this->assign('value',$value);
+        $this->assign('list',$list);
+        return $this->fetch();
+    }
+
+    //作者：于明明
+    //功能：公司服务器
+    public function companyDelList(){
+        $value=request()->param('value/s')?request()->param('value/s'):'';
+        $where='(status=0)';
+        if($value){
+            $where.=" and (companyName='{$value}' or companyShortName='{$value}' or companyEnName='{$value}')";
+        }
+
+        $list=db('company')->where($where)->paginate();
+        $this->assign('nav','index');
+        $this->assign('value',$value);
+        $this->assign('list',$list);
+        return $this->fetch();
+    }
+
+    //作者：于明明
+    //功能：添加公司
+    public function addCompany(){
+        if(request()->isPost()){
+            $company=new Company;
+            $company->companyName=request()->param('companyName/s')?request()->param('companyName/s'):'';
+            if(!$company->companyName) errorMsg(400,'公司名称不能为空');
+            $company->companyShortName=request()->param('companyShortName/s')?request()->param('companyShortName/s'):'';
+            if(!$company->companyShortName) errorMsg(400,'公司简称不能为空');
+            $company->companyEnName=request()->param('companyEnName/s')?request()->param('companyEnName/s'):'';
+            if(!$company->companyEnName) errorMsg(400,'公司英文名称不能为空');
+            $data['nickName']=request()->param('nickName/s')?request()->param('nickName/s'):'';
+            if(!$data['nickName']) errorMsg(400,'管理员昵称不能为空');
+            $data['mobile']=request()->param('mobile/s')?request()->param('mobile/s'):'';
+            if(!$data['mobile']) errorMsg(400,'管理员登陆手机号码不能为空');
+            $password=request()->param('password/s')?request()->param('password/s'):'';
+            if(!$password) errorMsg(400,'管理员登陆密码不能为空');
+            $data['password']=md5($password.'erp');
+            $data['isAdmin']=1;
+            try{
+                Db::startTrans();
+                $company->save();
+                $company->users()->save($data);
+                Db::commit();
+                errorMsg(200,'done');
+            }catch(Exception $e){
+                Db::rollback();
+                errorMsg(400,$e->getMessage());
+            }
+        }else{
+            $this->assign('nav','addCompany');
+            return $this->fetch();
+        }
+    }
+}

@@ -1,0 +1,8 @@
+<ul class="sdms_second_nav">
+<h3>包材</h3>
+<if condition="$subNav eq 'packageList'">
+<li><a href="/Index/Package/packageList" class="a">包材详情</a></li>
+<else />
+<li><a href="/Index/Package/packageList">包材详情</a></li>
+</if>
+</ul>

@@ -1,0 +1,66 @@
+<include file="public/header" title="商品品牌" />
+<include file="nav/nav" />
+<include file="nav/subNav" />
+<link href="__JS__/select/select2.min.css" rel="stylesheet" type="text/css">
+<script src="__JS__/select/select2.min.js"></script>
+<div class="sdms_main">
+	<div class="title_name">
+        <h2>商品 &nbsp;&nbsp;<span>SDMS SE / 商品 / 商品品牌</span></h2>
+        <p>
+            <a href="javascript:location.reload();" class="a_re"><i class="fa fa-refresh"></i> 刷新</a>
+        </p>
+    </div>
+    <div class="button_search">
+        <form action="/Index/Goods/goodsBrand" method="post">
+        <ul class="dropdown_menu">
+            <li><a href="javascript:void(0);"><i class="fa fa-cog"></i>&nbsp;&nbsp;操作&nbsp;&nbsp;<i class="fa fa-caret-down"></i></a>
+                <ul>
+                    <li class="li">{$button.addGoodsBrand}</li>
+                </ul>
+            </li>
+        </ul>
+        <input type="text" name="search_brand" placeholder="搜索..." value="{$search_brand}" class="input_search" />
+        <input value="搜索" class="button button-primary input_search_b" type="submit" />
+        </form>
+    </div>
+    <table class="table" border='0'cellspacing="0" cellpadding="0">
+        <thead>
+            <tr>
+                <td class="w20"><input type="checkbox" id="checkbox_a0" class="chk_3"/><label for="checkbox_a0"></label></td>
+                <td class="w30">ID</td>
+                <td>品牌名称</td>
+                <td>品牌描述</td>
+                <td>品牌地址</td>
+                <td>品牌logo</td>
+                <td  class="w130">创建时间</td>
+                <td class="w45 text_center">操作</td>
+            </tr>
+        </thead>
+        
+        <tbody>
+            <volist name="goodsBrand" id="v">
+                <tr class="tr1">
+                    <td><input type="checkbox" id="checkbox_a{$key+1}" class="chk_3" title="{$v.id}"/><label for="checkbox_a{$key+1}"></label></td>
+                    <td>{$key+1}</td>
+                    <td>{$v.name}</td>
+                    <td>{$v.desc}</td>
+                    <td>{$v.url}</td>
+                    <td><if condition="$v.logo neq null"><img src="/public/upload/brand/{$v.logo}" width="60" height="30" class="tips" data-tipso="<img src='/public/upload/brand/{$v.logo}' width='400' height='400'/>"></if></td>
+                    <td>{$v.createTime|date="Y-m-d H:i:s",###}</td>
+                    <td align="center" title="{$v.id}">{$button.editGoodsBrand}</td>
+                </tr>
+            </volist>     
+        </tbody>
+    </table>
+    <div class="page_size">
+        <div class="button">
+            {$button.delGoodsBrand}
+            {$button.addGoodsBrand}
+        </div>
+        <div class="page order_1 flex_end">
+            {$goodsBrand->render()}
+        </div>     
+    </div>
+</div>
+<include file="public/foot" />
+<script type="text/javascript" src="/public/static/functionJS/goods.js"></script>

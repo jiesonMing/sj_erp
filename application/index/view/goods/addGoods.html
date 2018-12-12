@@ -1,0 +1,133 @@
+<include file="public/header" title="添加商品" />
+<include file="nav/nav" />
+<include file="nav/subNav" />
+<link href="__JS__/select/select2.min.css" rel="stylesheet" type="text/css">
+<script src="__JS__/select/select2.min.js"></script>
+<div class="sdms_main">
+	<div class="title_name clearfloat">
+		<h2>商品新增 &nbsp;<span>SDMS SE / 商品列表 / 添加商品</span></h2>
+		<p>
+			<a href="javascript:location.reload();" class="a_re"><i class="fa fa-refresh"></i> 刷新</a>
+		</p>
+	</div>
+
+	<ul class="edit_add">
+	<form>
+		<li>
+			<p>商品名称：</p><input type="text" name="goodsName" value="" class="w500">
+		</li>
+		<li>
+			<p>品牌：</p>
+			<select class="select2 w180" name="brand">
+				<option value="0">选择品牌</option>
+				<volist name='goodsBrand' id='v'>
+					<option value="{$v.name}">{$v.id}.{$v.name}</option>
+				</volist>
+			</select>
+		</li>
+		<li>
+			<p>商品分类：</p>
+			<select class="select2 w180" name="cateId">
+				<option value="0" selected="selected">选择商品分类</option>
+				<volist name="goodsCate" id="v">
+					<option value="{$v.id}"><if condition="$v.level eq 1">--<elseif condition="$v.level eq 2"/>----<else/>------</if>{$v.cName}</option>
+				</volist>
+			</select>
+		</li>
+		<li>
+			<p>商品自编码：</p><input type="text" name="goodsCode" value="" class="w200">
+		</li>
+		<li>
+			<p>商品条形码：</p><input type="text" name="goodsBarcode" value="" class="w200">
+		</li>
+		<li>
+			<p>商品规格：</p><input type="text" name="specType" value="" class="w200">
+		</li>
+		<li>
+			<p>计量单位：</p>
+			<select class="select2 w180" name="stockUnit">
+				<option value="0">选择计量单位</option>
+				<volist name="goodsUnit" id='v'>
+					<option value="{$v.unitCode}">{$v.unitCode}.{$v.unitName}</option>
+				</volist>
+			</select>
+		</li>
+		<li>
+			<p>毛重：</p><input type="text" name="unitGrossWeight" value="" placeholder="Kg" class="w100">
+			<div class="name">净重：</div><input type="text" name="unitNetWeight" value="" placeholder="Kg" class="w100">
+		</li>
+		<li>
+			<p>长：</p><input type="text" name="length" value="" placeholder="CM" class="w100">
+			<div class="name">宽：</div><input type="text" name="width" value="" placeholder="CM" class="w100">
+			<div class="name">高：</div><input type="text" name="height" value="" placeholder="CM" class="w100">
+			<div class="name">体积：</div><input type="text" name="unitVol" value="" placeholder="CBM" class="w100">
+		</li>
+		<li>
+			<p>备案价：</p><input type="text" name="recordPrice" value="" placeholder="CNY.人民币" class="w100">
+			<div class="name">代理价：</div><input type="text" name="agentPrice" value="" placeholder="CNY.人民币" class="w100">
+			<div class="name">销售价：</div><input type="text" name="price" value="" placeholder="CNY.人民币" class="w100">
+		</li>
+		<li>
+			<p>行邮税：</p>
+			<select class="select2 w180" name="postNo">
+				<option value="0">选择行邮税</option>
+				<volist name="goodsRecord" id='v'>
+					<option value="{$v.parcelNumber}">{$v.parcelNumber}.{$v.goodsName}</option>
+				</volist>
+			</select>
+		</li>
+		<li>
+			<p>HsCode：</p>
+			<select class="select2 w300" name="Hscode">
+				<option value="0">选择Hscode</option>
+				<volist name="goodsHscode" id="v">
+					<option value="{$v.hsCode}">{$v.hsCode}.{$v.hsName}</option>
+				</volist>
+			</select>
+		</li>
+		<li>
+			<p>海关备案名称：</p><input type="text" name="cusName" value="" class="w500">
+		</li>
+		<li>
+			<p>成份：</p><input type="text" name="ingredient" value="" class="w500">
+		</li>
+		<li>
+			<p>超范围使用添加剂：</p><input type="text" name="additives" value="" class="w200" placeholder="没有填“无”">
+		</li>
+		<li>
+			<p>含有害物质：</p><input type="text" name="nasties" value="" class="w200" placeholder="没有填“无”">
+		</li>
+		<li>
+			<p>原产国：</p>
+			<select class="select2 w180" name="country">
+				<option value="0" selected="selected">选择原产国</option>
+				<volist name="country" id="v">
+					<option>{$v.code}.{$v.name}</option>
+				</volist>
+			</select>
+		</li>
+		<li>
+			<p>生产厂家：</p><input type="text" name="producer" value="" class="w500">
+		</li>
+		<li>
+			<p>生产厂家地址：</p><input type="text" name="producerAdr" value="" class="w500">
+		</li>
+		<li>
+			<p>备注：</p><input type="text" name="notes" value="" class="w500">
+		</li>
+		<li>
+			<p>&nbsp;</p><a href="#" class="ok_send_a addGoods_submit"><i class="fa fa-check" style="padding: 14px 4px"></i> 提交</a>
+		</li>
+	</form>
+	</ul>
+
+</div>
+<include file="public/foot" />
+<script type="text/javascript" src="/public/static/functionJS/goods.js"></script>
+<script type="text/javascript">
+	$(function(){
+		$('.select2').select2({
+            language: "zh-CN"
+        });
+	})
+</script>

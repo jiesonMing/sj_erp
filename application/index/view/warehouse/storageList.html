@@ -1,0 +1,205 @@
+<include file="public/header" title="货架管理" />
+<include file="nav/nav" />
+<include file="nav/subNav" />
+<script>
+	$( function () {
+		//全选
+        $("#checkbox_a0").click(function(){
+            if($(this).prop("checked")==true){
+                $("tr td").find("input").prop("checked",true);
+            }else{
+                $("tr td").find("input").prop("checked",false);
+            }         
+        });
+
+        var click_Btn = true;
+        //禁用
+        $(".delStorage").click(function(){
+        	if (click_Btn) {
+        		click_Btn = false;
+        		if($("tbody input").is(':checked')){
+	                var inp=$("tbody tr td").find("input[type='checkbox']");
+	                var len=$("tbody tr td").find("input[type='checkbox']").length;
+	                var str='';
+	                for(var i=0;i<len;i++){
+	                    if(inp[i].checked){
+	                        str+=inp[i].value+',';
+	                    }
+	                }
+	                str=str.substring(str.length-1,",");
+	                var saveUrl = "/Index/Warehouse/delStorage";
+	                $.ajax({
+			           	type: "post",
+			           	dataType:'json',
+			           	url: saveUrl,
+			           	data: {ids:str},
+			           	success: function(el){
+			                if(el) {
+			                    if(el.statusCode == 200) {
+			                        layer.msg("成功禁用所选货架！",{icon:0,time:1000},function(){
+			                            location.reload();
+			                        });
+			                    }else{
+			                        layer.msg(el.retMessage,{icon:0,time:2000});
+			                    }
+			                }else{
+			                    layer.msg('未知错误，请重试！',{icon:0,time:2000});
+			                }                                                           
+			           	}
+			        });
+	            }else{
+	            	click_Btn=true;
+	                var index=layer.open({
+                        type:0,
+                        icon:'2',
+                        title:'失败提示信息：',
+                        content:'还未选择数据！'
+                    });
+                    layer.style(index,{
+                        width:'400px',
+                        top:'120px'
+                    });
+	                return false;
+	            }
+        	}else{
+                var index=layer.open({
+                    type:0,
+                    icon:'2',
+                    title:'错误提示信息：',
+                    content:'提交中，请稍候...'
+                });
+                layer.style(index,{
+                    width:'400px',
+                    top:'120px'
+                });
+            }         
+        });
+
+		$( '.addStorage' ).click( function () {
+			var url = "/Index/Open/addStorage/id/{$id}";
+			layer.open( {
+				type: 2,
+				title: '新增货架',
+				area: [ '500px', '330px' ],
+				fixed: false, //不固定
+				maxmin: true,
+				content: url,
+				end:function(){
+                    location.reload();
+                }
+			});
+		} );
+
+		$(".editStorage").each(function(edindex,item){
+	        $(this).click(function(){
+	            var storageId=$(".storageId").eq(edindex).val();
+	            var url = "/Index/Open/editStorage/storageId/"+storageId;
+	            layer.open( {
+					type: 2,
+					title: '修改货架',
+					area: [ '500px', '330px' ],
+					fixed: false, //不固定
+					maxmin: true,
+					content: url,
+					end:function(){
+	                    location.reload();
+	                }
+				});
+	        });
+	    });
+
+	    $(".input_search_b").click(function(){
+	    	var id = "{$id}";
+	        var value=$(".input_search").val();
+	        var stype = $("#stype option:selected").val();
+	        var url='/Index/Warehouse/storageList';
+	        if(value && stype == ""){
+	            url += "/id/"+id+'/value/'+value;
+	        }else if(value == "" && stype){
+	        	url += "/id/"+id+'/stype/'+stype;
+	        }else if(stype && value){
+	        	url += "/id/"+id+'/stype/'+stype+'/value/'+value;
+	        }else{
+	        	url += "/id/"+id;
+	        }
+	        location.href=url;
+	    });
+	} );
+</script>
+<div class="sdms_main">
+		<div class="title_name clearfloat">
+			<h2>货架管理 &nbsp;<span>SDMS SE / 货架管理 / 列表</span></h2>
+			<p>
+				<a href="javascript:location.reload();" class="a_re"><i class="fa fa-refresh"></i> 刷新</a>
+            	{$button.storageDelList}
+			</p>
+		</div>
+
+		<div class="button_search clearfloat">
+
+			<ul class="dropdown_menu m_r_10">
+				<li><a href="#"><i class="fa fa-cog"></i>&nbsp;&nbsp;操作&nbsp;&nbsp;<i class="fa fa-caret-down"></i></a>
+					<ul>
+						<li class="li">
+							{$button.addStorage}
+						</li>
+						<li class="li">
+							{$button.delStorage}
+						</li>
+					</ul>
+				</li>
+			</ul>
+			<select class="select2 w100" id="stype">
+				<option value="">全部</option>
+				<option value="1">1.一层</option>
+				<option value="2">2.二层</option>
+				<option value="3">3.三层</option>
+				<option value="4">4.四层</option>
+			</select>
+			<input type="text" name="search" class="input_search"/>
+			<input value="搜索" class="button button-primary input_search_b" type="submit">
+		</div>
+
+		<table class="table" border='0' cellspacing="0" cellpadding="0">
+			<thead>
+				<tr>
+					<td class="w20"><input type="checkbox" id="checkbox_a0" class="chk_3"/><label for="checkbox_a0"></label>
+					</td>
+					<td class="w35">ID</td>
+					<td class="w150">货架自编码</td>
+					<td class="w85">层数</td>
+					<td>所属仓库</td>
+					<td class="w130">更新时间</td>
+					<td class="w35 text_center">修改</td>
+				</tr>
+			</thead>
+
+			<tbody>
+				<volist name="list" id="sto">
+					<tr class="tr1">
+						<td><input type="checkbox" id="checkbox_a{$sto.id}" value="{$sto.id}" class="chk_3"/><label for="checkbox_a{$sto.id}"></label>
+						</td>
+						<td>{$sto.id}</td>
+						<td>{$sto.shelfNumber}</td>
+						<td class="td1">{$sto.stype}</td>
+						<td>{$sto.warehouseName}</td>
+						<td>{$sto.updateTime}</td>
+						<td class="text_center">
+							<input type="hidden" class="storageId" value="{$sto.id}">
+							{$button.editStorage}
+						</td>
+					</tr>
+				</volist>
+			</tbody>
+
+		</table>
+		<div class="page_size">
+			<div class="button">
+				{$button.addStorage}
+				{$button.delStorage}
+			</div>
+		</div>
+
+
+	</div>
+<include file="public/foot" />

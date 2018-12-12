@@ -1,0 +1,66 @@
+<?php
+return [
+'purchaserList'=>[
+'addQuotation'=>'<a href="/Index/Purchase/addQuotation" class=""><i class="fa fa-shopping-cart"></i> 新增</a>',
+'editQuotation'=>'<a href="/Index/Purchase/editQuotation" class="a_list c_1785c8"><i class="fa fa-pencil-square"></i> 修改</a>',
+'delQuotation'=>'<a href="/Index/Purchase/delQuotation" class=""><i class="fa fa-shopping-cart"></i> 删除</a>',
+],
+'modularList'=>[
+'addModular'=>'<a href="/Index/Auth/addModular" class="a_button_green"><i class="fa fa-plus"></i> 新增模块</a>',
+'editModular'=>'<a href="/Index/Auth/editModular" class="a_list c_1785c8 m_r_10 edit"><i class="fa fa-pencil-square"></i> 修改模块</a>',
+'delModular'=>'<a href="/Index/Auth/delModular" class="a_list del"><i class="fa fa-trash-o"></i> 删除模块</a>',
+'modularDelList'=>'<a href="/Index/Auth/modularDelList" class="a_del"><i class="fa fa-trash-o"></i> 回收站</a>',
+'useModular'=>'<a href="javascript:void(0);" class="status b_28b5d6 C_FFF useModular">启用</a>',
+'purgeModular'=>'<a href="javascript:void(0);" class="a_list purge"><i class="fa fa-times-circle"></i></a>',
+],
+'authsList'=>[
+'addAuth'=>'<a href="/Index/Auth/addAuth" class="a_button_green"><i class="fa fa-plus"></i> 新增权限</a>',
+'editAuth'=>'<a href="javascript:void(0);" class="a_list c_1785c8 m_r_10 edit"><i class="fa fa-pencil-square"></i></a>',
+'delAuth'=>'<a href="javascript:void(0);" class="a_list del"><i class="fa fa-trash-o"></i></a>',
+'authDelList'=>'<a href="/Index/Auth/authDelList" class="a_del"><i class="fa fa-trash-o"></i> 回收站</a>',
+'useAuth'=>'<a href="javascript:void(0);" class="status b_28b5d6 C_FFF useAuth">启用</a>',
+'purgeAuth'=>'<a href="javascript:void(0);" class="a_list purge"><i class="fa fa-times-circle"></i></a>',
+],
+'order'=>[
+'delModular'=>'<a href="/Index/Auth/delModular" class=""><i class="fa fa-shopping-cart"></i> 删除采购报价单</a>',
+'checkOrder'=>'<a href="/Index/Order/checkOrder" class=""><i class="fa fa-shopping-cart"></i> 查看订单</a>',
+],
+'dealer'=>[
+'addDealer'=>'<a href="/Index/Delaer/addDealer" class=""><i class="fa fa-shopping-cart"></i> 新增客户详情</a>',
+'editDealerDetails'=>'<a href="/Index/Dealer/editDealerDetails" class=""><i class="fa fa-shopping-cart"></i> 编辑客户详情</a>',
+],
+'top'=>[
+'goodsServer'=>'<a href="/Index/Top/goodsServer" class="">商品与服务 <i class="fa fa-caret-down"></i></a>',
+'search'=>'<a href="/Index/Top/search" class="">搜索</a>',
+'workOrder'=>'<a href="/Index/Top/workOrder" class="">工单服务</a>',
+'help'=>'<a href="/Index/Top/help" class="">帮助与文档</a>',
+],
+'goodsList'=>[
+'delGoods'=>'<a href="/Index/Goods/delGoods" class=""><i class="fa fa-shopping-cart"></i> 删除商品</a>',
+],
+'packageList'=>[
+'addPackage'=>'<a href="/Index/Package/addPackage" class="a_button_green"><i class="fa fa-plus"></i> 新增包材</a>',
+],
+'userList'=>[
+'addUser'=>'<a href="/Index/Ucenter/addUser" class="a_button_green"><i class="fa fa-plus"></i> 新增员工</a>',
+'editUser'=>'<a href="javascript:void(0);" class="a_list c_1785c8 m_r_10 edit"><i class="fa fa-pencil-square"></i></a>',
+'delUser'=>'<a href="javascript:void(0);" class="a_list del"><i class="fa fa-trash-o"></i></a>',
+'userDelList'=>'<a href="/Index/Ucenter/userDelList" class="a_del"><i class="fa fa-trash-o"></i> 回收站</a>',
+'useUser'=>'<a href="javascript:void(0);" class="status b_28b5d6 C_FFF useUser">启用</a>',
+'purgeUser'=>'<a href="javascript:void(0);" class="a_list purge"><i class="fa fa-times-circle"></i></a>',
+],
+'roleList'=>[
+'addRole'=>'<a href="/Index/Ucenter/addRole" class="a_button_green"><i class="fa fa-plus"></i> 新增组织</a>',
+'editRole'=>'<a href="/Index/Ucenter/editRole" class="a_list c_1785c8 m_r_10 edit"><i class="fa fa-pencil-square"></i></a>',
+'delRole'=>'<a href="/Index/Ucenter/delRole" class="a_list del"><i class="fa fa-trash-o"></i></a>',
+'roleDelList'=>'<a href="/Index/Ucenter/roleDelList" class="a_del"><i class="fa fa-trash-o"></i> 回收站</a>',
+'useRole'=>'<a href="javascript:void(0);" class="status b_28b5d6 C_FFF useRole">启用</a>',
+'purgeRole'=>'<a href="javascript:void(0);" class="a_list purge"><i class="fa fa-times-circle"></i></a>',
+],
+'reback'=>[
+'addReback'=>'<a href="/Index/Purchase/addReback" class="a_button_green"><i class="fa fa-plus"></i> 新增退货</a>',
+],
+'myUser'=>[
+'editMyUser'=>'<a href="javascript:void(0);" class="a_button_blue submit"><i class="fa fa"></i> 保存</a>',
+],
+];

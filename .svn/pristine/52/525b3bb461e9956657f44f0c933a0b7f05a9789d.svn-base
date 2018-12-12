@@ -1,0 +1,17 @@
+<div class="tbody">
+    <dl class="sdms_nav_spread sdms_nav" id="sdmsnav">
+        <a href="javascript:changeNav();" class="zooming"><i class="fa fa-bars fa-rotate-90"></i></a>
+        <dt class="tips" data-tipso="公司"><a href="javascript:void(0);" class="nav_a"><i class="fa fa-caret-down"></i><span>公司</span></a></dt>
+        <div class="nav_dd">
+            <if condition="$nav eq 'index'">
+                <dd class="tips" data-tipso="公司管理"><a href="/Admin/index/index" class='a'><i class="fa fa-navicon"></i><span>公司管理</span></a></dd>
+            <else />
+                <dd class="tips" data-tipso="公司管理"><a href="/Admin/index/index"><i class="fa fa-navicon"></i><span>公司管理</span></a></dd>
+            </if>
+            <if condition="$nav eq 'addCompany'">
+                <dd class="tips" data-tipso="新增公司"><a href="/Admin/index/addCompany" class='a'><i class="fa fa-plus"></i><span>新增公司</span></a></dd>
+            <else />
+                <dd class="tips" data-tipso="新增公司"><a href="/Admin/index/addCompany"><i class="fa fa-plus"></i><span>新增公司</span></a></dd>
+            </if>
+        </div>
+    </dl>

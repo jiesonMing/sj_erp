@@ -1,0 +1,126 @@
+<include file="public/header" title="新增商品Boom" />
+<include file="nav/nav" />
+<include file="nav/subNav" />
+<link href="__JS__/select/select2.min.css" rel="stylesheet" type="text/css">
+<script src="__JS__/select/select2.min.js"></script>
+<div class="sdms_main">
+	<div class="title_name">
+        <h2>商品 &nbsp;&nbsp;<span>SDMS SE / 商品Boom / 新增商品Boom</span></h2>
+        <p>
+            <a href="javascript:location.reload();" class="a_re"><i class="fa fa-refresh"></i> 刷新</a>
+
+        </p>
+    </div>
+    <div class="sdms_view_name">
+    	<div>
+    		<p>1</p>
+    		<span>BOM信息</span>
+    	</div>
+    </div>
+    <form class="addGoodsBoom_form">
+    <ul class="edit_add">
+    	<li>
+    		<p>商品分类：</p>
+    		<select class="select2 w180" name="cateId">
+    			<option value="">选择商品分类</option>
+				<volist name="goodsCate" id="v">
+					<option value="{$v.id}"><if condition="$v.level eq 1">--<elseif condition="$v.level eq 2"/>----<else/>------</if>{$v.cName}</option>
+				</volist>
+    		</select>
+    	</li>
+    	<li>
+    		<p>商品名称：</p><input type="text" name="goodsName" placeholder="不可空" value="" class="w500">
+    	</li>
+    	<li>
+    		<p>品牌：</p><input type="text" name="brand" placeholder="可空" value="" class="w500">
+    	</li>
+    	
+    	<li>
+    		<p>商品自编码：</p><input type="text" name="goodsCode" placeholder="不可空" value="" class="w200">
+    	</li>
+    	<li>
+    		<p>商品条形码：</p><input type="text" name="goodsBarcode" placeholder="可空" value="" class="w200">
+    	</li>
+    	<li>
+    		<p>商品规格：</p><input type="text" name="specType" placeholder="可空" value="" class="w200">
+    	</li>
+    	<li>
+    		<p>计量单位：</p>
+    		<select class="select2 w180" name="stockUnit">
+    			<option value="">选择计量单位</option>
+				<volist name="goodsUnit" id='v'>
+					<option value="{$v.unitCode}">{$v.unitCode}.{$v.unitName}</option>
+				</volist>
+    		</select>
+    	</li>
+    	<li>
+    		<p>毛重：</p><input type="text" name="unitGrossWeight" value="" placeholder="Kg" class="w100">
+    		<div class="name">净重：</div><input type="text" name="unitNetWeight" value="" placeholder="Kg" class="w100">
+    	</li>
+    	<li>
+    		<p>长：</p><input type="text" name="length" value="" placeholder="CM" class="w100">
+    		<div class="name">宽：</div><input type="text" name="width" value="" placeholder="CM" class="w100">
+    		<div class="name">高：</div><input type="text" name="height" value="" placeholder="CM" class="w100">
+    		<div class="name">体积：</div><input type="text" name="unitVol" value="" placeholder="CBM" class="w100">
+    	</li>
+    	<li>
+    		<p>代理价：</p><input type="text" name="agentPrice" value="" placeholder="CNY.人民币" class="w100">
+    		<div class="name">销售价：</div><input type="text" name="price" value="" placeholder="CNY.人民币" class="w100">
+    	</li>
+
+    	<li>
+    		<p>原产国：</p>
+    		<select class="select2 w180" name="country">
+				<option value="">选择原产国</option>
+				<volist name="country" id="v">
+					<option value="{$v.code}">{$v.code}.{$v.name}</option>
+				</volist>
+    		</select> 
+    	</li>
+
+    	<li>
+    		<p>备注：</p><input type="text" name="" value="" class="w500">
+    	</li>
+    </ul>
+    
+    <div class="sdms_view_name">
+    	<div>
+    		<p>2</p>
+    		<span>子商品信息</span>
+    	</div>
+    	<a href="#" class="goods_in_open"><i class="fa fa-plus"></i>&nbsp;&nbsp;新增</a>
+    </div>
+
+    <table class="table parentChildGoods" border='0' cellspacing="0" cellpadding="0">
+    	<thead>
+    		<tr>
+    			<!-- <td class="w20"><input type="checkbox" id="checkbox_a0" class="chk_3"/><label for="checkbox_a0"></label></td> -->
+    			<td class="w30">ID</td>
+    			<td class="w150">商品编码</td>
+    			<td>商品名称</td>
+    			<td class="w100">规格型号</td>
+    			<td class="w50">单位</td>
+    			<td class="w100">售价</td>
+    			<td class="w75">数量</td>
+    			<td class="w45 text_center">操作</td>
+    		</tr>
+    	</thead>
+
+    	<tbody>
+    		
+    	</tbody> 	
+    </table>
+    </form>
+    <div class="sdms_save">
+    	<a href="#" class="addGoodsBoom_submit">保存</a>
+    </div>
+</div>
+<include file="public/foot" />
+<script type="text/javascript">
+	$(function(){
+		$('.select2').select2({
+            language: "zh-CN"
+        });
+	})
+</script>
+<script type="text/javascript" src="/public/static/functionJS/goods.js"></script>

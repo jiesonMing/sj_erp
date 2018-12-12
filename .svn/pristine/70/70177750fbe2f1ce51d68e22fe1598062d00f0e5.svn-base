@@ -1,0 +1,27 @@
+<div class="tbody">
+<dl class="sdms_nav_spread sdms_nav" id="sdmsnav">
+<a href="javascript:changeNav();" class="zooming"><i class="fa fa-bars fa-rotate-90"></i></a>
+<if condition="($nav eq 'receivables') or ($nav eq 'payment') or ($nav eq 'chart')">
+<dt class="tips" data-tipso="财务与报表"><a href="javascript:void(0);" class="nav_a"><i class="fa fa-caret-down"></i><span>财务与报表</span></a></dt>
+<div class="nav_dd">
+<else />
+<dt class="tips" data-tipso="财务与报表"><a href="javascript:void(0);" class="nav_a"><i class="fa fa-caret-right"></i><span>财务与报表</span></a></dt>
+<div class="nav_dd nav_none">
+</if>
+<if condition="$nav eq 'receivables'">
+<dd class="tips" data-tipso="应收账款"><a href="/Index/Receivables/index" class='a'><i class="fa fa-cog"></i><span>应收账款</span></a></dd>
+<else />
+<dd class="tips" data-tipso="应收账款"><a href="/Index/Receivables/index"><i class="fa fa-cog"></i><span>应收账款</span></a></dd>
+</if>
+<if condition="$nav eq 'payment'">
+<dd class="tips" data-tipso="应付账款"><a href="/Index/Payment/index" class='a'><i class="fa fa-file-text-o"></i><span>应付账款</span></a></dd>
+<else />
+<dd class="tips" data-tipso="应付账款"><a href="/Index/Payment/index"><i class="fa fa-file-text-o"></i><span>应付账款</span></a></dd>
+</if>
+<if condition="$nav eq 'chart'">
+<dd class="tips" data-tipso="报表"><a href="/Index/Chart/index" class='a'><i class="fa fa-bar-chart"></i><span>报表</span></a></dd>
+<else />
+<dd class="tips" data-tipso="报表"><a href="/Index/Chart/index"><i class="fa fa-bar-chart"></i><span>报表</span></a></dd>
+</if>
+</div>
+</dl>

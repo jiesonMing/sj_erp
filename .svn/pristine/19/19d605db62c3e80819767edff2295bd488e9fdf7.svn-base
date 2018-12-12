@@ -1,0 +1,170 @@
+<include file="public/header" title="新增组织" />
+<include file="nav/nav" />
+<include file="nav/subNav" />
+<link href="__JS__/select/select2.min.css" rel="stylesheet" type="text/css">
+<script src="__JS__/select/select2.min.js"></script>
+<div class="sdms_main">
+    <div class="title_name">
+        <h2>新增组织 &nbsp;<span>erp / 组织架构 / 新增</span></h2>
+        <p>
+            <a href="javascript:location.reload();" class="a_re"><i class="fa fa-refresh"></i> 刷新</a>
+        </p>
+    </div>
+    <ul class="page_text authority_n_e mg_top_20">
+        <li class="">
+            <span class="w100">组织名称：</span>
+            <input class="text_input txtVal w300 roleName" type="text" placeholder="组织名称" value="" />
+            <span class="help mg_left_10px"></span>
+        </li>
+        <li class="">
+            <span class="w100">上级组织：</span>
+            <select class="text_input select2 w300">
+                <option value="0">0——顶级组织</option>
+                {$roleList}
+            </select>
+        </li>
+        <li class="">
+            <span class="w100">是否部门：</span>
+            <input type="radio" id="checkbox_a0" name="sex" value="1" class="chk_1" /><label for="checkbox_a0"></label><p class="w35 p_left_3">是</p>
+            <input type="radio" id="checkbox_a1" name="sex" value="0" checked="checked" class="chk_1" /><label for="checkbox_a1"></label><p class="w35 p_left_3">否</p>
+        </li>
+        <li class="">
+            <span class="w100">部门负责人：</span>
+            <input type="radio" id="checkbox_a2" name="isRespons" value="1" class="chk_1" /><label for="checkbox_a2"></label><p class="w35 p_left_3">是</p>
+            <input type="radio" id="checkbox_a3" name="isRespons" value="0" checked="checked" class="chk_1" /><label for="checkbox_a3"></label><p class="w35 p_left_3">否</p>
+        </li>
+        <li class="">
+            <span class="w100">备注：</span>
+            <textarea class="text_input remark w300" placeholder="备注"></textarea>
+        </li>
+    </ul>
+    <div class="sdms_save">
+        <a href="javascript:void(0);" class="submit">提交</a>
+    </div>
+</div>
+<script>
+    $(function(){
+        $('.select2').select2({
+            language: "zh-CN"
+        });
+        $(".txtVal").blur(function(){
+            var val=$(this).val();
+            if($.trim(val)==''){
+                $(this).addClass('is-danger');
+                $(this).next().addClass('is-danger');
+                $(this).next().addClass('is-danger');
+                $(this).next().text('不能为空');
+            }else{
+                $(this).removeClass('is-danger');
+                $(this).addClass('is-success');
+                $(this).next().text('');
+            }
+        });
+        var isSubmit=true;
+        $('.submit').click(function(){
+            if(isSubmit){
+                isSubmit=false;
+                var roleName=$(".roleName").val();
+                if($.trim(roleName)==''){
+                    isSubmit=true;
+                    var index=layer.open({
+                        type:0,
+                        icon:'2',
+                        title:'错误提示信息：',
+                        content:'角色名称不能为空'
+                    });
+                    layer.style(index,{
+                        width:'500px',
+                        top:'120px'
+                    });
+                    return false;
+                }
+                var parentRoleId=$(".select2").val();
+                var type=$("input[name=type]:checked").val();
+                var isRespons=$("input[name=isRespons]:checked").val();
+                var remark=$(".remark").val();
+                var referer="{$referer}";
+                var postdata={roleName:roleName,parentRoleId:parentRoleId,isRespons:isRespons,type:type,remark:remark};
+                $.ajax({
+                    type : 'POST',
+                    url : "/Index/Ucenter/addRole",
+                    dataType : 'json',
+                    data : postdata,
+                    success : function(el){
+                        if(el.statusCode==200){
+                            var index=layer.open({
+                                type:0,
+                                icon:'1',
+                                title:'成功提示信息：',
+                                content:'新增成功',
+                                end: function(){
+                                    location.href=referer;
+                                }
+                            });
+                            layer.style(index,{
+                                width:'500px',
+                                top:'120px'
+                            });
+                            return false;
+                        }else if(el.statusCode==300){
+                            var index=layer.open({
+                                type:0,
+                                icon:'2',
+                                title:'错误提示信息：',
+                                content:el.retMessage,
+                                end: function(){
+                                    location.href='/Index/User/login';
+                                }
+                            });
+                            layer.style(index,{
+                                width:'500px',
+                                top:'120px'
+                            });
+                            return false;
+                        }else{
+                            isSubmit=true;
+                            var index=layer.open({
+                                type:0,
+                                icon:'2',
+                                title:'错误提示信息：',
+                                content:el.retMessage
+                            });
+                            layer.style(index,{
+                                width:'400px',
+                                top:'120px'
+                            });
+                            return false;
+                        }
+                    },
+                    error: function(el){
+                        isSubmit=true;
+                        var index=layer.open({
+                            type:0,
+                            icon:'2',
+                            title:'错误提示信息：',
+                            content:el.retMessage
+                        });
+                        layer.style(index,{
+                            width:'400px',
+                            top:'120px'
+                        });
+                        return false;
+                    }
+                });
+            }else{
+                var index=layer.open({
+                    type:0,
+                    icon:'2',
+                    title:'错误提示信息：',
+                    content:'提交中，请稍候'
+                });
+                layer.style(index,{
+                    width:'400px',
+                    top:'120px'
+                });
+                return false;
+            }
+        });
+    });
+</script>
+<include file="public/foot" />

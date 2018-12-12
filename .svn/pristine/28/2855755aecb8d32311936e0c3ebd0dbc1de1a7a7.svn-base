@@ -1,0 +1,220 @@
+<include file="public/header" title="公司回收站" />
+<include file="public/nav" />
+<div class="sdms_main">
+    <div class="title_name">
+        <h2>公司回收站 &nbsp;&nbsp;<span>SDMS SE / 公司 / 列表</span></h2>
+        <p>
+            <a href="javascript:location.reload();" class="a_re"><i class="fa fa-refresh"></i> 刷新</a>
+        </p>
+    </div>
+    <div class="button_search">
+        <ul class="dropdown_menu">
+            <li><a href="javascript:void(0);"><i class="fa fa-cog"></i>&nbsp;&nbsp;操作&nbsp;&nbsp;<i class="fa fa-caret-down"></i></a>
+                <ul>
+                    <li class="li"><a href="/Admin/Index/addCompany" class="a_button_green"><i class="fa fa-plus"></i> 新增公司</a></li>
+                </ul>
+            </li>
+        </ul>
+        <input type="text" value="{$value}" class="input_search" />
+        <a class="a_button_white mg_left_5 search">搜索</a>
+    </div>
+    <table class='table is-bordered'>
+        <thead>
+        <tr>
+            <td class="w20"><input type="checkbox" id="checkbox_a0" class="chk_3 checkbox0"/><label for="checkbox_a0"></label></td>
+            <td class="w30 has-text-centered">编号</td>
+            <td class="w100 has-text-centered">公司名称</td>
+            <td class="w130 has-text-centered">公司简称</td>
+            <td class="w100 has-text-centered">公司英文名称</td>
+            <td class="w100 has-text-centered">备注</td>
+            <td class="w100 has-text-centered">添加时间</td>
+            <td class="w45 has-text-centered">状态</td>
+            <td class="w45 has-text-centered">操作</td>
+        </tr>
+        </thead>
+        <tbody>
+        <volist name="list" id="company">
+            <tr class="tr1">
+                <td><input type="checkbox" id="checkbox_a{$company.companyId}" class="chk_3" /><label for="checkbox_a{$company.companyId}"></label></td>
+                <td class="has-text-centered">{$company.companyId}</td>
+                <td class="has-text-centered">{$company.companyName}</td>
+                <td class="has-text-centered">{$company.companyShortName}</td>
+                <td class="has-text-centered">{$company.companyEnName}</td>
+                <td class="has-text-centered">{$company.remark}</td>
+                <td class="has-text-centered">{$company.createTime}</td>
+                <td class="text_center"><a href="javascript:useCompany({$company.companyId});" class="status b_28b5d6 C_FFF">启用</a></td>
+                <td class="has-text-centered">
+                    <a href="javascript:purge({$company.companyId});" class="a_list"><i class="fa fa-times-circle"></i></a>
+                </td>
+            </tr>
+        </volist>
+        </tbody>
+    </table>
+    <div class="page_size">
+        <div class="tbutton">
+
+        </div>
+        <div class="page">
+            {$list->render()}
+        </div>
+    </div>
+</div>
+<script>
+    function useCompany(companyId){
+        if(companyId){
+            var index=layer.confirm('确定启用当前公司吗', {icon: 3, title:'提示'}, function(i){
+                var postdata={companyId:companyId,status:1};
+                $.ajax({
+                    type : 'POST',
+                    url : "/Admin/Index/delCompany",
+                    dataType : 'json',
+                    data : postdata,
+                    success : function(el){
+                        if(el.statusCode==200){
+                            var index=layer.open({
+                                type:0,
+                                icon:'1',
+                                title:'成功提示信息：',
+                                content:'启用成功',
+                                end: function(){
+                                    location.reload();
+                                }
+                            });
+                            layer.style(index,{
+                                width:'500px',
+                                top:'120px'
+                            });
+                        }else{
+                            isSubmit=true;
+                            var index=layer.open({
+                                type:0,
+                                icon:'2',
+                                title:'错误提示信息：',
+                                content:el.retMessage,
+                                end: function(){
+                                    location.reload();
+                                }
+                            });
+                            layer.style(index,{
+                                width:'400px',
+                                top:'120px'
+                            });
+                        }
+                    },
+                    error: function(el){
+                        var index=layer.open({
+                            type:0,
+                            icon:'2',
+                            title:'错误提示信息：',
+                            content:'操作失败，请刷新重试',
+                            end: function(){
+                                location.reload();
+                            }
+                        });
+                        layer.style(index,{
+                            width:'400px',
+                            top:'120px'
+                        });
+                    }
+                });
+            });
+            layer.style(index,{
+                width:'400px',
+                top:'120px'
+            });
+        }else{
+            var index=layer.open({
+                type:0,
+                icon:'2',
+                title:'失败提示信息：',
+                content:'公司信息有误',
+                end: function(){
+                    location.reload();
+                }
+            });
+            layer.style(index,{
+                width:'500px',
+                top:'120px'
+            });
+        }
+    }
+    function purge(companyId){
+        if(companyId){
+            var index=layer.confirm('确定彻底删除当前公司吗', {icon: 3, title:'提示'}, function(i){
+                var postdata={companyId:companyId};
+                $.ajax({
+                    type : 'POST',
+                    url : "/Admin/Index/purgeCompany",
+                    dataType : 'json',
+                    data : postdata,
+                    success : function(el){
+                        if(el.statusCode==200){
+                            var index=layer.open({
+                                type:0,
+                                icon:'1',
+                                title:'成功提示信息：',
+                                content:'彻底删除成功',
+                                end: function(){
+                                    location.reload();
+                                }
+                            });
+                            layer.style(index,{
+                                width:'500px',
+                                top:'120px'
+                            });
+                        }else{
+                            isSubmit=true;
+                            var index=layer.open({
+                                type:0,
+                                icon:'2',
+                                title:'错误提示信息：',
+                                content:el.retMessage,
+                                end: function(){
+                                    location.reload();
+                                }
+                            });
+                            layer.style(index,{
+                                width:'400px',
+                                top:'120px'
+                            });
+                        }
+                    },
+                    error: function(el){
+                        var index=layer.open({
+                            type:0,
+                            icon:'2',
+                            title:'错误提示信息：',
+                            content:'操作失败，请刷新重试',
+                            end: function(){
+                                location.reload();
+                            }
+                        });
+                        layer.style(index,{
+                            width:'400px',
+                            top:'120px'
+                        });
+                    }
+                });
+            });
+            layer.style(index,{
+                width:'400px',
+                top:'120px'
+            });
+        }else{
+            var index=layer.open({
+                type:0,
+                icon:'2',
+                title:'失败提示信息：',
+                content:'公司信息有误',
+                end: function(){
+                    location.reload();
+                }
+            });
+            layer.style(index,{
+                width:'500px',
+                top:'120px'
+            });
+        }
+    }
+</script>
+<include file="public/foot" />

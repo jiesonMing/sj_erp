@@ -1,0 +1,106 @@
+<include file="public/header" title="添加sku" />
+<include file="nav/nav" />
+<include file="nav/subNav" />
+<link href="__JS__/select/select2.min.css" rel="stylesheet" type="text/css">
+<script src="__JS__/select/select2.min.js"></script>
+<script type="text/javascript" src="__JS__/ajaxupload.js"></script>
+<div class="sdms_main">
+	<div class="title_name">
+        <h2>商品 &nbsp;&nbsp;<span>SDMS SE / 商品SKU / 添加sku</span></h2>
+        <p>
+            <a href="javascript:location.reload();" class="a_re"><i class="fa fa-refresh"></i> 刷新</a>
+        </p>
+    </div>
+    <table class="goods_sku" border='0' cellspacing="0" cellpadding="0">
+		<thead>
+			<tr>
+				<td colspan="5" class="border_top border_left f16">正在添加：</td>
+			</tr>
+		</thead>
+		<tbody>
+		<form>
+			<tr>
+				<td class="border_left text_right font_b">电商企业：</td>
+				<td colspan="4">
+					<select class="select2 w300" name="companyId">
+						<option value="{$company.companyId}" selected="selected">{$company.companyName}</option>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td class="border_left text_right font_b">仓储企业：</td>
+				<td colspan="4">
+					<select class="select2 w300" name="warehouseId">
+						<option value="" selected="selected">选择仓储企业</option>
+						<volist name="warehouse" id="v">
+							<option value="{$v.id}">{$v.id}.{$v.warehouseName}</option>
+						</volist>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td class="w100 text_right border_left font_b">商品：</td>
+				<td class="w200">{$goods.goodsCode}</td>
+				<td class="w200"><input type="text" name='sku' value="" placeholder="请输入对应SKU编码" class="input"/>
+				</td>
+				<td class="w300">{$goods.goodsName}</td>
+				<td>{$goods.specType}</td>
+				<input type="hidden" name="goodsCode" value="{$goods.goodsCode}">
+			</tr>
+			<tr>
+				<td class="border_left"></td>
+				<td colspan="4">
+					<a href="#" class="ok_send_a addGoodsSKU_submit"><i class="fa fa-check"></i> 提交</a>
+				</td>
+			</tr>
+		</form>
+		</tbody>
+	</table>
+
+	<table class="goods_sku" border='0' cellspacing="0" cellpadding="0">
+		<thead>
+			<tr>
+				<td colspan="10" class=" border_left f16 border_top ">该商品SKU对应列表：</td>
+			</tr>
+		</thead>
+		<tbody class="font_b">
+			<tr>
+				<td class="w30 border_left text_center">序号</td>
+				<td class="w130">电商企业</td>
+				<td class="w130">仓储企业</td>
+				<td class="w120">系统商品代码</td>
+				<td class="w120">仓库对应SKU</td>
+				<td>商品名称</td>
+				<td class="w75">更新时间</td>
+				<td class="w50 text_center">操作</td>
+			</tr>
+		</tbody>
+		<tfoot>
+			<empty name="goodsSKU">
+				<tr><td colspan="8">暂时没有数据</td></tr>
+			<else/>
+				<volist name="goodsSKU" id="v">
+					<tr>
+						<td class="border_left text_center">{$key+1}</td>
+						<td>{$v.companyShortName}</td>
+						<td>{$v.warehouseName}</td>
+						<td>{$v.goodsCode}</td>
+						<td class="editGoodsSKU_input" title='{$v.id}'>{$v.sku}</td>
+						<td>{$v.goodsName}</td>
+						<td>{$v.createTime|date="Y-m-d H:i:s",###}</td>
+						<td class="text_center"><a href="#" class="a_list c_1785c8 editGoodsSKU" title="修改"><i class="fa fa-pencil-square"></i></a>
+						</td>
+					</tr>
+				</volist>
+			</empty>
+		</tfoot>
+	</table>
+
+</div>
+<include file="public/foot" />
+<script type="text/javascript" src="/public/static/functionJS/goods.js"></script>
+<script type="text/javascript">
+ 	$('.select2').select2({
+        language: "zh-CN"
+    });
+</script>

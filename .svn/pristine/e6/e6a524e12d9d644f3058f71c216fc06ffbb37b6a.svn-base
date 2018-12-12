@@ -1,0 +1,607 @@
+<include file="public/header" title="编辑员工" />
+<include file="nav/nav" />
+<include file="nav/subNav" />
+<link href="__JS__/select/select2.min.css" rel="stylesheet" type="text/css">
+<script src="__JS__/select/select2.min.js"></script>
+<div class="sdms_main">
+    <div class="title_name">
+        <h2>编辑员工 &nbsp;<span>SDMS SE / 用户中心 / 编辑</span></h2>
+        <p>
+        </p>
+    </div>
+    <ul class="authority_n_e mg_top_20">
+        <li class="">
+            <span class="w100">姓名：</span>
+            <div class="w300">
+                <input class="text_input nickName w300" type="text" placeholder="姓名" value="{$data.nickName}">
+            </div>
+            <p class="help mg_left_10px"></p>
+        </li>
+
+        <li class="">
+            <span class="w100">英文名：</span>
+            <div class="w300">
+                <input class="text_input enName w300" type="text" placeholder="英文名" value="{$data.enName}">
+            </div>
+            <p class="help mg_left_10px"></p>
+        </li>
+        <li>
+            <span class="w100">所属部门：</span>
+            <select class="select2 parentRole w180">
+                <option value="0">0.请选择</option>
+                <volist name="role1" key="k" id="role">
+                    <if condition="$role['roleId'] eq $parentRoleId1">
+                        <option value="{$role.roleId}" selected="selected">{$k}.{$role.roleName}</option>
+                    <else />
+                        <option value="{$role.roleId}">{$k}.{$role.roleName}</option>
+                    </if>
+                </volist>
+            </select>
+            <select class="select2 role1 w180">
+                <option value="0">0.请选择</option>
+                <volist name="role2" key="k" id="role">
+                    <if condition="$role['roleId'] eq $parentRoleId2">
+                        <option value="{$role.roleId}" selected="selected">{$k}.{$role.roleName}</option>
+                        <else />
+                        <option value="{$role.roleId}">{$k}.{$role.roleName}</option>
+                    </if>
+                </volist>
+            </select>
+            <select class="select2 role2 w180">
+                <option value="0">0.请选择</option>
+                <volist name="role3" key="k" id="role">
+                    <if condition="$role['roleId'] eq $parentRoleId3">
+                        <option value="{$role.roleId}" selected="selected">{$k}.{$role.roleName}</option>
+                        <else />
+                        <option value="{$role.roleId}">{$k}.{$role.roleName}</option>
+                    </if>
+                </volist>
+            </select>
+        </li>
+        <li>
+            <span class="w100">职位：</span>
+            <select class="select2 role3 w180">
+                <option value="0">0.请选择</option>
+                <volist name="role4" key="k" id="role">
+                    <if condition="$role['roleId'] eq $data['roleId']">
+                        <option value="{$role.roleId}" selected="selected">{$k}.{$role.roleName}</option>
+                    <else />
+                        <option value="{$role.roleId}">{$k}.{$role.roleName}</option>
+                    </if>
+                </volist>
+            </select>
+        </li>
+        <li>
+            <span class="w100">性别：</span>
+            <if condition="$data['sex'] eq 1">
+                <input type="radio" id="checkbox_a0" name="sex" value="1" checked="checked" class="chk_1"/><label for="checkbox_a0"></label><p class="w35 p_left_3">男</p>
+                <input type="radio" id="checkbox_a1" name="sex" value="0" class="chk_1"/><label for="checkbox_a1"></label><p class="w35 p_left_3">女</p>
+            <else />
+                <input type="radio" id="checkbox_a2" name="sex" value="1" class="chk_1"/><label for="checkbox_a2"></label><p class="w35 p_left_3">男</p>
+                <input type="radio" id="checkbox_a3" name="sex" value="0" checked="checked" class="chk_1"/><label for="checkbox_a3"></label><p class="w35 p_left_3">女</p>
+            </if>
+        </li>
+        <li>
+            <span class="w100">邮箱：</span>
+            <div class="w300">
+                <input class="text_input email w300" type="text" placeholder="邮箱" value="{$data.email}">
+            </div>
+            <p class="help mg_left_10px"></p>
+        </li>
+        <li>
+            <span class="w100">手机(登录)：</span>
+            <div class="w300">
+                <input class="text_input mobile w300" type="text" placeholder="手机(登录)" value="{$data.mobile}">
+            </div>
+            <p class="help mg_left_10px"></p>
+        </li>
+        <li>
+            <span class="w100">修改密码：</span>
+            <div class="w300">
+                <input class="text_input password w300" type="password" placeholder="修改密码" value="">
+            </div>
+            <p class="help mg_left_10px"></p>
+        </li>
+        <li>
+            <span class="w100">确认密码：</span>
+            <div class="w300">
+                <input class="text_input repass w300" type="password" placeholder="确认密码" value="">
+            </div>
+            <p class="help mg_left_10px"></p>
+        </li>
+        <li>
+            <span class="w100">备注：</span>
+            <textarea class="text_input remark w300" placeholder="备注">{$data.remark}</textarea>
+        </li>
+        <li>
+            <span class="w100">所属权限组：</span>
+            <select class="w180 authId select2">
+                <option value="0">选择权限组</option>
+                <volist name="authList" id="auth">
+                    <if condition="$auth['userId'] eq 0">
+                        <option value="{$auth.authId}">{$auth.authId}.{$auth.authName}</option>
+                    <else />
+                        <option value="{$auth.authId}" selected="selected">{$auth.authId}.{$auth.authName}</option></if>
+                </volist>
+            </select>
+        </li>
+        <li>
+            <a href="javascript:void(0);" class="a_button_blue submit">保存</a>
+        </li>
+    </ul>
+</div>
+<script>
+    $(function(){
+        $('.select2').select2({
+            language: "zh-CN"
+        });
+        $(".txtVal").blur(function(){
+            var val=$(this).val();
+            if($.trim(val)==''){
+                $(this).addClass('is-danger');
+                $(this).parent().next().addClass('is-danger');
+                $(this).parent().next().text('不能为空');
+            }else{
+                $(this).removeClass('is-danger');
+                $(this).addClass('is-success');
+                $(this).parent().next().text('');
+            }
+        });
+        $(".nickName").blur(function(){
+            var pattern=/^[\u4E00-\u9FA5]{1,6}$/;
+            var nickName=$(this).val();
+            if($.trim(nickName)==''){
+                $(this).addClass('is-danger');
+                $(this).parent().next().addClass('is-danger');
+                $(this).parent().next().text('姓名不能为空');
+            }else if(nickName.length>6){
+                $(this).addClass('is-danger');
+                $(this).parent().next().addClass('is-danger');
+                $(this).parent().next().text('不能超过六个字符');
+            }else if(!pattern.test(nickName)){
+                $(this).addClass('is-danger');
+                $(this).parent().next().addClass('is-danger');
+                $(this).parent().next().text('必须是中文名');
+            }else{
+                $(this).removeClass('is-danger');
+                $(this).addClass('is-success');
+                $(this).parent().next().text('');
+            }
+        });
+        $(".enName").blur(function(){
+            var pattern=/^[(a-z)(A-Z)(0-9)]{1,10}$/;
+            var enName=$(this).val();
+            if($.trim(enName)==''){
+                $(this).addClass('is-danger');
+                $(this).parent().next().addClass('is-danger');
+                $(this).parent().next().text('英文名不能为空');
+            }else if(enName.length>10){
+                $(this).addClass('is-danger');
+                $(this).parent().next().addClass('is-danger');
+                $(this).parent().next().text('不能超过十个字符');
+            }else if(!pattern.test(enName)){
+                $(this).addClass('is-danger');
+                $(this).parent().next().addClass('is-danger');
+                $(this).parent().next().text('必须是英文名');
+            }else{
+                $(this).removeClass('is-danger');
+                $(this).addClass('is-success');
+                $(this).parent().next().text('');
+            }
+        });
+        $(".email").blur(function(){
+            var email=$(this).val();
+            var pattern=/^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+.((com)|(cn)|(com.cn)|(net))$/;
+            if($.trim(email)==''){
+                $(this).addClass('is-danger');
+                $(this).parent().next().addClass('is-danger');
+                $(this).parent().next().text('邮箱不能为空');
+            }else if(!pattern.test(email)){
+                $(this).addClass('is-danger');
+                $(this).parent().next().addClass('is-danger');
+                $(this).parent().next().text('邮箱格式不正确');
+            }else{
+                $(this).removeClass('is-danger');
+                $(this).addClass('is-success');
+                $(this).parent().next().text('');
+            }
+        });
+        $(".mobile").blur(function(){
+            var tel=$(this).val();
+            var pattern = /^1[34578]\d{9}$/;
+            if($.trim(tel)==''){
+                $(this).addClass('is-danger');
+                $(this).parent().next().addClass('is-danger');
+                $(this).parent().next().text('登陆手机号码不能为空');
+            }else if(tel.length!=11){
+                $(this).addClass('is-danger');
+                $(this).parent().next().addClass('is-danger');
+                $(this).parent().next().text('登陆手机号码长度必须为11位');
+            }else if(!pattern.test(tel)){
+                $(this).addClass('is-danger');
+                $(this).parent().next().addClass('is-danger');
+                $(this).parent().next().text('不是正确的手机号码');
+            }else{
+                $(this).removeClass('is-danger');
+                $(this).addClass('is-success');
+                $(this).parent().next().text('');
+            }
+        });
+        $('.repass').blur(function(){
+            var password=$(".password").val();
+            var repass=$(this).val();
+            if(repass!==password){
+                $(this).addClass('is-danger');
+                $(this).parent().next().addClass('is-danger');
+                $(this).parent().next().text('两次输入密码不一致');
+            }else{
+                $(this).removeClass('is-danger');
+                $(this).parent().next().text('');
+            }
+        });
+        $(".parentRole").on("change",function(){
+            var parentId=$(this).val();
+            if(parentId>0){
+                postdata={parentId:parentId};
+                $.ajax({
+                    type : 'POST',
+                    url : "/Index/Ucenter/getRole",
+                    dataType : 'json',
+                    data : postdata,
+                    success : function(el){
+                        var role1='<option value="0">0.请选择</option>';
+                        var role2='<option value="0">0.请选择</option>';
+                        var role3='<option value="0">0.请选择</option>';
+                        if(el.statusCode==200){
+                            var data=el.retMessage;
+                            var roleNum1=1;
+                            var roleNum3=1;
+                            $.each(data,function(n,value){
+                                if(value['type']==1){
+                                    role1+='<option value="'+value['roleId']+'">'+roleNum1+'.'+value['roleName']+'</option>';
+                                    roleNum1+=1;
+                                }else{
+                                    role3+='<option value="'+value['roleId']+'">'+roleNum3+'.'+value['roleName']+'</option>';
+                                    roleNum3+=1;
+                                }
+                            });
+                        }else if(el.statusCode==300){
+                            var index=layer.open({
+                                type:0,
+                                icon:'2',
+                                title:'错误提示信息：',
+                                content:el.retMessage,
+                                end: function(){
+                                    location.href='/Index/User/login';
+                                }
+                            });
+                            layer.style(index,{
+                                width:'500px',
+                                top:'120px'
+                            });
+                            return false;
+                        }
+                        $(".role1").empty();
+                        $(".role2").empty();
+                        $(".role3").empty();
+                        $(".role1").append(role1);
+                        $(".role2").append(role2);
+                        $('.role3').append(role3);
+                    },
+                    error: function(el){
+
+                    }
+                });
+            }
+        });
+        $(".role1").on("change",function(){
+            var parentId=$(this).val();
+            if(parentId>0){
+                postdata={parentId:parentId};
+                $.ajax({
+                    type : 'POST',
+                    url : "/Index/Ucenter/getRole",
+                    dataType : 'json',
+                    data : postdata,
+                    success : function(el){
+                        var role2='<option value="0">0.请选择</option>';
+                        var role3='<option value="0">0.请选择</option>';
+                        if(el.statusCode==200){
+                            var data=el.retMessage;
+                            var roleNum2=1;
+                            var roleNum3=1;
+                            $.each(data,function(n,value){
+                                if(value['type']==1){
+                                    role2+='<option value="'+value['roleId']+'">'+roleNum2+'.'+value['roleName']+'</option>';
+                                    roleNum2+=1;
+                                }else{
+                                    role3+='<option value="'+value['roleId']+'">'+roleNum3+'.'+value['roleName']+'</option>';
+                                    roleNum3+=1;
+                                }
+                            });
+                        }else if(el.statusCode==300){
+                            var index=layer.open({
+                                type:0,
+                                icon:'2',
+                                title:'错误提示信息：',
+                                content:el.retMessage,
+                                end: function(){
+                                    location.href='/Index/User/login';
+                                }
+                            });
+                            layer.style(index,{
+                                width:'500px',
+                                top:'120px'
+                            });
+                            return false;
+                        }
+                        $(".role2").empty();
+                        $(".role3").empty();
+                        $(".role2").append(role2);
+                        $('.role3').append(role3);
+                    },
+                    error: function(el){
+
+                    }
+                });
+            }
+        });
+        $(".role2").on("change",function(){
+            var parentId=$(this).val();
+            if(parentId>0){
+                postdata={parentId:parentId};
+                $.ajax({
+                    type : 'POST',
+                    url : "/Index/Ucenter/getRole",
+                    dataType : 'json',
+                    data : postdata,
+                    success : function(el){
+                        var role3='<option value="0">0.请选择</option>';
+                        if(el.statusCode==200){
+                            var data=el.retMessage;
+                            var roleNum3=1;
+                            $.each(data,function(n,value){
+                                if(value['type']==0){
+                                    role3+='<option value="'+value['roleId']+'">'+roleNum3+'.'+value['roleName']+'</option>';
+                                    roleNum3+=1;
+                                }
+                            });
+                        }else if(el.statusCode==300){
+                            var index=layer.open({
+                                type:0,
+                                icon:'2',
+                                title:'错误提示信息：',
+                                content:el.retMessage,
+                                end: function(){
+                                    location.href='/Index/User/login';
+                                }
+                            });
+                            layer.style(index,{
+                                width:'500px',
+                                top:'120px'
+                            });
+                            return false;
+                        }
+                        $(".role3").empty();
+                        $('.role3').append(role3);
+                    },
+                    error: function(el){
+
+                    }
+                });
+            }
+        });
+        var isSubmit=true;
+        $('.submit').click(function(){
+            if(isSubmit){
+                isSubmit=false;
+                $(".text_input").each(function(){
+                    if($(this).hasClass('is-danger')){
+                        isSubmit=true;
+                        var index=layer.open({
+                            type:0,
+                            icon:'2',
+                            title:'错误提示信息：',
+                            content:'输入内容有误，请验证'
+                        });
+                        layer.style(index,{
+                            width:'500px',
+                            top:'120px'
+                        });
+                        return false;
+                    }
+                });
+                var nickName=$(".nickName").val();
+                if($.trim(nickName)==''){
+                    isSubmit=true;
+                    var index=layer.open({
+                        type:0,
+                        icon:'2',
+                        title:'错误提示信息：',
+                        content:'姓名不能为空'
+                    });
+                    layer.style(index,{
+                        width:'500px',
+                        top:'120px'
+                    });
+                    return false;
+                }
+                var enName=$(".enName").val();
+                if($.trim(enName)==''){
+                    isSubmit=true;
+                    var index=layer.open({
+                        type:0,
+                        icon:'2',
+                        title:'错误提示信息：',
+                        content:'英文名不能为空'
+                    });
+                    layer.style(index,{
+                        width:'500px',
+                        top:'120px'
+                    });
+                    return false;
+                }
+                var roleId=$(".role3").val();
+                if(!$.isNumeric(roleId) || roleId<0){
+                    isSubmit=true;
+                    var index=layer.open({
+                        type:0,
+                        icon:'2',
+                        title:'错误提示信息：',
+                        content:'请选择职位'
+                    });
+                    layer.style(index,{
+                        width:'500px',
+                        top:'120px'
+                    });
+                    return false;
+                }
+                var sex=$("input[name=sex]:checked").val();
+                var email=$(".email").val();
+                if($.trim(email)==''){
+                    isSubmit=true;
+                    var index=layer.open({
+                        type:0,
+                        icon:'2',
+                        title:'错误提示信息：',
+                        content:'邮箱不能为空'
+                    });
+                    layer.style(index,{
+                        width:'500px',
+                        top:'120px'
+                    });
+                    return false;
+                }
+                var mobile=$(".mobile").val();
+                if($.trim(mobile)==''){
+                    isSubmit=true;
+                    var index=layer.open({
+                        type:0,
+                        icon:'2',
+                        title:'错误提示信息：',
+                        content:'登陆手机不能为空'
+                    });
+                    layer.style(index,{
+                        width:'500px',
+                        top:'120px'
+                    });
+                    return false;
+                }
+                var password=$(".password").val();
+                var repass=$(".repass").val();
+                if(password!==repass){
+                    isSubmit=true;
+                    var index=layer.open({
+                        type:0,
+                        icon:'2',
+                        title:'错误提示信息：',
+                        content:'两次密码输入不一致'
+                    });
+                    layer.style(index,{
+                        width:'500px',
+                        top:'120px'
+                    });
+                    return false;
+                }
+                var remark=$(".remark").val();
+                var authId=$(".authId").val();
+                if(!$.isNumeric(authId) || authId<0){
+                    isSubmit=true;
+                    var index=layer.open({
+                        type:0,
+                        icon:'2',
+                        title:'错误提示信息：',
+                        content:'请选择权限组'
+                    });
+                    layer.style(index,{
+                        width:'500px',
+                        top:'120px'
+                    });
+                    return false;
+                }
+                var referer="{$referer}";
+                var id="{$id}";
+                var postdata={id:id,nickName:nickName,enName:enName,roleId:roleId,sex:sex,email:email,mobile:mobile,password:password,repass:repass,authId:authId,remark:remark};
+                $.ajax({
+                    type : 'POST',
+                    url : "/Index/Ucenter/editUser",
+                    dataType : 'json',
+                    data : postdata,
+                    success : function(el){
+                        if(el.statusCode==200){
+                            var index=layer.open({
+                                type:0,
+                                icon:'1',
+                                title:'成功提示信息：',
+                                content:'修改成功',
+                                end: function(){
+                                    location.href=referer;
+                                }
+                            });
+                            layer.style(index,{
+                                width:'500px',
+                                top:'120px'
+                            });
+                            return false;
+                        }else if(el.statusCode==300){
+                            var index=layer.open({
+                                type:0,
+                                icon:'2',
+                                title:'错误提示信息：',
+                                content:el.retMessage,
+                                end: function(){
+                                    location.href='/Index/User/login';
+                                }
+                            });
+                            layer.style(index,{
+                                width:'500px',
+                                top:'120px'
+                            });
+                            return false;
+                        }else{
+                            isSubmit=true;
+                            var index=layer.open({
+                                type:0,
+                                icon:'2',
+                                title:'错误提示信息：',
+                                content:el.retMessage
+                            });
+                            layer.style(index,{
+                                width:'400px',
+                                top:'120px'
+                            });
+                            return false;
+                        }
+                    },
+                    error: function(el){
+                        isSubmit=true;
+                        var index=layer.open({
+                            type:0,
+                            icon:'2',
+                            title:'错误提示信息：',
+                            content:el.retMessage
+                        });
+                        layer.style(index,{
+                            width:'400px',
+                            top:'120px'
+                        });
+                        return false;
+                    }
+                });
+            }else{
+                var index=layer.open({
+                    type:0,
+                    icon:'2',
+                    title:'错误提示信息：',
+                    content:'提交中，请稍候'
+                });
+                layer.style(index,{
+                    width:'400px',
+                    top:'120px'
+                });
+                return false;
+            }
+        });
+    });
+</script>
+<include file="public/foot" />

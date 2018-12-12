@@ -1,0 +1,77 @@
+<include file="public/header" title="欠货单" />
+<include file="nav/nav" />
+<include file="nav/subNav" />
+<div class="sdms_main">
+    <div class="title_name">
+        <h2>欠货单 &nbsp;&nbsp;<span>SDMS SE / 入出仓 / 列表</span></h2>
+        <p>
+            <a href="javascript:location.reload();" class="a_re"><i class="fa fa-refresh"></i> 刷新</a>
+        </p>
+    </div>
+    <div class="button_search">
+        <ul class="dropdown_menu">
+            <li><a href="javascript:void(0);"><i class="fa fa-cog"></i>&nbsp;&nbsp;操作&nbsp;&nbsp;<i class="fa fa-caret-down"></i></a>
+                <ul>
+                    <li class="li"></li>
+                </ul>
+            </li>
+        </ul>
+        <input type="text" value="{$value}" class="input_search" />
+        <input value="搜索" class="button button-primary input_search_b" type="submit" />
+    </div>
+    <table class='table' border="0" cellpadding="0" cellspacing="0">
+        <thead>
+            <tr>
+                <td class="w20"><input type="checkbox" id="checkbox_a0" class="chk_3 checkbox0"/><label for="checkbox_a0"></label></td>
+                <td class="w30 text_center">ID</td>
+                <td class="w100 text_center">欠货单号</td>
+                <td class="w100 text_center">公司名称</td>
+                <td class="w100 text_center">合同号</td>
+                <td class="w130 text_center">商品名称</td>
+                <td class="w85 text_center">欠货数量</td>
+                <td class="w85 text_center">需补货数量</td>
+                <td class="w85 text_center">已补货数量</td>
+                <td class="w100 text_center">创建日期</td>
+                <td class="w45 text_center">状态</td>
+                <td class="w85 text_center">备注</td>
+            </tr>
+        </thead>
+        <tbody>
+            <volist name="list" id="owe">
+                <tr class="tr1">
+                    <td><input type="checkbox" id="checkbox_a{$owe.oweId}" class="chk_3" /><label for="checkbox_a{$owe.oweId}"></label></td>
+                    <td class="text_center">{$owe.oweId}</td>
+                    <td class="text_center">{$owe.oweCode}</td>
+                    <td class="text_center">{$Think.Session.companyName}</td>
+                    <td class="text_center">{$owe.contractNum}</td>
+                    <td class="text_center">{$owe.goodsName}.{$owe.goodsCode}</td>
+                    <td class="text_center">{$owe.amount}</td>
+                    <td class="text_center">{$owe.inOwe}</td>
+                    <td class="text_center">{$owe.outOwe}</td>
+                    <td class="text_center">{$owe.createTime}</td>
+                    <td class="text_center">{$statusArr[$owe.status]}</td>
+                    <td class="text_center">{$owe.remark}</td>
+                </tr>
+            </volist>
+        </tbody>
+    </table>
+    <div class="page_size">
+        <div class="button">
+
+        </div>
+        <div class="page flex_end">
+            {$list->render()}
+        </div>
+    </div>
+</div>
+<script>
+    $(".input_search_b").click(function(){
+        var value=$(".input_search").val();
+        var url='/Index/Declaration/oweList';
+        if(value){
+            url+='/value/'+value;
+        }
+        location.href=url;
+    });
+</script>
+<include file="public/foot" />

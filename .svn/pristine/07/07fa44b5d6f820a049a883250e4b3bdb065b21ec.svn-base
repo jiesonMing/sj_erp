@@ -1,0 +1,15 @@
+<?php
+
+namespace app\index\controller;
+
+use think\Controller;
+
+class WarehouseController extends BaseController
+{
+    //作者：于明明
+    //功能：仓库
+    public function index(){
+        $this->assign('nav','warehouse');
+        return $this->fetch();
+    }
+}

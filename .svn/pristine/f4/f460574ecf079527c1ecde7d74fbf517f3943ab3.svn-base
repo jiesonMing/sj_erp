@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>[title]</title>
+    <link rel="stylesheet" href="__CSS__/font-awesome.min.css">
+    <link rel="stylesheet" href="__CSS__/Manage.font.css">
+    <script type="application/x-javascript" src="__JS__/jquery-3.2.1.min.js"></script>
+    <script type="application/x-javascript" src="__JS__/layer/layer.js"></script>
+    <script type="text/javascript" src="__JS__/tipso.min.js"></script>
+    <script type="text/javascript" src="__JS__/sdms.js"></script>
+</head>
+<body>
+<div class="sdms_top sdms_top_manage">
+    <div class="left">
+        <a href="/">控制台</a>
+        {$topNav.goodsServer}
+    </div>
+
+    <div class="right">
+        <a href="javascript:void(0);" class="all_lock">锁定 <i class="fa fa-lock"></i></a>
+        <a href="javascript:loginOut({$Think.session.userId},0);">{$Think.session.nickName}<i class="fa fa-caret-down"></i></a>
+        {$topNav.search}
+        {$topNav.workOrder}
+        {$topNav.help}
+    </div>
+</div>

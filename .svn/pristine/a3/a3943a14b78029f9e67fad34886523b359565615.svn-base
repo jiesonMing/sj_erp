@@ -1,0 +1,418 @@
+<include file="public/header" title="我的资料" />
+<include file="nav/nav" />
+<include file="nav/subNav" />
+<div class="sdms_main">
+    <div class="title_name">
+        <h2>我的资料 &nbsp;<span>SDMS SE / 用户中心 / 查看，修改我的资料</span></h2>
+        <p>
+        </p>
+    </div>
+    <ul class="page_text authority_n_e mg_top_20">
+        <if condition="$button['editMyUser'] eq ''">
+            <li class="">
+                <span class="w100">姓名：</span>
+                <input class="text_input w300" type="text" disabled="disabled" value="{$data.nickName}" />
+                <span class="help mg_left_10px"></span>
+            </li>
+            <li class="">
+                <span class="w100">英文名：</span>
+                <input class="text_input w300" type="text" disabled="disabled" value="{$data.enName}" />
+                <span class="help mg_left_10px"></span>
+            </li>
+            <li>
+                <span class="w100">性别：</span>
+                <if condition="$data['sex'] eq 1">
+                    <input type="radio" id="checkbox_a0" name="sex" value="1" checked="checked" disabled="disabled" class="chk_1"/><label for="checkbox_a0"></label><p class="w35 p_left_3">男</p>
+                    <input type="radio" id="checkbox_a1" name="sex" value="0" disabled="disabled" class="chk_1"/><label for="checkbox_a1"></label><p class="w35 p_left_3">女</p>
+                    <else />
+                    <input type="radio" id="checkbox_a2" name="sex" value="1" disabled="disabled" class="chk_1"/><label for="checkbox_a2"></label><p class="w35 p_left_3">男</p>
+                    <input type="radio" id="checkbox_a3" name="sex" value="0" checked="checked" disabled="disabled" class="chk_1"/><label for="checkbox_a3"></label><p class="w35 p_left_3">女</p>
+                </if>
+            </li>
+            <li>
+                <span class="w100">邮箱：</span>
+                <input class="text_input w300" type="text" disabled="disabled" value="{$data.email}">
+                <span class="help mg_left_10px"></span>
+            </li>
+            <li>
+                <span class="w100">手机(登录)：</span>
+                <input class="text_input w300" type="text" disabled="disabled" value="{$data.mobile}">
+                <span class="help mg_left_10px"></span>
+            </li>
+            <if condition="$data['isAdmin'] eq 1">
+                <li>
+                    <span class="w100">员工类型：</span>
+                    <input class="text_input w100" type="text" disabled="disabled" value="超级管理员" />
+                </li>
+            <else />
+                <li>
+                    <span class="w100">所属部门：</span>
+                    <input class="text_input w100" type="text" disabled="disabled" value="{$data.proleName}" />
+                </li>
+                <li>
+                    <span class="w100">职位：</span>
+                    <input class="text_input w150" type="text" disabled="disabled" value="{$data.roleName}" />
+                </li>
+                <li>
+                    <span class="w100">所属权限组：</span>
+                    <input class="text_input w180" type="text" disabled="disabled" value="{$data.authName}">
+                </li>
+            </if>
+            <li>
+                <span class="w100">备注：</span>
+                <textarea class="text_input w300" disabled="disabled">{$data.remark}</textarea>
+            </li>
+        <else />
+            <li class="">
+                <span class="w100">姓名：</span>
+                <input class="text_input nickName w300" type="text" value="{$data.nickName}" />
+                <span class="help mg_left_10px"></span>
+            </li>
+            <li class="">
+                <span class="w100">英文名：</span>
+                <input class="text_input enName w300" type="text" value="{$data.enName}" />
+                <span class="help mg_left_10px"></span>
+            </li>
+            <li>
+                <span class="w100">性别：</span>
+                <if condition="$data['sex'] eq 1">
+                    <input type="radio" id="checkbox_a4" name="sex" value="1" checked="checked" class="chk_1"/><label for="checkbox_a4"></label><p class="w35 p_left_3">男</p>
+                    <input type="radio" id="checkbox_a5" name="sex" value="0" class="chk_1"/><label for="checkbox_a5"></label><p class="w35 p_left_3">女</p>
+                <else />
+                    <input type="radio" id="checkbox_a6" name="sex" value="1" class="chk_1"/><label for="checkbox_a6"></label><p class="w35 p_left_3">男</p>
+                    <input type="radio" id="checkbox_a7" name="sex" value="0" checked="checked" class="chk_1"/><label for="checkbox_a7"></label><p class="w35 p_left_3">女</p>
+                </if>
+            </li>
+            <li>
+                <span class="w100">邮箱：</span>
+                <input class="text_input email w300" type="text" value="{$data.email}">
+                <span class="help mg_left_10px"></span>
+            </li>
+            <li>
+                <span class="w100">手机(登录)：</span>
+                <input class="text_input mobile w300" type="text" value="{$data.mobile}">
+                <span class="help mg_left_10px"></span>
+            </li>
+            <li>
+                <span class="w100">原始密码：</span>
+                <input class="text_input oldpass w300" type="password" placeholder="原始密码" value="">
+                <p class="help mg_left_10px"></p>
+            </li>
+            <li>
+                <span class="w100">新密码：</span>
+                <input class="text_input password w300" type="password" placeholder="新密码" value="">
+                <span class="help mg_left_10px"></span>
+            </li>
+            <li>
+                <span class="w100">确认新密码：</span>
+                <input class="text_input repass w300" type="password" placeholder="确认新密码" value="">
+                <span class="help mg_left_10px"></span>
+            </li>
+            <if condition="$data['isAdmin'] eq 1">
+                <li>
+                    <span class="w100">员工类型：</span>
+                    <input class="text_input w100" type="text" disabled="disabled" value="超级管理员" />
+                </li>
+            <else />
+                <li>
+                    <span class="w100">所属部门：</span>
+                    <input class="text_input w100" type="text" disabled="disabled" value="{$data.proleName}" />
+                </li>
+                <li>
+                    <span class="w100">职位：</span>
+                    <input class="text_input w150" type="text" disabled="disabled" value="{$data.roleName}" />
+                </li>
+                <li>
+                    <span class="w100">所属权限组：</span>
+                    <input class="text_input w180" type="text" disabled="disabled" value="{$data.authName}">
+                </li>
+            </if>
+            <li>
+                <span class="w100">备注：</span>
+                <textarea class="text_input remark w300">{$data.remark}</textarea>
+            </li>
+        </if>
+    </ul>
+    <div class="sdms_save">
+        {$button.editMyUser}
+    </div>
+</div>
+<script>
+    $(function(){
+        $(".nickName").blur(function(){
+            var pattern=/^[\u4E00-\u9FA5]{1,6}$/;
+            var nickName=$(this).val();
+            if($.trim(nickName)==''){
+                $(this).addClass('is-danger');
+                $(this).next().addClass('is-danger');
+                $(this).next().text('姓名不能为空');
+            }else if(nickName.length>6){
+                $(this).addClass('is-danger');
+                $(this).next().addClass('is-danger');
+                $(this).next().text('不能超过六个字符');
+            }else if(!pattern.test(nickName)){
+                $(this).addClass('is-danger');
+                $(this).next().addClass('is-danger');
+                $(this).next().text('必须是中文名');
+            }else{
+                $(this).removeClass('is-danger');
+                $(this).addClass('is-success');
+                $(this).next().text('');
+            }
+        });
+        $(".enName").blur(function(){
+            var pattern=/^[(a-z)(A-Z)(0-9)]{1,10}$/;
+            var enName=$(this).val();
+            if($.trim(enName)==''){
+                $(this).addClass('is-danger');
+                $(this).parent().next().addClass('is-danger');
+                $(this).parent().next().text('英文名不能为空');
+            }else if(enName.length>10){
+                $(this).addClass('is-danger');
+                $(this).parent().next().addClass('is-danger');
+                $(this).parent().next().text('不能超过十个字符');
+            }else if(!pattern.test(enName)){
+                $(this).addClass('is-danger');
+                $(this).parent().next().addClass('is-danger');
+                $(this).parent().next().text('必须是英文名');
+            }else{
+                $(this).removeClass('is-danger');
+                $(this).addClass('is-success');
+                $(this).parent().next().text('');
+            }
+        });
+        $(".email").blur(function(){
+            var email=$(this).val();
+            var pattern=/^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+.((com)|(cn)|(com.cn)|(net))$/;
+            if($.trim(email)==''){
+                $(this).addClass('is-danger');
+                $(this).parent().next().addClass('is-danger');
+                $(this).parent().next().text('邮箱不能为空');
+            }else if(!pattern.test(email)){
+                $(this).addClass('is-danger');
+                $(this).parent().next().addClass('is-danger');
+                $(this).parent().next().text('邮箱格式不正确');
+            }else{
+                $(this).removeClass('is-danger');
+                $(this).addClass('is-success');
+                $(this).parent().next().text('');
+            }
+        });
+        $(".mobile").blur(function(){
+            var tel=$(this).val();
+            var pattern = /^1[34578]\d{9}$/;
+            if($.trim(tel)==''){
+                $(this).addClass('is-danger');
+                $(this).parent().next().addClass('is-danger');
+                $(this).parent().next().text('登陆手机号码不能为空');
+            }else if(tel.length!=11){
+                $(this).addClass('is-danger');
+                $(this).parent().next().addClass('is-danger');
+                $(this).parent().next().text('登陆手机号码长度必须为11位');
+            }else if(!pattern.test(tel)){
+                $(this).addClass('is-danger');
+                $(this).parent().next().addClass('is-danger');
+                $(this).parent().next().text('不是正确的手机号码');
+            }else{
+                $(this).removeClass('is-danger');
+                $(this).addClass('is-success');
+                $(this).parent().next().text('');
+            }
+        });
+        $('.repass').blur(function(){
+            var password=$(".password").val();
+            var repass=$(this).val();
+            if(repass!==password){
+                $(this).addClass('is-danger');
+                $(this).parent().next().addClass('is-danger');
+                $(this).parent().next().text('两次输入密码不一致');
+            }else{
+                $(this).removeClass('is-danger');
+                $(this).parent().next().text('');
+            }
+        });
+        var isSubmit=true;
+        $('.submit').click(function(){
+            if(isSubmit){
+                isSubmit=false;
+                $(".text_input").each(function(){
+                    if($(this).hasClass('is-danger')){
+                        isSubmit=true;
+                        var index=layer.open({
+                            type:0,
+                            icon:'2',
+                            title:'错误提示信息：',
+                            content:'输入内容有误，请验证'
+                        });
+                        layer.style(index,{
+                            width:'500px',
+                            top:'120px'
+                        });
+                        return false;
+                    }
+                });
+                var nickName=$(".nickName").val();
+                if($.trim(nickName)==''){
+                    isSubmit=true;
+                    var index=layer.open({
+                        type:0,
+                        icon:'2',
+                        title:'错误提示信息：',
+                        content:'姓名不能为空'
+                    });
+                    layer.style(index,{
+                        width:'500px',
+                        top:'120px'
+                    });
+                    return false;
+                }
+                var enName=$(".enName").val();
+                if($.trim(enName)==''){
+                    isSubmit=true;
+                    var index=layer.open({
+                        type:0,
+                        icon:'2',
+                        title:'错误提示信息：',
+                        content:'英文名不能为空'
+                    });
+                    layer.style(index,{
+                        width:'500px',
+                        top:'120px'
+                    });
+                    return false;
+                }
+                var sex=$("input[name=sex]:checked").val();
+                var email=$(".email").val();
+                if($.trim(email)==''){
+                    isSubmit=true;
+                    var index=layer.open({
+                        type:0,
+                        icon:'2',
+                        title:'错误提示信息：',
+                        content:'邮箱不能为空'
+                    });
+                    layer.style(index,{
+                        width:'500px',
+                        top:'120px'
+                    });
+                    return false;
+                }
+                var mobile=$(".mobile").val();
+                if($.trim(mobile)==''){
+                    isSubmit=true;
+                    var index=layer.open({
+                        type:0,
+                        icon:'2',
+                        title:'错误提示信息：',
+                        content:'登陆手机不能为空'
+                    });
+                    layer.style(index,{
+                        width:'500px',
+                        top:'120px'
+                    });
+                    return false;
+                }
+                var oldpass=$(".oldpass").val();
+                var password=$(".password").val();
+                var repass=$(".repass").val();
+                if(password!==repass){
+                    isSubmit=true;
+                    var index=layer.open({
+                        type:0,
+                        icon:'2',
+                        title:'错误提示信息：',
+                        content:'两次密码输入不一致'
+                    });
+                    layer.style(index,{
+                        width:'500px',
+                        top:'120px'
+                    });
+                    return false;
+                }
+                var remark=$(".remark").val();
+                var referer="{$referer}";
+                var id="{$id}";
+                var postdata={id:id,nickName:nickName,enName:enName,sex:sex,email:email,mobile:mobile,oldpass:oldpass,password:password,repass:repass,remark:remark};
+                $.ajax({
+                    type : 'POST',
+                    url : "/Index/Ucenter/editMyUser",
+                    dataType : 'json',
+                    data : postdata,
+                    success : function(el){
+                        if(el.statusCode==200){
+                            var index=layer.open({
+                                type:0,
+                                icon:'1',
+                                title:'成功提示信息：',
+                                content:'修改成功',
+                                end: function(){
+                                    location.reload();
+                                }
+                            });
+                            layer.style(index,{
+                                width:'500px',
+                                top:'120px'
+                            });
+                            return false;
+                        }else if(el.statusCode=300){
+                            var index=layer.open({
+                                type:0,
+                                icon:'2',
+                                title:'错误提示信息：',
+                                content:el.retMessage,
+                                end: function(){
+                                    location.href='/Index/User/login';
+                                }
+                            });
+                            layer.style(index,{
+                                width:'500px',
+                                top:'120px'
+                            });
+                            return false;
+                        }else{
+                            isSubmit=true;
+                            var index=layer.open({
+                                type:0,
+                                icon:'2',
+                                title:'错误提示信息：',
+                                content:el.retMessage
+                            });
+                            layer.style(index,{
+                                width:'400px',
+                                top:'120px'
+                            });
+                            return false;
+                        }
+                    },
+                    error: function(el){
+                        isSubmit=true;
+                        var index=layer.open({
+                            type:0,
+                            icon:'2',
+                            title:'错误提示信息：',
+                            content:el.retMessage
+                        });
+                        layer.style(index,{
+                            width:'400px',
+                            top:'120px'
+                        });
+                        return false;
+                    }
+                });
+            }else{
+                var index=layer.open({
+                    type:0,
+                    icon:'2',
+                    title:'错误提示信息：',
+                    content:'提交中，请稍候'
+                });
+                layer.style(index,{
+                    width:'400px',
+                    top:'120px'
+                });
+                return false;
+            }
+        });
+    });
+</script>
+<include file="public/foot" />

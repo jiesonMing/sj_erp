@@ -1,0 +1,33 @@
+<include file="public/header" title="模块列表" />
+<include file="nav/nav" />
+<include file="nav/subNav" />
+<link href="__JS__/treeview/jquery.treeview.css" rel="stylesheet" type="text/css">
+<script src="__JS__/treeview/jquery.treeview.js"></script>
+<div class="sdms_main">
+    <div class="title_name">
+        <h2>权限管理 &nbsp;&nbsp;<span>SDMS SE / 权限 / 列表</span></h2>
+        <p>
+            <a href="javascript:location.reload();" class="a_re"><i class="fa fa-refresh"></i> 刷新</a>
+            <a href="/Index/Auth/modularList" class="a_re"><i class="fa fa-table"></i> 表状结构</a>
+            {$button.modularDelList}
+        </p>
+    </div>
+    <div class="button_search">
+        <ul class="dropdown_menu">
+            <li><a href="javascript:void(0);"><i class="fa fa-cog"></i>&nbsp;&nbsp;操作&nbsp;&nbsp;<i class="fa fa-caret-down"></i></a>
+                <ul>
+                    <li class="li">{$button.addModular}</li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    <div class="tree">
+        <ul id="tree" class="filetree">
+            {$list}
+        </ul>
+    </div>
+</div>
+<script>
+    $("#tree").treeview();
+</script>
+<include file="public/foot" />

@@ -1,0 +1,544 @@
+<include file="public/header" title="新增公司" />
+<include file="public/nav" />
+<div class="sdms_main">
+    <div class="title_name">
+        <h2>新增公司 &nbsp;<span>erp / 公司 / 新增</span></h2>
+        <p>
+            <a href="javascript:location.reload();" class="a_re"><i class="fa fa-refresh"></i> 刷新</a>
+        </p>
+    </div>
+    <ul class="page_text authority_n_e">
+        <li class="">
+            <span class="w100">公司编码：</span>
+            <input class="text_input w300 txtVal companyCode" disabled="disabled" type="text" value="{$companyCode}" />
+            <span class="help"></span>
+        </li>
+        <li class="">
+            <span class="w100">公司名称：</span>
+            <input class="text_input w300 txtVal companyName" type="text" placeholder="公司名称" value="" />
+            <span class="help"></span>
+        </li>
+        <li class="">
+            <span class="w100">公司简称：</span>
+            <input class="text_input w300 txtVal companyShortName" type="text" placeholder="公司简称" value="" />
+            <span class="help"></span>
+        </li>
+        <li class="">
+            <span class="w100">公司英文名称：</span>
+            <input class="text_input w300 txtVal companyEnName" type="text" placeholder="公司英文名称" value="" />
+            <span class="help"></span>
+        </li>
+        <li class="">
+            <span class="w100">公司地址：</span>
+            <input class="text_input w300 txtVal companyAdd" type="text" placeholder="公司地址" value="" />
+            <span class="help"></span>
+        </li>
+        <li class="">
+            <span class="w100">公司域名：</span>
+            <input class="text_input w300 txtVal domain" type="text" placeholder="公司域名" value="" />
+            <span class="help"></span>
+        </li>
+        <li class="">
+            <span class="w100">营业执照注册号：</span>
+            <input class="text_input w300 businessId" type="text" placeholder="营业执照注册号" value="" />
+            <span class="help"></span>
+        </li>
+        <li class="">
+            <span class="w100">法人姓名：</span>
+            <input class="text_input w300 legalPerson" type="text" placeholder="法人姓名" value="" />
+            <span class="help"></span>
+        </li>
+        <li class="">
+            <span class="w100">法人联系方式：</span>
+            <input class="text_input w300 legalPersonPhone" type="text" placeholder="法人联系方式" value="" />
+            <span class="help"></span>
+        </li>
+        <li class="">
+            <span class="w100">公司类型：</span>
+            <input type="checkbox" id="checkbox_a0" name="companyType" value="1" checked="checked" class="chk_1" /><label for="checkbox_a0"></label><p class="w85 p_left_3">电商企业</p>
+            <input type="checkbox" id="checkbox_a1" name="companyType" value="2" class="chk_1" /><label for="checkbox_a1"></label><p class="w85 p_left_3">仓库企业</p>
+            <input type="checkbox" id="checkbox_a2" name="companyType" value="3" class="chk_1" /><label for="checkbox_a2"></label><p class="w85 p_left_3">贸易公司</p>
+        </li>
+        <li class="">
+            <span class="w100">合作方式：</span>
+            <input type="radio" id="checkbox_a3" name="cooperation" value="0" checked="checked" class="chk_1" /><label for="checkbox_a3"></label><p class="w85 p_left_3">按用户</p>
+            <input type="radio" id="checkbox_a4" name="cooperation" value="1" class="chk_1" /><label for="checkbox_a4"></label><p class="w85 p_left_3">预付款后收租</p>
+        </li>
+        <li class="">
+            <span class="w100">预付款：</span>
+            <input class="text_input w300 advance" type="text" placeholder="预付款" value="" />
+            <span class="help"></span>
+        </li>
+        <li class="">
+            <span class="w100">每单收费：</span>
+            <input class="text_input w300 unitPrice" type="text" placeholder="每单收费" value="" />
+            <span class="help"></span>
+        </li>
+        <li class="">
+            <span class="w100">用户数：</span>
+            <input class="text_input w300 num" type="text" placeholder="用户数" value="" />
+            <span class="help"></span>
+        </li>
+        <li class="">
+            <span class="w100">管理员昵称：</span>
+            <input class="text_input w300 txtVal nickName" type="text" placeholder="管理员昵称" value="" />
+            <span class="help"></span>
+        </li>
+        <li class="">
+            <span class="w100">管理员登陆手机：</span>
+            <input class="text_input w300 txtVal mobile" type="text" placeholder="管理员登陆手机" value="" />
+            <span class="help"></span>
+        </li>
+        <li class="">
+            <span class="w100">管理员登陆密码：</span>
+            <input class="text_input w300 txtVal password" type="password" placeholder="管理员登陆密码" value="" />
+            <span class="help"></span>
+        </li>
+        <li class="">
+            <span class="w100">管理员邮箱：</span>
+            <input class="text_input w300 txtVal email" type="text" placeholder="管理员邮箱" value="" />
+            <span class="help"></span>
+        </li>
+        <li class="">
+            <span class="w100">备注：</span>
+            <textarea class="text_input remark w300" placeholder="备注"></textarea>
+        </li>
+    </ul>
+    <div class="sdms_save">
+        <a href="javascript:void(0);" class="submit">提交</a>
+    </div>
+</div>
+<script>
+    $(function(){
+        $(".txtVal").blur(function(){
+            var val=$(this).val();
+            if($.trim(val)==''){
+                $(this).removeClass('is-success');
+                $(this).addClass('is-danger');
+                $(this).next().addClass('is-danger');
+                $(this).next().text('不能为空');
+            }else{
+                $(this).removeClass('is-danger');
+                $(this).addClass('is-success');
+                $(this).next().text('');
+            }
+        });
+        $(".legalPersonPhone").blur(function(){
+            var legalPersonPhone=$(this).val();
+            if($.trim(legalPersonPhone)!=''){
+                var pattern = /^1[34578]\d{9}$/;
+                if(legalPersonPhone.length!=11){
+                    $(this).removeClass('is-success');
+                    $(this).addClass('is-danger');
+                    $(this).next().addClass('is-danger');
+                    $(this).next().text('登陆手机号码长度必须为11位');
+                }else if(!pattern.test(legalPersonPhone)){
+                    $(this).removeClass('is-success');
+                    $(this).addClass('is-danger');
+                    $(this).next().addClass('is-danger');
+                    $(this).next().text('不是正确的手机号码');
+                }else{
+                    $(this).removeClass('is-danger');
+                    $(this).addClass('is-success');
+                    $(this).next().text('');
+                }
+            }else{
+                $(this).removeClass('is-danger');
+                $(this).removeClass('is-success');
+                $(this).next().text('');
+            }
+        });
+        $(".advance").blur(function(){
+            var advance=$(this).val();
+            var cooperation=$("input[name=cooperation]:checked").val();
+            if(cooperation==1 && (!$.isNumeric(advance) || advance<=0)){
+                $(this).removeClass('is-success');
+                $(this).addClass('is-danger');
+                $(this).next().addClass('is-danger');
+                $(this).next().text('预付额不正确');
+            }else{
+                $(this).removeClass('is-danger');
+                $(this).removeClass('is-success');
+                $(this).next().text('');
+            }
+        });
+        $(".unitPrice").blur(function(){
+            var unitPrice=$(this).val();
+            var cooperation=$("input[name=cooperation]:checked").val();
+            if(cooperation==1 && (!$.isNumeric(unitPrice) || unitPrice<=0)){
+                $(this).removeClass('is-success');
+                $(this).addClass('is-danger');
+                $(this).next().addClass('is-danger');
+                $(this).next().text('每单收费不正确');
+            }else{
+                $(this).removeClass('is-danger');
+                $(this).removeClass('is-success');
+                $(this).next().text('');
+            }
+        });
+        $(".num").blur(function(){
+            var num=$(this).val();
+            var cooperation=$("input[name=cooperation]:checked").val();
+            if(cooperation==0 && (!$.isNumeric(num) || num<=0)){
+                $(this).removeClass('is-success');
+                $(this).addClass('is-danger');
+                $(this).next().addClass('is-danger');
+                $(this).next().text('用户数量不正确');
+            }else{
+                $(this).removeClass('is-danger');
+                $(this).removeClass('is-success');
+                $(this).next().text('');
+            }
+        });
+        $(".email").blur(function(){
+            var email=$(this).val();
+            var pattern=/^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+.((com)|(cn)|(com.cn)|(net))$/;
+            if($.trim(email)==''){
+                $(this).removeClass('is-success');
+                $(this).addClass('is-danger');
+                $(this).next().addClass('is-danger');
+                $(this).next().text('邮箱不能为空');
+            }else if(!pattern.test(email)){
+                $(this).addClass('is-danger');
+                $(this).next().addClass('is-danger');
+                $(this).next().text('邮箱格式不正确');
+            }else{
+                $(this).removeClass('is-danger');
+                $(this).addClass('is-success');
+                $(this).next().text('');
+            }
+        });
+        $(".mobile").blur(function(){
+            var tel=$(this).val();
+            var pattern = /^1[34578]\d{9}$/;
+            if($.trim(tel)==''){
+                $(this).removeClass('is-success');
+                $(this).addClass('is-danger');
+                $(this).next().addClass('is-danger');
+                $(this).next().text('登陆手机号码不能为空');
+            }else if(tel.length!=11){
+                $(this).addClass('is-danger');
+                $(this).next().addClass('is-danger');
+                $(this).next().text('登陆手机号码长度必须为11位');
+            }else if(!pattern.test(tel)){
+                $(this).addClass('is-danger');
+                $(this).next().addClass('is-danger');
+                $(this).next().text('不是正确的手机号码');
+            }else{
+                $(this).removeClass('is-danger');
+                $(this).addClass('is-success');
+                $(this).next().text('');
+            }
+        });
+        var isSubmit=true;
+        $('.submit').click(function(){
+            if(isSubmit){
+                isSubmit=false;
+                var isDanger=false;
+                $(".text_input").each(function(){
+                    if($(this).hasClass('is-danger')){
+                        isDanger=true;
+                    }
+                });
+                if(isDanger){
+                    isSubmit=true;
+                    var index=layer.open({
+                        type:0,
+                        icon:'2',
+                        title:'错误提示信息：',
+                        content:'输入内容有误，请验证'
+                    });
+                    layer.style(index,{
+                        width:'500px',
+                        top:'120px'
+                    });
+                    return false;
+                }
+                var companyCode=$(".companyCode").val();
+                var companyName=$(".companyName").val();
+                if($.trim(companyName)==''){
+                    isSubmit=true;
+                    var index=layer.open({
+                        type:0,
+                        icon:'2',
+                        title:'错误提示信息：',
+                        content:'公司名称不能为空'
+                    });
+                    layer.style(index,{
+                        width:'500px',
+                        top:'120px'
+                    });
+                    return false;
+                }
+                var companyShortName=$(".companyShortName").val();
+                if($.trim(companyShortName)==''){
+                    isSubmit=true;
+                    var index=layer.open({
+                        type:0,
+                        icon:'2',
+                        title:'错误提示信息：',
+                        content:'公司简称不能为空'
+                    });
+                    layer.style(index,{
+                        width:'500px',
+                        top:'120px'
+                    });
+                    return false;
+                }
+                var companyEnName=$(".companyEnName").val();
+                if($.trim(companyEnName)==''){
+                    isSubmit=true;
+                    var index=layer.open({
+                        type:0,
+                        icon:'2',
+                        title:'错误提示信息：',
+                        content:'公司英文名称不能为空'
+                    });
+                    layer.style(index,{
+                        width:'500px',
+                        top:'120px'
+                    });
+                    return false;
+                }
+                var companyAdd=$(".companyAdd").val();
+                if($.trim(companyAdd)==''){
+                    isSubmit=true;
+                    var index=layer.open({
+                        type:0,
+                        icon:'2',
+                        title:'错误提示信息：',
+                        content:'公司地址不能为空'
+                    });
+                    layer.style(index,{
+                        width:'500px',
+                        top:'120px'
+                    });
+                    return false;
+                }
+                var domain=$(".domain").val();
+                if($.trim(domain)==''){
+                    isSubmit=true;
+                    var index=layer.open({
+                        type:0,
+                        icon:'2',
+                        title:'错误提示信息：',
+                        content:'公司域名不能为空'
+                    });
+                    layer.style(index,{
+                        width:'500px',
+                        top:'120px'
+                    });
+                    return false;
+                }
+                var businessId=$(".businessId").val();
+                var legalPerson=$(".legalPerson").val();
+                var legalPersonPhone=$(".legalPersonPhone").val();
+                var types='';
+                $("input[name=companyType]:checked").each(function(){
+                    types+=$(this).val()+',';
+                });
+                if($.trim(types)==''){
+                    isSubmit=true;
+                    var index=layer.open({
+                        type:0,
+                        icon:'2',
+                        title:'错误提示信息：',
+                        content:'请选择公司类型'
+                    });
+                    layer.style(index,{
+                        width:'500px',
+                        top:'120px'
+                    });
+                    return false;
+                }
+                var cooperation=$("input[name=cooperation]:checked").val();
+                var advance=$(".advance").val();
+                var unitPrice=$(".unitPrice").val()
+                var num=$(".num").val();
+                if(cooperation==1 && (!$.isNumeric(advance) || advance<=0)){
+                    isSubmit=true;
+                    var index=layer.open({
+                        type:0,
+                        icon:'2',
+                        title:'错误提示信息：',
+                        content:'预付款不能小于0'
+                    });
+                    layer.style(index,{
+                        width:'500px',
+                        top:'120px'
+                    });
+                    return false;
+                }
+                if(cooperation==1 && (!$.isNumeric(unitPrice) || unitPrice<=0)){
+                    isSubmit=true;
+                    var index=layer.open({
+                        type:0,
+                        icon:'2',
+                        title:'错误提示信息：',
+                        content:'每单收费不能小于0'
+                    });
+                    layer.style(index,{
+                        width:'500px',
+                        top:'120px'
+                    });
+                    return false;
+                }
+                if(cooperation==0 && (!$.isNumeric(num) || num<=0)){
+                    isSubmit=true;
+                    var index=layer.open({
+                        type:0,
+                        icon:'2',
+                        title:'错误提示信息：',
+                        content:'用户数不能小于0'
+                    });
+                    layer.style(index,{
+                        width:'500px',
+                        top:'120px'
+                    });
+                    return false;
+                }
+                var nickName=$(".nickName").val();
+                if($.trim(nickName)==''){
+                    isSubmit=true;
+                    var index=layer.open({
+                        type:0,
+                        icon:'2',
+                        title:'错误提示信息：',
+                        content:'管理员昵称不能为空'
+                    });
+                    layer.style(index,{
+                        width:'500px',
+                        top:'120px'
+                    });
+                    return false;
+                }
+                var mobile=$(".mobile").val();
+                if($.trim(mobile)==''){
+                    isSubmit=true;
+                    var index=layer.open({
+                        type:0,
+                        icon:'2',
+                        title:'错误提示信息：',
+                        content:'管理员登陆手机号码不能为空'
+                    });
+                    layer.style(index,{
+                        width:'500px',
+                        top:'120px'
+                    });
+                    return false;
+                }
+                var password=$(".password").val();
+                if($.trim(password)==''){
+                    isSubmit=true;
+                    var index=layer.open({
+                        type:0,
+                        icon:'2',
+                        title:'错误提示信息：',
+                        content:'管理员登陆密码不能为空'
+                    });
+                    layer.style(index,{
+                        width:'500px',
+                        top:'120px'
+                    });
+                    return false;
+                }
+                var email=$(".email").val();
+                if($.trim(email)==''){
+                    isSubmit=true;
+                    var index=layer.open({
+                        type:0,
+                        icon:'2',
+                        title:'错误提示信息：',
+                        content:'管理员邮箱不能为空'
+                    });
+                    layer.style(index,{
+                        width:'500px',
+                        top:'120px'
+                    });
+                    return false;
+                }
+                var remark=$(".remark").val();
+                var postdata={companyCode:companyCode,companyName:companyName,companyShortName:companyShortName,companyEnName:companyEnName,companyAdd:companyAdd,domain:domain,businessId:businessId,legalPerson:legalPerson,legalPersonPhone:legalPersonPhone,types:types,cooperation:cooperation,advance:advance,unitPrice:unitPrice,num:num,nickName:nickName,mobile:mobile,password:password,email:email,remark:remark};
+                $.ajax({
+                    type : 'POST',
+                    url : "/Admin/Index/addCompany",
+                    dataType : 'json',
+                    data : postdata,
+                    success : function(el){
+                        if(el.statusCode==200){
+                            var index=layer.open({
+                                type:0,
+                                icon:'1',
+                                title:'成功提示信息：',
+                                content:'新增成功',
+                                end: function(){
+                                    location.reload();
+                                }
+                            });
+                            layer.style(index,{
+                                width:'500px',
+                                top:'120px'
+                            });
+                            return false;
+                        }else if(el.statusCode==300){
+                            var index=layer.open({
+                                type:0,
+                                icon:'2',
+                                title:'错误提示信息：',
+                                content:el.retMessage,
+                                end: function(){
+                                    location.href='/Admin/User/login';
+                                }
+                            });
+                            layer.style(index,{
+                                width:'500px',
+                                top:'120px'
+                            });
+                            return false;
+                        }else{
+                            isSubmit=true;
+                            var index=layer.open({
+                                type:0,
+                                icon:'2',
+                                title:'错误提示信息：',
+                                content:el.retMessage
+                            });
+                            layer.style(index,{
+                                width:'400px',
+                                top:'120px'
+                            });
+                            return false;
+                        }
+                    },
+                    error: function(el){
+                        isSubmit=true;
+                        var index=layer.open({
+                            type:0,
+                            icon:'2',
+                            title:'错误提示信息：',
+                            content:el.retMessage
+                        });
+                        layer.style(index,{
+                            width:'400px',
+                            top:'120px'
+                        });
+                        return false;
+                    }
+                });
+            }else{
+                var index=layer.open({
+                    type:0,
+                    icon:'2',
+                    title:'错误提示信息：',
+                    content:'提交中，请稍候'
+                });
+                layer.style(index,{
+                    width:'400px',
+                    top:'120px'
+                });
+                return false;
+            }
+        });
+    });
+</script>
+<include file="public/foot" />

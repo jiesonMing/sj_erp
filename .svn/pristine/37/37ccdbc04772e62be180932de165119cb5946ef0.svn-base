@@ -1,0 +1,13 @@
+<ul class="sdms_second_nav">
+<h3>仓库</h3>
+<if condition="$subNav eq 'warehouseList'">
+<li><a href="/Index/Warehouse/warehouseList" class="a">仓库列表</a></li>
+<else />
+<li><a href="/Index/Warehouse/warehouseList">仓库列表</a></li>
+</if>
+<if condition="$subNav eq 'myWarehouse'">
+<li><a href="/Index/Warehouse/myWarehouse" class="a">自营仓库</a></li>
+<else />
+<li><a href="/Index/Warehouse/myWarehouse">自营仓库</a></li>
+</if>
+</ul>

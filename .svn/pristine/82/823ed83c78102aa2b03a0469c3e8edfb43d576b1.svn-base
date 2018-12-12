@@ -1,0 +1,324 @@
+<?php
+
+namespace app\index\controller;
+
+use think\Db;
+use think\Config;
+use Think\Exception;
+use app\index\model\Purchase;
+use app\index\model\Inwarehouse;
+use app\index\model\InwarehouseGoods;
+use app\index\model\Batch;
+use app\index\model\Owe;
+
+class DeclarationController extends BaseController
+{
+    //作者：于明明
+    //功能：入仓单
+    public function inwarehouse(){
+        $where='i.companyId='.$this->companyId.' and i.status>0';
+        $value=request()->param('value/s')?request()->param('value/s'):'';
+        if($value){
+            $where.=" and i.inwareCode='{$value}'";
+        }
+        $list=db('inwarehouse')->alias('i')->join('erp_purchase p','p.id=i.parentId','left')->join('erp_owe o','o.oweId=i.parentId','left')->join('erp_supplier s','s.supplierId=i.supplierId','left')->join('erp_shop sh','sh.shopId=i.shopId','left')->join('erp_warehouse w','w.id=i.wareId','left')->field('i.inwareId,i.inwareCode,i.payMoney,i.inBatch,i.parentType,i.createTime,i.status,p.contractNum,o.oweCode,s.supplierName,sh.shopName,w.warehouseName')->where($where)->order('i.inwareId asc')->paginate();
+
+        $this->assign('button',Config::get('func'.$this->authId.'.inwarehouse'));
+        $this->assign('nav','declaration');
+        $this->assign('subNav','inwarehouse');
+        $this->assign('list',$list);
+        $this->assign('value',$value);
+        return $this->fetch();
+    }
+
+    //作者：于明明
+    //功能：入仓单回收站
+    public function inwareDelList(){
+        $where='i.companyId='.$this->companyId.' and i.status=0';
+        $value=request()->param('value/s')?request()->param('value/s'):'';
+        if($value){
+            $where.=" and i.inwareCode='{$value}'";
+        }
+        $list=db('inwarehouse')->alias('i')->join('erp_purchase p','p.id=i.parentId','left')->join('erp_owe o','o.oweId=i.parentId','left')->join('erp_supplier s','s.supplierId=i.supplierId','left')->join('erp_shop sh','sh.shopId=i.shopId','left')->join('erp_warehouse w','w.id=i.wareId','left')->field('i.inwareId,i.inwareCode,i.payMoney,i.inBatch,i.parentType,i.createTime,i.status,p.contractNum,o.oweCode,s.supplierName,sh.shopName,w.warehouseName')->where($where)->order('i.inwareId asc')->paginate();
+
+        $this->assign('button',Config::get('func'.$this->authId.'.inwarehouse'));
+        $this->assign('nav','declaration');
+        $this->assign('subNav','inwarehouse');
+        $this->assign('list',$list);
+        $this->assign('value',$value);
+        return $this->fetch();
+    }
+
+    //作者：于明明
+    //功能：新增入仓单
+    public function addInware(){
+        $this->assign('nav','declaration');
+        $this->assign('subNav','inwarehouse');
+        return $this->fetch();
+    }
+
+    //作者：于明明
+    //功能：编辑入仓单
+    public function editInware(){
+        $inwareId=request()->param('inwareId/s')?request()->param('inwareId/s'):0;
+        $this->assign('nav','declaration');
+        $this->assign('subNav','inwarehouse');
+        return $this->fetch();
+    }
+
+    //于明明
+    //功能：欠货单
+    public function oweList(){
+        $value=request()->param('value/s')?request()->param('value/s'):'';
+        $where='o.companyId='.$this->companyId.' and o.status>0';
+        if($value){
+            $where.=" and ( o.oweCode='{$value}' or o.goodsCode='{$value}' )";
+        }
+
+        $list=db('owe')->alias('o')->join('erp_purchase p','p.id=o.purchaseId','left')->join('erp_goods g','g.goodsCode=o.goodsCode','left')->field('o.oweId,o.oweCode,o.goodsCode,o.amount,o.inOwe,o.outOwe,o.createTime,o.status,o.remark,p.contractNum,g.goodsName')->where($where)->paginate();
+
+        $this->assign('button',Config::get('func'.$this->authId.'.oweList'));
+        $this->assign('nav','declaration');
+        $this->assign('subNav','oweList');
+        $this->assign('list',$list);
+        $this->assign('value',$value);
+        return $this->fetch();
+    }
+
+    //作者：于明明
+    //功能：批次
+    public function batch(){
+        $value=request()->param('value/s')?request()->param('value/s'):'';
+        $stockType=request()->param('stockType/d')?request()->param('stockType/d'):1;
+        $inwareId=request()->param('inwareId/d')?request()->param('inwareId/d'):0;
+        $where='b.companyId='.$this->companyId.' and b.status>0';
+        if($inwareId){
+            $where.=' and b.inwareId='.$inwareId;
+        }
+        if($stockType==1){
+            $where.=' and ( b.shelves>0 or b.bSurStock>0 or b.bUsingStock>0 )';
+        }elseif($stockType==2){
+            $where.=' and  b.shelves=0 and b.bSurStock=0 and b.bUsingStock=0';
+        }
+        if($value){
+            $where.=" and ( b.batch='{$value}' or b.goodsCode='{$value}' )";
+        }
+
+        $list=db('batch')->alias('b')->join('erp_warehouse w','w.id=b.wareId')->join('erp_shop s','s.shopId=b.shopId','left')->join('erp_goods g','g.goodsCode=b.goodsCode','left')->field('b.batchId,b.batch,b.expireDate,b.type,b.amount,b.shelves,b.bSurStock,b.bUsingStock,b.status,b.remark,g.goodsCode,g.goodsName,w.warehouseName,w.warehouseType,s.shopName')->where($where)->order('b.batchId')->paginate();
+
+        $this->assign('button',Config::get('func'.$this->authId.'.batch'));
+        $this->assign('nav','declaration');
+        $this->assign('subNav','batch');
+        $this->assign('list',$list);
+        $this->assign('value',$value);
+        $this->assign('stockType',$stockType);
+        $this->assign('inwareId',$inwareId);
+        return $this->fetch();
+    }
+
+    //作者：于明明
+    //功能：批次回收站
+    public function batchDelList(){
+        $value=request()->param('value/s')?request()->param('value/s'):'';
+        $where='b.companyId='.$this->companyId.' and b.status=0';
+        if($value){
+            $where.=" and ( b.batch='{$value}' or b.goodsCode='{$value}' )";
+        }
+
+        $list=db('batch')->alias('b')->join('erp_warehouse w','w.id=b.wareId')->join('erp_shop s','s.shopId=b.shopId','left')->join('erp_goods g','g.goodsCode=b.goodsCode','left')->field('b.batchId,b.batch,b.expireDate,b.type,b.amount,b.shelves,b.bSurStock,b.bUsingStock,b.status,b.remark,g.goodsCode,g.goodsName,w.warehouseName,w.warehouseType,s.shopName')->where($where)->order('b.batchId')->paginate();
+
+        $this->assign('button',Config::get('func'.$this->authId.'.batch'));
+        $this->assign('nav','declaration');
+        $this->assign('subNav','batch');
+        $this->assign('list',$list);
+        $this->assign('value',$value);
+        return $this->fetch();
+    }
+
+    //作者：于明明
+    //功能：QC质检
+    public function addBatch(){
+        if(request()->isPost()){
+            try{
+                $inwareGoodsId=request()->param('inwareGoodsId/d')?request()->param('inwareGoodsId/d'):0;
+                if(!$inwareGoodsId) errorMsg(400,'请选择入仓商品！');
+                $inwareGoods=InwarehouseGoods::get($inwareGoodsId);
+                $outBatch=request()->param('outBatch/d')?request()->param('outBatch/d'):0;
+                if($outBatch<=0) errorMsg(400,'批次数量不能小于0！');
+                if($outBatch>$inwareGoods->inBatch) errorMsg(400,'入仓商品可质检数量不足！');
+                $expire=request()->param('expire/s')?request()->param('expire/s'):'';
+                if(!$expire) errorMsg(400,'有效期不能为空！');
+                $type=request()->param('type/d')?request()->param('type/d'):0;
+                $remark=request()->param('remark/s')?request()->param('remark/s'):'';
+                $where['inBatch']=['>=',$outBatch];
+                //更新入仓商品的质检数量
+                $inwareGoods->inBatch=$inwareGoods->inBatch-$outBatch;
+                $inwareGoods->outBatch=$inwareGoods->outBatch+$outBatch;
+                //更新入仓单的质检数量
+                $inware=Inwarehouse::get($inwareGoods->inwareId);
+                $inware->inBatch=$inware->inBatch-$outBatch;
+                $inware->outBatch=$inware->outBatch+$outBatch;
+                if($inware->outBatch>=$inware->total){//如果质检数量大于等于总数量，设置入仓单完成
+                    $inware->status=80;
+                }
+            }catch(Exception $e){
+                errorMsg(400,$e->getMessage());
+            }
+            //欠货单
+            if($type==4){
+                try{
+                    //新增欠货单
+                    $owe=New Owe;
+                    $owe->oweCode='O'.date('dHis').str_pad(rand(0,999999), 6, '0', STR_PAD_LEFT);
+                    $owe->companyId=$this->companyId;
+                    $owe->purchaseId=$inware->parentId;
+                    $owe->goodsCode=$inwareGoods->goodsCode;
+                    $owe->amount=$outBatch;
+                    $owe->inOwe=$outBatch;
+                    if($inware->parentType==1){
+                        //更新采购单的欠货数量
+                        $purchase=Purchase::get($inware->parentId);
+                        $purchase->oweNum=$purchase->oweNum+$outBatch;
+                        $purchase->status=41;//设置采购单为欠货状态
+                    }elseif($inware->parentType==2){
+                        //更新旧的欠货单
+                        $oldOwe=Owe::get($inware->parentId);
+                        //设置新的欠货单关联采购单
+                        $owe->purchaseId=$oldOwe->purchaseId;
+                        $oldOwe->inOwe=$oldOwe->inOwe-$outBatch;
+                        $oldOwe->outOwe=$oldOwe->outOwe+$outBatch;
+                    }
+                }catch(Exception $e){
+                    errorMsg(400,$e->getMessage());
+                }
+                Db::startTrans();
+                try{
+                    $owe->save();
+                    if(!$inware->save(array(),$where)) exception('入仓单可质检商品数量异常！');;
+                    if(!$inwareGoods->save(array(),$where)) exception('入仓商品可质检商品数量异常！');
+                    if($inware->parentType==1) {
+                        $purchase->save();
+                    }elseif($inware->parentType==2){
+                        $owhere['inOwe']=['>=',$outBatch];
+                        if(!$oldOwe->save(array(),$owhere)) exception('入仓单关联退货单的需补货数量不足，请验证！');
+                    }
+                    Db::commit();
+                    errorMsg(200,'done');
+                }catch(Exception $e){
+                    Db::rollback();
+                    errorMsg(400,$e->getMessage());
+                }
+            }
+            //质检批次
+            if($type!=4){
+                try{
+                    $batch=new Batch;
+                    $batch->batch='B'.date('dHis').str_pad(rand(0,999999), 6, '0', STR_PAD_LEFT);
+                    $batch->companyId=$this->companyId;
+                    $batch->inwareId=$inwareGoods->inwareId;
+                    $batch->wareId=$inware->wareId;
+                    $batch->shopId=$inware->shopId;
+                    $batch->goodsCode=$inwareGoods->goodsCode;
+                    $batch->expireDate=$expire;
+                    $batch->type=$type;
+                    $batch->amount=$outBatch;
+                    $batch->shelves=$outBatch;
+                    $batch->remark=$remark;
+                    if($inware->parentType==1){
+                        //更新采购单的质检数量
+                        $purchase=Purchase::get($inware->parentId);
+                    }elseif($inware->parentType==2){
+                        //更新欠货单的欠货数量
+                        $owe=Owe::get($inware->parentId);
+                        $owe->inOwe=$owe->inOwe-$outBatch;
+                        $owe->outOwe=$owe->outOwe+$outBatch;
+                        if($owe->outOwe>=$owe->amount){
+                            $owe->status=80;
+                        }
+                        //更新采购单的欠货数量
+                        $purchase=Purchase::get($owe->purchaseId);
+                        $purchase->oweNum=$purchase->oweNum-$outBatch;
+                    }
+                    $purchase->outBatch=$purchase->outBatch+$outBatch;
+                    if($purchase->outBatch>=$purchase->total){//如果质检数量大于等于总数量，设置采购单完成
+                        $purchase->status=80;
+                    }
+                }catch(Exception $e){
+                    errorMsg(400,$e->getMessage());
+                }
+                Db::startTrans();
+                try{
+                    $batch->save();
+                    if(!$inware->save(array(),$where)) exception('入仓单可质检商品数量异常！');;
+                    if(!$inwareGoods->save(array(),$where)) exception('入仓商品可质检商品数量异常！');
+                    $sql='';
+                    if($inware->parentType==2){
+                        $owhere['inOwe']=['>=',$outBatch];
+                        if(!$owe->save(array(),$owhere)) exception('入仓单关联退货单的需补货数量不足，请验证！');
+                        $sql=db('owe')->getLastSql();
+                    }
+                    $purchase->save();
+                    Db::commit();
+                    errorMsg(200,'done',$sql);
+                }catch(Exception $e){
+                    Db::rollback();
+                    errorMsg(400,$e->getMessage());
+                }
+            }
+            errorMsg(400,'状态不正确，请刷新重试！');
+        }else{
+            $inwareId=request()->param('inwareId/s')?request()->param('inwareId/s'):0;
+            $where['i.companyId']=$this->companyId;
+            $where['i.status']=1;
+            $where['i.inBatch']=['>',0];
+            if($inwareId>0) {
+                $where['i.inwareId'] = $inwareId;
+            }
+            $data=db('inwarehouse')->alias('i')->join('erp_inwarehouse_goods g','g.inwareId=i.inwareId and g.inBatch>0','left')->join('erp_warehouse w','w.id=i.wareId','left')->field('i.inwareCode,g.inwareGoodsId,g.goodsCode,g.goodsName,g.inBatch,w.warehouseName')->where($where)->select();
+            $wareName='';
+            if($data){
+                $wareName=$data[0]['warehouseName'];
+            }
+            $this->assign('nav','declaration');
+            $this->assign('subNav','addBatch');
+            $this->assign('list',$data);
+            $this->assign('wareName',$wareName);
+            return $this->fetch();
+        }
+
+    }
+
+    //作者：于明明
+    //功能：编辑批次
+    public function editBatch(){
+        $batchId=request()->param('batchId/d')?request()->param('batchId/d'):0;
+        if(!$batchId) errorMsg(200,'批次信息有误，请刷新后重试！');
+        $expire=request()->param('expire')?request()->param('expire'):'';
+        if(!$expire) errorMsg(400,'保质期不能为空！');
+        $amount=request()->param('amount/d')?request()->param('amount/d'):0;
+        if($amount>0){
+            $oldBatch=Batch::get($batchId);
+            if($oldBatch->)
+        }else{
+
+        }
+    }
+
+    //作者：于明明
+    //功能：获取当前入仓商品可质检数量
+    public function getInwareGoodsInBatch(){
+        $inwareGoodsId=request()->param('inwareGoodsId/d')?request()->param('inwareGoodsId/d'):0;
+        if($inwareGoodsId>0){
+            $where['inwareGoodsId']=$inwareGoodsId;
+            $where['inBatch']=['>',0];
+            $data=InwarehouseGoods::get($where);
+            if($data){
+                errorMsg(200,$data->inBatch);
+            }else{
+                errorMsg(400,'未查询到可质检商品，或可质检商品数量不足！');
+            }
+        }else{
+
+        }
+    }
+}

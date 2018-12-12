@@ -1,0 +1,4 @@
+<include file="public/header" title="搜索" />
+<include file="nav/nav" />
+<div class="sdms_main"> 搜索 </div>
+<include file="public/foot" />

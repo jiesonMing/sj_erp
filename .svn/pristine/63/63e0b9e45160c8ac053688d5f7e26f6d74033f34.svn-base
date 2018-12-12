@@ -1,0 +1,223 @@
+<include file="public/header" title="新增模块" />
+<include file="nav/nav" />
+<include file="nav/subNav" />
+<link href="__JS__/select/select2.min.css" rel="stylesheet" type="text/css">
+<script src="__JS__/select/select2.min.js"></script>
+<div class="sdms_main">
+    <div class="title_name">
+        <h2>新增模块 &nbsp;<span>erp / 模块 / 新增</span></h2>
+        <p>
+            <a href="javascript:location.reload();" class="a_re"><i class="fa fa-refresh"></i> 刷新</a>
+            <a href="/Index/Auth/modularTree" class="a_re"><i class="fa fa-tree"></i> 树形结构</a>
+            <a href="/Index/Auth/delModularList.html" class="a_del"><i class="fa fa-trash-o"></i> 回收站</a>
+        </p>
+    </div>
+    <ul class="page_text authority_n_e mg_top_20">
+        <li class="">
+            <span class="w100">模块名称：</span>
+            <input class="text_input txtVal w300 modularName" type="text" placeholder="模块名称" value="" />
+            <span class="help"></span>
+        </li>
+        <li class="">
+            <span class="w100">模块英文简称：</span>
+            <input class="text_input txtVal w300 modularEnName" type="text" placeholder="模块英文简称" value="" />
+            <span class="help"></span>
+        </li>
+        <li class="">
+            <span class="w100">模块方法名称：</span>
+            <input class="text_input txtVal w300 modularFunName" type="text" placeholder="模块方法名称" value="" />
+            <span class="help"></span>
+        </li>
+        <li class="">
+            <span class="w100">模块图标字体：</span>
+            <input class="text_input w300 modularIcon" type="text" placeholder="示例：fa-tree fa-table（多个用空格隔开）" value="" />
+            <span class="help"></span>
+        </li>
+        <li class="">
+            <span class="w100">模块html类：</span>
+            <input class="text_input w300 modularClass" type="text" placeholder="示例：a_re del（多个用空格隔开）" value="" />
+            <span class="help"></span>
+        </li>
+        <li class="">
+            <span class="w100">是否导航：</span>
+            <input type="radio" id="checkbox_a0" name="isNav" value="1" checked="checked" class="chk_1" /><label for="checkbox_a0"></label><p class="w40 p_left_3">是</p>
+            <input type="radio" id="checkbox_a1" name="isNav" value="0" class="chk_1" /><label for="checkbox_a1"></label><p class="w40 p_left_3">否</p>
+        </li>
+        <li class="">
+            <span class="w100">是否显示名称：</span>
+            <input type="radio" id="checkbox_a2" name="showName" value="1" checked="checked" class="chk_1" /><label for="checkbox_a2"></label><p class="w40 p_left_3">显示</p>
+            <input type="radio" id="checkbox_a3" name="showName" value="0" class="chk_1" /><label for="checkbox_a3"></label><p class="w40 p_left_3">不显示</p>
+        </li>
+        <li class="">
+            <span class="w100">所属父模块：</span>
+            <select class="input select2 w300">
+                <option value="0">0——顶级模块</option>
+                {$modularList}
+            </select>
+        </li>
+        <li class="">
+            <span class="w100">备注：</span>
+            <textarea class="text_input remark w300" placeholder="备注"></textarea>
+        </li>
+    </ul>
+    <div class="sdms_save">
+        <a class="submit">提交</a>
+    </div>
+</div>
+<script>
+    $(function(){
+        $('.select2').select2({
+            language: "zh-CN"
+        });
+        $(".txtVal").blur(function(){
+            var val=$(this).val();
+            if($.trim(val)==''){
+                $(this).addClass('is-danger');
+                $(this).next().addClass('is-danger');
+                $(this).next().text('不能为空');
+            }else{
+                $(this).removeClass('is-danger');
+                $(this).addClass('is-success');
+                $(this).next().text('');
+            }
+        });
+        var isSubmit=true;
+        $('.submit').click(function(){
+            if(isSubmit){
+                isSubmit=false;
+                var modularName=$(".modularName").val();
+                if($.trim(modularName)==''){
+                    isSubmit=true;
+                    var index=layer.open({
+                        type:0,
+                        icon:'2',
+                        title:'错误提示信息：',
+                        content:'模块名称不能为空'
+                    });
+                    layer.style(index,{
+                        width:'500px',
+                        top:'120px'
+                    });
+                    return false;
+                }
+                var modularEnName=$(".modularEnName").val();
+                if($.trim(modularEnName)==''){
+                    isSubmit=true;
+                    var index=layer.open({
+                        type:0,
+                        icon:'2',
+                        title:'错误提示信息：',
+                        content:'模块英文名称不能为空'
+                    });
+                    layer.style(index,{
+                        width:'500px',
+                        top:'120px'
+                    });
+                    return false;
+                }
+                var modularFunName=$(".modularFunName").val();
+                if($.trim(modularFunName)==''){
+                    isSubmit=true;
+                    var index=layer.open({
+                        type:0,
+                        icon:'2',
+                        title:'错误提示信息：',
+                        content:'模块方法名称不能为空'
+                    });
+                    layer.style(index,{
+                        width:'500px',
+                        top:'120px'
+                    });
+                    return false;
+                }
+                var modularIcon=$(".modularIcon").val();
+                var modularClass=$(".modularClass").val();
+                var isNav=$("input[name=isNav]:checked").val();
+                var showName=$("input[name=showName]:checked").val();
+                var parentModularId=$(".select2").val();
+                var remark=$(".remark").val();
+                var referer="{$referer}";
+                var postdata={modularName:modularName,modularEnName:modularEnName,modularFunName:modularFunName,modularIcon:modularIcon,modularClass:modularClass,isNav:isNav,showName:showName,parentModularId:parentModularId,remark:remark};
+                $.ajax({
+                    type : 'POST',
+                    url : "/Index/Auth/addModular",
+                    dataType : 'json',
+                    data : postdata,
+                    success : function(el){
+                        if(el.statusCode==200){
+                            var index=layer.open({
+                                type:0,
+                                icon:'1',
+                                title:'成功提示信息：',
+                                content:'新增成功',
+                                end: function(){
+                                    //location.href=referer;
+                                    location.reload();
+                                }
+                            });
+                            layer.style(index,{
+                                width:'500px',
+                                top:'120px'
+                            });
+                            return false;
+                        }else if(el.statusCode==300){
+                            var index=layer.open({
+                                type:0,
+                                icon:'2',
+                                title:'错误提示信息：',
+                                content:el.retMessage,
+                                end: function(){
+                                    location.href='/Index/User/login';
+                                }
+                            });
+                            layer.style(index,{
+                                width:'500px',
+                                top:'120px'
+                            });
+                            return false;
+                        }else{
+                            isSubmit=true;
+                            var index=layer.open({
+                                type:0,
+                                icon:'2',
+                                title:'错误提示信息：',
+                                content:el.retMessage
+                            });
+                            layer.style(index,{
+                                width:'400px',
+                                top:'120px'
+                            });
+                            return false;
+                        }
+                    },
+                    error: function(el){
+                        var index=layer.open({
+                            type:0,
+                            icon:'2',
+                            title:'错误提示信息：',
+                            content:'操作失败，请刷新重试'
+                        });
+                        layer.style(index,{
+                            width:'400px',
+                            top:'120px'
+                        });
+                        return false;
+                    }
+                });
+            }else{
+                var index=layer.open({
+                    type:0,
+                    icon:'2',
+                    title:'错误提示信息：',
+                    content:'提交中，请稍候'
+                });
+                layer.style(index,{
+                    width:'400px',
+                    top:'120px'
+                });
+                return false;
+            }
+        });
+    });
+</script>
+<include file="public/foot" />

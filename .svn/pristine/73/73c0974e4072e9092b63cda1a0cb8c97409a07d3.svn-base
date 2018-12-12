@@ -1,0 +1,28 @@
+<?php
+
+namespace app\index\controller;
+
+use think\Controller;
+use think\Session;
+
+class WarehouseController extends BaseController
+{
+    //作者：于明明
+    //功能：仓库
+    public function warehouseList(){
+        Session::set('subNav','warehouse');
+
+        $this->assign('button',Config::get('func'.Session::get('authId').'.warehouseList'));
+        $this->assign('nav','warehouse');
+        $this->assign('subNav','warehouseList');
+        return $this->fetch();
+    }
+
+    public function myWarehouse(){
+        Session::set('subNav','warehouse');
+
+        $this->assign('nav','warehouse');
+        $this->assign('subNav','myWarehouse');
+        return $this->fetch();
+    }
+}

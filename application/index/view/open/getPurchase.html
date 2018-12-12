@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>关联采购单</title>
+    <link rel="stylesheet" href="__CSS__/font-awesome.min.css">
+    <link rel="stylesheet" href="__CSS__/open.css">
+    <script type="application/x-javascript" src="__JS__/jquery-3.2.1.min.js"></script>
+    <script type="application/x-javascript" src="__JS__/layer/layer.js"></script>
+</head>
+<body>
+    <ul class="loading_ul">
+
+        <li class="li_1">
+            <div>
+                <a href="/" class="ok_open"><i class="fa fa-check"></i> 确认选择</a>
+            </div>
+            <div class="flex_end">
+
+                <select class="select2 w100">
+                    <option value="" selected="selected">0.全部</option>
+                    <option>1.商品类</option>
+                    <option>2.包材类</option>
+                    <option>3.其它类</option>
+                </select>
+
+                <input type="text" value="" class="input m_r_10 m_l_10 w250" placeholder="采购单号、供应商名称">
+
+                <a href="/" class="a_out"><i class="fa fa-sign-out fa-rotate-270"></i> 订单导出</a>
+            </div>
+
+        </li>
+        <li class="flex">
+
+            <div class="open_list_class">
+                <p>采购类型</p>
+                <a href="#">全部</a>
+                <a href="#">商品类</a>
+                <a href="#">包材类</a>
+                <a href="#">其它类</a>
+            </div>
+
+            <table class="open_table w_open_rightlist" border='0' cellspacing="0" cellpadding="0">
+                <thead>
+                <tr>
+                    <td class="w35"><input type="checkbox" id="checkbox_a0" class="chk_3"/><label for="checkbox_a0"></label>
+                    </td>
+                    <td class="w35">序号</td>
+                    <td class="w100">采购单号</td>
+                    <td class="w130">供应商名称</td>
+                    <td>仓库</td>
+                    <td class="w80">总金额</td>
+                    <td class="w130">单据创建日期</td>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td><input type="checkbox" id="checkbox_a2" class="chk_3" checked/><label for="checkbox_a2"></label>
+                    </td>
+                    <td>1</td>
+                    <td>P201801220001</td>
+                    <td>BORYUNG MEDIENCE CO.,LTD.</td>
+                    <td>宜婴宝南沙仓</td>
+                    <td>13320.00</td>
+                    <td>2016-05-06 18:00:06</td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox" id="checkbox_a3" class="chk_3"/><label for="checkbox_a3"></label>
+                    </td>
+                    <td>2</td>
+                    <td>P201801220001</td>
+                    <td>BORYUNG MEDIENCE CO.,LTD.</td>
+                    <td>宜婴宝南沙仓</td>
+                    <td>13320.00</td>
+                    <td>2016-05-06 18:00:06</td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox" id="checkbox_a4" class="chk_3"/><label for="checkbox_a4"></label>
+                    </td>
+                    <td>3</td>
+                    <td>P201801220001</td>
+                    <td>BORYUNG MEDIENCE CO.,LTD.</td>
+                    <td>宜婴宝南沙仓</td>
+                    <td>13320.00</td>
+                    <td>2016-05-06 18:00:06</td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox" id="checkbox_a5" class="chk_3"/><label for="checkbox_a5"></label>
+                    </td>
+                    <td>4</td>
+                    <td>P201801220001</td>
+                    <td>BORYUNG MEDIENCE CO.,LTD.</td>
+                    <td>宜婴宝南沙仓</td>
+                    <td>13320.00</td>
+                    <td>2016-05-06 18:00:06</td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox" id="checkbox_a6" class="chk_3"/><label for="checkbox_a6"></label>
+                    </td>
+                    <td>5</td>
+                    <td>P201801220001</td>
+                    <td>BORYUNG MEDIENCE CO.,LTD.</td>
+                    <td>宜婴宝南沙仓</td>
+                    <td>13320.00</td>
+                    <td>2016-05-06 18:00:06</td>
+                </tr>
+
+
+                </tbody>
+            </table>
+
+        </li>
+    </ul>
+</body>
+</html>

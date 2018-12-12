@@ -1,0 +1,206 @@
+<include file="public/header" title="新增" />
+<include file="nav/nav" />
+<include file="nav/subNav" />
+<link href="__JS__/select/select2.min.css" rel="stylesheet" type="text/css">
+<script src="__JS__/select/select2.min.js"></script>
+<div class="sdms_main">
+    <div class="title_name">
+        <h2>新增商品入仓单 &nbsp;<span>SDMS SE / 商品入仓单 / 新增</span></h2>
+        <p>
+            <a href="javascript:location.reload();" class="a_re"><i class="fa fa-refresh"></i> 刷新</a>
+        </p>
+    </div>
+
+    <div class="sdms_view_name">
+        <div>
+            <p>1</p>
+            <span>基础信息</span>
+        </div>
+
+    </div>
+
+    <table class="sdms_view_teble" border='0' cellspacing="0" cellpadding="0">
+        <tr>
+            <td class="w85 bg_f9f9f9 text_right">入仓单号：</td>
+            <td colspan="3"><input type="text" value="自动生成，以Y开头命名" name="">
+            </td>
+            <td class="w85 bg_f9f9f9 text_right">关联采购单：</td>
+            <td colspan="3"><input type="text" value="点击框框显示采购单" name=""> <a href="#" class="purchase_open">点我</a>
+            </td>
+
+        </tr>
+
+        <tr>
+            <td class="w85 bg_f9f9f9 text_right">供应商：</td>
+            <td colspan="3"><input type="text" value="" name="" class="w350"> <a href="#" class="supplier_open">点我</a>
+            </td>
+            <td class="w85 bg_f9f9f9 text_right">单据日期：</td>
+            <td><input type="text" value="当前日期" name="">
+            </td>
+            <td class="w85 bg_f9f9f9 text_right">付款日期：</td>
+            <td colspan="3"><input type="text" value="日期插件" name="">
+            </td>
+
+        </tr>
+
+        <tr>
+            <td class="w85 bg_f9f9f9 text_right">经手人：</td>
+            <td><input type="text" value="裘胜" name="" disabled>
+            </td>
+            <td class="w85 bg_f9f9f9 text_right">部门：</td>
+            <td><input type="text" value="采购部" name="">
+            </td>
+            <td class="w85 bg_f9f9f9 text_right">仓库：</td>
+            <td colspan="3"><input type="text" value="" name="">
+            </td>
+        </tr>
+
+        <tr>
+            <td class="w85 bg_f9f9f9 text_right">付款账户：</td>
+            <td><input type="text" value="鑫城通支付宝" name="">
+            </td>
+            <td class="w85 bg_f9f9f9 text_right">预付订金：</td>
+            <td><input type="text" value="" name="">
+            </td>
+            <td class="w85 bg_f9f9f9 text_right">结算方式：</td>
+            <td>
+                <select class="select2 w180">
+                    <option value="" selected="selected">1.现金</option>
+                        <option>2.供应链金融</option>
+                        <option>3.赊账</option>
+                </select>
+            </td>
+            <td class="w85 bg_f9f9f9 text_right">总金额：</td>
+            <td><input type="text" value="13320.00" name="" disabled>
+            </td>
+        </tr>
+
+    </table>
+
+    <div class="sdms_view_name">
+        <div>
+            <p>2</p>
+            <span>货品清单</span>
+        </div>
+        <a href="#" class="goods_in_open"><i class="fa fa-plus"></i>&nbsp;&nbsp;新增</a>
+    </div>
+
+    <table class="table" border='0' cellspacing="0" cellpadding="0">
+        <thead>
+        <tr>
+            <td class="w20"><input type="checkbox" id="checkbox_a0" class="chk_3"/><label for="checkbox_a0"></label>
+            </td>
+            <td class="w30">ID</td>
+            <td class="w150">商品编码</td>
+            <td>商品名称</td>
+            <td class="w100">规格型号</td>
+            <td class="w50">单位</td>
+            <td class="w75">数量</td>
+            <td class="w100">单价</td>
+            <td class="w100">金额</td>
+            <td class="w45 text_center">操作</td>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr class="tr1">
+            <td><input type="checkbox" id="checkbox_a1" class="chk_3"/><label for="checkbox_a1"></label>
+            </td>
+            <td>1</td>
+            <td>yyb5996427111007</td>
+            <td>trendglas-JENA玻璃烧水壶—G 1.75L 111007 </td>
+            <td>1.75L/个</td>
+            <td>个</td>
+            <td>100</td>
+            <td>98.00</td>
+            <td>9800.00</td>
+            <td align="center">
+                <a href="#" class="a_list c_1785c8 goods_in_open" title="修改"><i class="fa fa-pencil-square"></i></a>
+            </td>
+        </tr>
+        <tr class="tr1">
+            <td><input type="checkbox" id="checkbox_a2" class="chk_3"/><label for="checkbox_a2"></label>
+            </td>
+            <td>2</td>
+            <td>bb5996427403300</td>
+            <td>Trendglas-JENA 手冲咖啡滤杯(不锈钢) 403300</td>
+            <td>0.8kg/个</td>
+            <td>个</td>
+            <td>110</td>
+            <td>32.00</td>
+            <td>3520.00</td>
+            <td align="center">
+                <a href="#" class="a_list c_1785c8 goods_in_open" title="修改"><i class="fa fa-pencil-square"></i></a>
+            </td>
+        </tr>
+
+        </tbody>
+
+    </table>
+
+    <div class="sdms_view_name">
+        <div>
+            <p>3</p>
+            <span>附件【可选】</span>
+        </div>
+        <a href=""><i class="fa fa-plus"></i>&nbsp;&nbsp;新增</a>
+    </div>
+
+    <table class="sdms_view_teble" border='0' cellspacing="0" cellpadding="0">
+        <tr>
+            <td class="w30 text_center">1</td>
+            <td class="w85 bg_f9f9f9 text_right">附件名称：</td>
+            <td>合同扫描件</td>
+            <td class="w85 bg_f9f9f9 text_center"><a href="">下载</a>
+            </td>
+        </tr>
+
+    </table>
+
+    <div class="sdms_save">
+        <a href="">保存</a>
+    </div>
+
+</div>
+<script>
+    $( function () {
+        $( '.select2' ).select2( {
+            language: "zh-CN"
+        } );
+        $( '.supplier_open' ).click( function () {
+            layer.open( {
+                type: 2,
+                title: '供应商选择',
+                area: [ '1150px', '550px' ],
+                offset:'200px',
+                fixed: false, //不固定
+                maxmin: true,
+                content: '/Index/Declaration/getSupplier'
+            } );
+        } );
+        $( '.purchase_open' ).click( function () {
+            layer.open( {
+                type: 2,
+                title: '关联采购单',
+                area: [ '1150px', '550px' ],
+                offset:'200px',
+                fixed: false, //不固定
+                maxmin: true,
+                content: '/Index/Declaration/getPurchase'
+            } );
+        } );
+        $( '.goods_in_open' ).click( function () {
+            layer.open( {
+                type: 2,
+                title: '货品新增',
+                area: [ '1150px', '430px' ],
+                offset:'200px',
+                fixed: false, //不固定
+                maxmin: true,
+                content: '/Index/Declaration/getGoods'
+            } );
+        } );
+
+    } );
+</script>
+<include file="public/foot" />

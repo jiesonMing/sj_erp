@@ -1,0 +1,4 @@
+<include file="public/header" title="日志" />
+<include file="nav/nav" />
+<div class="sdms_main"> 日志 </div>
+<include file="public/foot" />

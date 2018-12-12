@@ -1,0 +1,4 @@
+<include file="public/header" title="应收账款" />
+<include file="nav/nav" />
+<div class="sdms_main"> 应收账款 </div>
+<include file="public/foot" />

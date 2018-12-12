@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>关联采购单</title>
+    <link rel="stylesheet" href="__CSS__/font-awesome.min.css">
+    <link rel="stylesheet" href="__CSS__/open.css">
+    <script type="application/x-javascript" src="__JS__/jquery-3.2.1.min.js"></script>
+    <script type="application/x-javascript" src="__JS__/layer/layer.js"></script>
+</head>
+<body>
+    <ul class="loading_ul">
+        <li class="li_1">新增商品</li>
+        <li>
+            <table class="table w_100" border='0' cellspacing="0" cellpadding="0">
+                <tr>
+                    <td class="text_right w100">* 项号： </td>
+                    <td><input type="text" value="1" disabled>
+                    </td>
+                    <td class="text_right w100">* 币种： </td>
+                    <td colspan="3"><input type="text" value="142.人民币" disabled>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="text_right">* 商品： </td>
+                    <td colspan="4">
+                        <select class="select2 w700">
+                            <option value="" selected="selected" class="w450">1.母婴用品</option>
+                            <option>2.洗面奶</option>
+                            <option>3.面霜</option>
+                            <option>4.唇部</option>
+                            <option>5.卸妆</option>
+                            <option>6.眼部护理</option>
+                            <option>7.香水</option>
+                        </select>
+                    </td>
+                    <td><input type="text" placeholder="340.德国" disabled>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="text_right">* 单价： </td>
+                    <td><input type="text" value="100.50">
+                    </td>
+                    <td class="text_right">* 数量： </td>
+                    <td><input type="text" value="3125.00">
+                    </td>
+                    <td class="text_right">* 总价： </td>
+                    <td><input type="text" value="313500.50" disabled>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="text_right"> 计量单位： </td>
+                    <td><input type="text" value="140.盒" disabled>
+                    </td>
+                    <td class="text_right"> 净重： </td>
+                    <td><input type="text">
+                    </td>
+                    <td class="text_right"> 毛重： </td>
+                    <td><input type="text">
+                    </td>
+
+                </tr>
+
+
+            </table>
+
+        </li>
+        <li class="li_1">
+            <div>
+                <a href="/" class="ok_open"><i class="fa fa-check"></i> 确认提交</a>
+            </div>
+
+        </li>
+    </ul>
+</body>
+</html>

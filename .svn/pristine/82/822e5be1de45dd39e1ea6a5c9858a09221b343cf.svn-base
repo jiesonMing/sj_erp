@@ -1,0 +1,277 @@
+<include file="public/header" title="QC质检" />
+<include file="nav/nav" />
+<include file="nav/subNav" />
+<link href="__JS__/select/select2.min.css" rel="stylesheet" type="text/css">
+<script src="__JS__/select/select2.min.js"></script>
+<script src="__JS__/laydate/laydate.js"></script>
+<div class="sdms_main">
+    <div class="title_name clearfloat">
+        <h2>QC质检 &nbsp;<span>SDMS SE / QC质检批次新增 / 列表</span></h2>
+        <p>
+            <a href="javascript:location.reload();" class="a_re"><i class="fa fa-refresh"></i> 刷新</a>
+        </p>
+    </div>
+    <ul class="edit_add">
+        <li>
+            <p>* 入仓商品选择：</p>
+            <select class="select2 goods">
+                <option value="" selected="selected">选择商品</option>
+                <volist name="list" id="inwareGoods">
+                    <option value="{$inwareGoods.inwareGoodsId}">{$inwareGoods.inwareGoodsId}.{$inwareGoods.inwareCode}.{$inwareGoods.goodsCode}.{$inwareGoods.goodsName}.---数量：{$inwareGoods.inBatch}</option>
+                </volist>
+            </select>
+        </li>
+        <li>
+            <p>* 电商：</p><input type="text" name="" value="{$Think.Session.companyName}" class="w300" disabled>
+        </li>
+
+        <li>
+            <p>* 仓库：</p><input type="text" name="" value="{$wareName}" class="w300" disabled>
+        </li>
+        <li>
+            <p>* 商品数量：</p><input type="text" name="inBatch" value="" class="w200" disabled placeholder="可上架商品总数">
+        </li>
+        <li>
+            <p>* 新增批次数量：</p><input type="text" name="outBatch" value="" class="w200" placeholder="0与商品数量之间，超过则为无效值。">
+        </li>
+        <li>
+            <p>* 有效期：</p><input type="text" name="expire" id='expire' value="2018-02-06" class="laydate-icon w200">
+        </li>
+        <li>
+            <p>* 状态：</p>
+            <select class="select2 w220 type">
+                <option value="0">请选择批次状态</option>
+                <option value="1">1.正常</option>
+                <option value="2">2.破损（可用）</option>
+                <option value="3">3.破损（不可用）</option>
+                <option value="4">4.欠货</option>
+                <option value="5">5.其他</option>
+            </select>
+        </li>
+        <li>
+            <p>备注：</p><textarea type="text" class="w300 remark"></textarea>
+        </li>
+    </ul>
+    <div class="sdms_save">
+        <a href="javascript:void(0);" class="submit">提交</a>
+    </div>
+</div>
+<script>
+    $(function(){
+        $( '.select2' ).select2( {
+            language: "zh-CN"
+        } );
+        var expire = {
+            elem: '#expire',
+            type:'date',
+            format: 'YYYY-MM-DD',
+            istime: false,
+            istoday: true,
+            min: laydate.now(), //最小日期
+            max: '2099-12-31', //最大日期
+        };
+        laydate(expire);
+        $(".goods").on('change',function(){
+            var inwareGoodsId=$(this).val();
+            var postdata={inwareGoodsId:inwareGoodsId};
+            if(inwareGoodsId>0){
+                $.ajax({
+                    type : 'POST',
+                    url : "/Index/Declaration/getInwareGoodsInBatch",
+                    dataType : 'json',
+                    data : postdata,
+                    success : function(el){
+                        if(el.statusCode==200){
+                            var num=el.retMessage;
+                            $("input[name=inBatch]").val(num);
+                            return false;
+                        }else if(el.statusCode==300){
+                            var index=layer.open({
+                                type:0,
+                                icon:'2',
+                                title:'错误提示信息：',
+                                content:el.retMessage,
+                                end: function(){
+                                    location.href='/Index/User/login';
+                                }
+                            });
+                            layer.style(index,{
+                                width:'500px',
+                                top:'120px'
+                            });
+                            return false;
+                        }
+                    },
+                    error: function(el){
+                    }
+                });
+            }
+        })
+        var isSubmit=true;
+        $(".submit").click(function(){
+            if(isSubmit){
+                isSubmit=false;
+                var inwareGoodsId=$('.goods').val();
+                if(!$.isNumeric(inwareGoodsId) || inwareGoodsId<=0){
+                    isSubmit=true;
+                    var index=layer.open({
+                        type:0,
+                        icon:'2',
+                        title:'错误提示信息：',
+                        content:'请选择商品'
+                    });
+                    layer.style(index,{
+                        width:'400px',
+                        top:'120px'
+                    });
+                    return false;
+                }
+                var inBatch=$("input[name=inBatch]").val();
+                var outBatch=$("input[name=outBatch]").val();
+                if(!$.isNumeric(outBatch) || outBatch<=0){
+                    isSubmit=true;
+                    var index=layer.open({
+                        type:0,
+                        icon:'2',
+                        title:'错误提示信息：',
+                        content:'批次数量不正确'
+                    });
+                    layer.style(index,{
+                        width:'400px',
+                        top:'120px'
+                    });
+                    return false;
+                }
+                if(parseInt(outBatch)>parseInt(inBatch)){
+                    isSubmit=true;
+                    var index=layer.open({
+                        type:0,
+                        icon:'2',
+                        title:'错误提示信息：',
+                        content:'批次数量不能大于商品数量'
+                    });
+                    layer.style(index,{
+                        width:'400px',
+                        top:'120px'
+                    });
+                    return false;
+                }
+                var expire=$("#expire").val();
+                if($.trim(expire)==''){
+                    isSubmit=true;
+                    var index=layer.open({
+                        type:0,
+                        icon:'2',
+                        title:'错误提示信息：',
+                        content:'有效日期不能为空'
+                    });
+                    layer.style(index,{
+                        width:'400px',
+                        top:'120px'
+                    });
+                    return false;
+                }
+                var type=$(".type").val();
+                if(!$.isNumeric(type) || type<=0){
+                    isSubmit=true;
+                    var index=layer.open({
+                        type:0,
+                        icon:'2',
+                        title:'错误提示信息：',
+                        content:'请选择批次状态'
+                    });
+                    layer.style(index,{
+                        width:'400px',
+                        top:'120px'
+                    });
+                    return false;
+                }
+                var remark=$(".remark").val();
+                var postdata={inwareGoodsId:inwareGoodsId,outBatch:outBatch,expire:expire,type:type,remark:remark};
+                console.log(postdata);
+                $.ajax({
+                    type : 'POST',
+                    url : "/Index/Declaration/addBatch",
+                    dataType : 'json',
+                    data : postdata,
+                    success : function(el){
+                        isSubmit=true;
+                        console.log(el);return false;
+                        if(el.statusCode==200){
+                            var index=layer.open({
+                                type:0,
+                                icon:'1',
+                                title:'成功提示信息：',
+                                content:'新增成功',
+                                end: function(){
+                                    location.reload();
+                                }
+                            });
+                            layer.style(index,{
+                                width:'500px',
+                                top:'120px'
+                            });
+                            return false;
+                        }else if(el.statusCode==300){
+                            var index=layer.open({
+                                type:0,
+                                icon:'2',
+                                title:'错误提示信息：',
+                                content:el.retMessage,
+                                end: function(){
+                                    location.href='/Index/User/login';
+                                }
+                            });
+                            layer.style(index,{
+                                width:'500px',
+                                top:'120px'
+                            });
+                            return false;
+                        }else{
+                            isSubmit=true;
+                            var index=layer.open({
+                                type:0,
+                                icon:'2',
+                                title:'错误提示信息：',
+                                content:el.retMessage
+                            });
+                            layer.style(index,{
+                                width:'500px',
+                                top:'120px'
+                            });
+                            return false;
+                        }
+                    },
+                    error: function(el){
+                        isSubmit=true;
+                        console.log(el);return false;
+                        var index=layer.open({
+                            type:0,
+                            icon:'2',
+                            title:'错误提示信息：',
+                            content:el.retMessage
+                        });
+                        layer.style(index,{
+                            width:'500px',
+                            top:'120px'
+                        });
+                        return false;
+                    }
+                });
+            }else{
+                var index=layer.open({
+                    type:0,
+                    icon:'2',
+                    title:'错误提示信息：',
+                    content:'提交中，请稍候'
+                });
+                layer.style(index,{
+                    width:'400px',
+                    top:'120px'
+                });
+                return false;
+            }
+        });
+    });
+</script>
+<include file="public/foot" />

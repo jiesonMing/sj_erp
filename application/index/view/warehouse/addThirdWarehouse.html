@@ -1,0 +1,401 @@
+<include file="public/header" title="新建第三方仓库" />
+<link href="__JS__/select/select2.min.css" rel="stylesheet" type="text/css">
+<script src="__JS__/select/select2.min.js"></script>
+<include file="nav/nav" />
+<include file="nav/subNav" />
+<script>
+	$( function () {
+		$( ".trhide" ).hide();
+		$( ".tr1" ).each( function ( i ) {
+			if ( i % 2 == 0 ) {
+				$( this ).addClass( "tr_2" );
+			} else {
+				$( this ).addClass( "tr_1" );
+			}
+			$( this ).click( function () {
+				if ( $( ".trhide" ).eq( i ).is( ":hidden" ) ) {
+					$( ".trhide" ).eq( i ).show();
+				} else {
+					$( ".trhide" ).eq( i ).hide();
+				}
+			} );
+		} );
+		$( '.select2' ).select2( {
+			language: "zh-CN"
+		} );
+		$( '.supplier_open' ).click( function () {
+			layer.open( {
+				type: 2,
+				title: '供应商选择',
+				area: [ '1150px', '550px' ],
+				fixed: false, //不固定
+				maxmin: true,
+				content: 'supplier.open.php'
+			} );
+		} );
+	} );
+</script>
+
+	<div class="sdms_main"> 
+				<div class="title_name">
+			<h2>第三方仓库 &nbsp;<span>SDMS SE / 第三方仓库 / 新建</span></h2>
+		</div>
+
+		<div class="sdms_view_name">
+			<div>
+				<p>1</p>
+				<span>基础信息</span>
+			</div>
+
+		</div>
+
+		<ul class="edit_add">
+			<li>
+				<p>* 仓库自编码：</p><input type="text" name="warehouseCode" class="w300"><i>仓库自定义编码：可以是字母或者数字组成</i>
+			</li>
+			<li>
+				<p>* 仓库名称：</p><input type="text" name="warehouseName" class="w300">
+			</li>
+			<li>
+				<p>* 仓库属性：</p>
+				<select class="select2 w180" id="wareType">
+					<option value="" >请选择</option>
+					<volist name="wareType" id="w">
+						<option value="{$w.name}">{$w.name}</option>
+					</volist>
+					
+				</select>
+			</li>
+			<li>
+				<p>* 仓库类型：</p>
+				<select class="select2 w180" id="warehouseType">
+					<option value="" >请选择</option>
+					<option value="1">自营仓</option>
+					<option value="2">第三方仓</option>
+				</select>
+			</li>
+			<li>
+				<p>所属企业：</p><input type="text" name="companyName" class="w500">
+			</li>
+			<li>
+				<p>仓库省市区：</p>
+				<select class="select2 w180" id="province">
+					<option value="" selected="selected">请选择</option>
+					<volist name="provinceName" id='p'>
+						<option value="{$p.provinceName}">{$p.provinceName}</option>
+					</volist>
+				</select>
+				<select class="select2 w180 m_r_10" id="city">
+					<option value="" selected="selected">请选择</option>
+				</select>
+				<select class="select2 w180" id="district">
+					<option value="" selected="selected">请选择</option>
+				</select>
+			</li>
+			<li>
+				<p>详细地址：</p><input type="text" name="warehouseAddr"  class="w500">
+			</li>
+			<!-- <li>
+				<p>* 寄件人姓名：</p><input type="text" name="sender" class="w200"><p>* 寄件人电话：</p><input type="text" name="senderTel" class="w200"><i>寄件人会打印在快递面单上</i>
+			</li>
+			
+			<li>
+				<p>* 称重误差：</p><input type="text" name="weightError" class="w200"><i>单位：克(g)</i>
+			</li>
+			<li>
+				<p>* 是否有拣货区：</p>
+				<div class="flex">
+					<input type="radio" id="radio-1-1" name="hasPackingArea" value="1" class="sdms_radio" checked /><label for="radio-1-1"></label> <span class="m_r_10">有拣货区</span> 
+					<input type="radio" id="radio-1-2" name="hasPackingArea" value="2" class="sdms_radio" /><label for="radio-1-2"></label> <span>无拣货区</span>
+				</div>
+				
+			</li>
+			<li>
+				<p>* 货架层数：</p>
+				<input type="text" name="maxLayer" class="w200"><i>货架层数：例(一)、例(二)</i>
+			</li> -->
+			<li>
+				<p>备注：</p>
+				<textarea type="text" name="remark" class="w500 remark" rows="3"></textarea>
+			</li>
+		</ul>
+
+
+		<div class="sdms_view_name">
+			<div>
+				<p>2</p>
+				<span>附件【可选】</span>
+			</div>
+			<a href=""><i class="fa fa-plus"></i>&nbsp;&nbsp;新增</a>
+		</div>
+
+		<table class="sdms_view_teble" border='0' cellspacing="0" cellpadding="0">
+			<tr>
+				<td class="w30 text_center">1</td>
+				<td class="w85 bg_f9f9f9 text_right">附件名称：</td>
+				<td>合同扫描件</td>
+				<td class="w85 bg_f9f9f9 text_center"><a href="">下载</a>
+				</td>
+			</tr>
+
+		</table>
+
+		<div class="sdms_save">
+			<a href="javascript:void(0);" class="submit">保存</a>
+		</div>
+		
+ 	</div>
+<script>
+    // 选中省份，获取市区
+    $("#province").bind('change',function(){
+        $("#city option:first").remove();
+        // $("#district option:first").remove();
+        var provinceName=$(this).val();
+        $.ajax({
+            type : 'POST',
+            url : "/Index/Warehouse/changeProvince",
+            dataType : 'json',
+            data : {provinceName:provinceName},
+            success : function(el){
+                // console.log(el);
+                if(el.statusCode==200){
+                    var data = el.data;
+                    $("#city option:gt(0)").remove();
+                    $.each(data,function(k,p){                        
+                        var option = "<option value='" + p.cityName + "'>" + p.cityName + "</option>";
+                        $("#city").append(option);                         
+                    });
+                }else{
+                    layer.msg('获取市区信息失败！',{icon:0,time:2000});    
+                }                                   
+            },
+            error : function(el){
+                layer.msg('未知错误！',{icon:0,time:2000});
+            },
+        });
+    });
+
+    // 选中市区，获取县级
+    $("#city").bind('change',function(){
+    	$("#district option:first").remove();
+        var cityName=$(this).val();
+        $.ajax({
+            type : 'POST',
+            url : "/Index/Warehouse/changeCity",
+            dataType : 'json',
+            data : {cityName:cityName},
+            success : function(el){
+                if(el.statusCode==200){
+                    var data = el.data;
+                    $("#district option:gt(0)").remove();
+                    $.each(data,function(k,p){                        
+                        var option = "<option value='" + p.areaName + "'>" + p.areaName + "</option>";
+                        $("#district").append(option);                         
+                    });
+                }else{
+                    layer.msg('获取县级信息失败！',{icon:0,time:2000});    
+                }                                   
+            },
+            error : function(el){
+                layer.msg('未知错误！',{icon:0,time:2000});
+            },
+        });
+    });
+
+    var isSubmit=true;
+    $('.submit').click(function(){
+        if(isSubmit){
+            isSubmit=false;
+            var warehouseCode = $("input[name='warehouseCode']").val();
+            var warehouseName = $("input[name='warehouseName']").val();
+            var wareType 	  = $("#wareType").find("option:selected").val();
+            var warehouseType = $("#warehouseType").find("option:selected").val();
+            var companyName = $("input[name='companyName']").val();
+            var province = $("#province option:selected").val();
+            var city = $("#city option:selected").val();
+            var district = $("#district option:selected").val();
+            var warehouseAddr = $("input[name='warehouseAddr']").val();
+            var remark = $(".remark").val();
+            if($.trim(warehouseCode)==''){
+                isSubmit=true;
+                var index=layer.open({
+                    type:0,
+                    icon:'2',
+                    title:'错误提示信息：',
+                    content:'仓库自编码不能为空'
+                });
+                layer.style(index,{
+                    width:'500px',
+                    top:'120px'
+                });
+                return false;
+            }
+            if($.trim(warehouseName)==''){
+                isSubmit=true;
+                var index=layer.open({
+                    type:0,
+                    icon:'2',
+                    title:'错误提示信息：',
+                    content:'仓库名称不能为空'
+                });
+                layer.style(index,{
+                    width:'500px',
+                    top:'120px'
+                });
+                return false;
+            }
+            if($.trim(wareType)==''){
+                isSubmit=true;
+                var index=layer.open({
+                    type:0,
+                    icon:'2',
+                    title:'错误提示信息：',
+                    content:'请选择仓库属性'
+                });
+                layer.style(index,{
+                    width:'500px',
+                    top:'120px'
+                });
+                return false;
+            }
+            if($.trim(warehouseType)==''){
+                isSubmit=true;
+                var index=layer.open({
+                    type:0,
+                    icon:'2',
+                    title:'错误提示信息：',
+                    content:'请选择仓库类型'
+                });
+                layer.style(index,{
+                    width:'500px',
+                    top:'120px'
+                });
+                return false;
+            }
+            if($.trim(province)==''){
+                isSubmit=true;
+                var index=layer.open({
+                    type:0,
+                    icon:'2',
+                    title:'错误提示信息：',
+                    content:'请选择仓库所在省份'
+                });
+                layer.style(index,{
+                    width:'500px',
+                    top:'120px'
+                });
+                return false;
+            }
+            if($.trim(city)==''){
+                isSubmit=true;
+                var index=layer.open({
+                    type:0,
+                    icon:'2',
+                    title:'错误提示信息：',
+                    content:'请选择仓库所在市'
+                });
+                layer.style(index,{
+                    width:'500px',
+                    top:'120px'
+                });
+                return false;
+            }
+            if($.trim(district)==''){
+                isSubmit=true;
+                var index=layer.open({
+                    type:0,
+                    icon:'2',
+                    title:'错误提示信息：',
+                    content:'请选择仓库所在区'
+                });
+                layer.style(index,{
+                    width:'500px',
+                    top:'120px'
+                });
+                return false;
+            }
+            var referer="{$referer}";
+            var postdata={warehouseCode:warehouseCode,warehouseName:warehouseName,wareType:wareType,warehouseType:warehouseType,companyName:companyName,province:province,city:city,district:district,warehouseAddr:warehouseAddr,remark:remark};
+            $.ajax({
+                type : 'POST',
+                url : "/Index/Warehouse/addThirdWarehouse",
+                dataType : 'json',
+                data : postdata,
+                success : function(el){
+                	// console.log(el);return false;
+                    if(el.statusCode==200){
+                        var index=layer.open({
+                            type:0,
+                            icon:'1',
+                            title:'成功提示信息：',
+                            content:'新增成功',
+                            end: function(){
+                                location.href=referer;
+                            }
+                        });
+                        layer.style(index,{
+                            width:'500px',
+                            top:'120px'
+                        });
+                        return false;
+                    }else if(el.statusCode==300){
+                        var index=layer.open({
+                            type:0,
+                            icon:'2',
+                            title:'错误提示信息：',
+                            content:el.retMessage,
+                            end: function(){
+                                location.href='/Index/Warehouse/thirdWarehouse';
+                            }
+                        });
+                        layer.style(index,{
+                            width:'500px',
+                            top:'120px'
+                        });
+                        return false;
+                    }else{
+                        isSubmit=true;
+                        var index=layer.open({
+                            type:0,
+                            icon:'2',
+                            title:'错误提示信息：',
+                            content:el.retMessage
+                        });
+                        layer.style(index,{
+                            width:'400px',
+                            top:'120px'
+                        });
+                        return false;
+                    }
+                },
+                error: function(el){
+                    isSubmit=true;
+                    var index=layer.open({
+                        type:0,
+                        icon:'2',
+                        title:'错误提示信息：',
+                        content:el.retMessage
+                    });
+                    layer.style(index,{
+                        width:'400px',
+                        top:'120px'
+                    });
+                    return false;
+                }
+            });
+        }else{
+            var index=layer.open({
+                type:0,
+                icon:'2',
+                title:'错误提示信息：',
+                content:'提交中，请稍候'
+            });
+            layer.style(index,{
+                width:'400px',
+                top:'120px'
+            });
+            return false;
+        }
+    });
+</script>
+<include file="public/foot" />

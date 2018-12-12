@@ -1,0 +1,267 @@
+<include file="public/header" title="组织回收站" />
+<include file="nav/nav" />
+<include file="nav/subNav" />
+<div class="sdms_main">
+    <div class="title_name">
+        <h2>组织回收站 &nbsp;&nbsp;<span>SDMS SE / 用户中心 / 列表</span></h2>
+        <p>
+            <a href="javascript:location.reload();" class="a_re"><i class="fa fa-refresh"></i> 刷新</a>
+        </p>
+    </div>
+    <div class="button_search">
+        <input type="text" value="{$value}" class="input_search" />
+        <input value="搜索" class="button button-primary input_search_b" type="submit" />
+    </div>
+    <table class='table' border="0" cellpadding="0" cellspacing="0">
+        <thead>
+        <tr>
+            <td class="w20"><input type="checkbox" id="checkbox_a0" class="chk_3 checkbox0"/><label for="checkbox_a0"></label></td>
+            <td class="w30">编号</td>
+            <td class="w100">角色名称</td>
+            <td class="w130">上级角色名称</td>
+            <td class="w100">角色类型</td>
+            <td class="w100">创建时间</td>
+            <td class="w75">备注</td>
+            <td class="w45">状态</td>
+            <td class="w45">操作</td>
+        </tr>
+        </thead>
+        <tbody>
+        <volist name="list" id="role">
+            <tr class="tr1">
+                <td><input type="checkbox" id="checkbox_a{$role.roleId}" class="chk_3" /><label for="checkbox_a{$role.roleId}"></label></td>
+                <td class="">{$role.roleId}</td>
+                <td class="">{$role.roleName}</td>
+                <td class="-centered">{$role.proleName}</td>
+                <if condition="$role['type'] eq 1">
+                    <td class="">部门</td>
+                <else />
+                    <td class="">职位</td>
+                </if>
+                <td class="">{$role.createTime}</td>
+                <td class="">{$role.remark}</td>
+                <td class="">
+                    <input type="hidden" class="roleId" value="{$role.roleId}" />
+                    {$button.useRole}
+                </td>
+                <td class="">
+                    {$button.purgeRole}
+                </td>
+            </tr>
+        </volist>
+        </tbody>
+    </table>
+    <div class="page_size">
+        <div class="tbutton">
+
+        </div>
+        <div class="page">
+            {$list->render()}
+        </div>
+    </div>
+</div>
+<script>
+    $(".input_search_b").click(function(){
+        var value=$(".input_search").val();
+        var url='/Index/Ucenter/userDelList';
+        if(value){
+            url+='/value/'+value;
+        }
+        location.href=url;
+    });
+    $(".useRole").each(function(roleindex,item){
+        $(this).click(function(){
+            var roleId=$(".roleId").eq(roleindex).val();
+            if(roleId){
+                var index=layer.confirm('确定启用当前组织吗', {icon: 3, title:'提示'}, function(i){
+                    var postdata={roleId:roleId};
+                    $.ajax({
+                        type : 'POST',
+                        url : "/Index/Ucenter/useRole",
+                        dataType : 'json',
+                        data : postdata,
+                        success : function(el){
+                            if(el.statusCode==200){
+                                var index=layer.open({
+                                    type:0,
+                                    icon:'1',
+                                    title:'成功提示信息：',
+                                    content:'启用成功',
+                                    end: function(){
+                                        location.reload();
+                                    }
+                                });
+                                layer.style(index,{
+                                    width:'500px',
+                                    top:'120px'
+                                });
+                            }else if(el.statusCode==300){
+                                var index=layer.open({
+                                    type:0,
+                                    icon:'2',
+                                    title:'错误提示信息：',
+                                    content:el.retMessage,
+                                    end: function(){
+                                        location.href='/Index/User/login';
+                                    }
+                                });
+                                layer.style(index,{
+                                    width:'500px',
+                                    top:'120px'
+                                });
+                                return false;
+                            }else{
+                                isSubmit=true;
+                                var index=layer.open({
+                                    type:0,
+                                    icon:'2',
+                                    title:'错误提示信息：',
+                                    content:el.retMessage,
+                                    end: function(){
+                                        location.reload();
+                                    }
+                                });
+                                layer.style(index,{
+                                    width:'400px',
+                                    top:'120px'
+                                });
+                            }
+                        },
+                        error: function(el){
+                            var index=layer.open({
+                                type:0,
+                                icon:'2',
+                                title:'错误提示信息：',
+                                content:'操作失败，请刷新重试',
+                                end: function(){
+                                    location.reload();
+                                }
+                            });
+                            layer.style(index,{
+                                width:'400px',
+                                top:'120px'
+                            });
+                        }
+                    });
+                });
+                layer.style(index,{
+                    width:'400px',
+                    top:'120px'
+                });
+            }else{
+                var index=layer.open({
+                    type:0,
+                    icon:'2',
+                    title:'失败提示信息：',
+                    content:'组织有误',
+                    end: function(){
+                        location.reload();
+                    }
+                });
+                layer.style(index,{
+                    width:'500px',
+                    top:'120px'
+                });
+            }
+        });
+    });
+    $(".purge").each(function(purgeindex,item){
+        $(this).click(function(){
+            var roleId=$(".roleId").eq(purgeindex).val();
+            if(roleId){
+                var index=layer.confirm('确定彻底删除当前组织吗', {icon: 3, title:'提示'}, function(i){
+                    var postdata={roleId:roleId};
+                    $.ajax({
+                        type : 'POST',
+                        url : "/Index/Ucenter/purgeRole",
+                        dataType : 'json',
+                        data : postdata,
+                        success : function(el){
+                            console.log(el);return false;
+                            if(el.statusCode==200){
+                                var index=layer.open({
+                                    type:0,
+                                    icon:'1',
+                                    title:'成功提示信息：',
+                                    content:'彻底删除成功',
+                                    end: function(){
+                                        location.reload();
+                                    }
+                                });
+                                layer.style(index,{
+                                    width:'500px',
+                                    top:'120px'
+                                });
+                            }else if(el.statusCode==300){
+                                var index=layer.open({
+                                    type:0,
+                                    icon:'2',
+                                    title:'错误提示信息：',
+                                    content:el.retMessage,
+                                    end: function(){
+                                        location.href='/Index/User/login';
+                                    }
+                                });
+                                layer.style(index,{
+                                    width:'500px',
+                                    top:'120px'
+                                });
+                                return false;
+                            }else{
+                                isSubmit=true;
+                                var index=layer.open({
+                                    type:0,
+                                    icon:'2',
+                                    title:'错误提示信息：',
+                                    content:el.retMessage,
+                                    end: function(){
+                                        location.reload();
+                                    }
+                                });
+                                layer.style(index,{
+                                    width:'400px',
+                                    top:'120px'
+                                });
+                            }
+                        },
+                        error: function(el){
+                            console.log(el);return false;
+                            var index=layer.open({
+                                type:0,
+                                icon:'2',
+                                title:'错误提示信息：',
+                                content:el.retMessage,
+                                end: function(){
+                                    location.reload();
+                                }
+                            });
+                            layer.style(index,{
+                                width:'400px',
+                                top:'120px'
+                            });
+                        }
+                    });
+                });
+                layer.style(index,{
+                    width:'400px',
+                    top:'120px'
+                });
+            }else{
+                var index=layer.open({
+                    type:0,
+                    icon:'2',
+                    title:'失败提示信息：',
+                    content:'组织有误',
+                    end: function(){
+                        location.reload();
+                    }
+                });
+                layer.style(index,{
+                    width:'500px',
+                    top:'120px'
+                });
+            }
+        });
+    });
+</script>
+<include file="public/foot" />

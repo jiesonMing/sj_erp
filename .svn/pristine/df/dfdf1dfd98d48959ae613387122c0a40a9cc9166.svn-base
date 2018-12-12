@@ -1,0 +1,55 @@
+<?php
+namespace app\index\controller;
+use think\Session;
+use think\Config;
+/*
+ *商品类
+ * @jieson 2018.01.31
+ */
+class GoodsController extends BaseController{
+    /*
+     * 商品列表
+     */
+    public function goodsList(){      
+        $this->assign('button',Config::get('func'.Session::get('authId').'.goodsList'));
+        Session::set('subNav','goods');
+        $this->assign('nav','goods');
+        $this->assign('subNav','goodsList');
+        return $this->fetch();
+    }
+    /*
+     * 商品
+     */
+    public function category(){
+        $resCategory=db('goods_cate')->field('id,topId,cName,createTime,status')->where('')->select();
+        $Category=$this->Cate($resCategory);
+        
+        $this->assign('category',$Category);
+        Session::set('subNav','goods');
+        $this->assign('button',Config::get('func'.Session::get('authId').'.category'));
+        $this->assign('nav','goods');
+        $this->assign('subNav','category');
+        return $this->fetch();
+    }
+    //无限级分类
+    protected function Cate($data,$pid=0,$level=0) {
+        $arr=array();
+        foreach($data as $k=>$v){
+            if($v['topId']==$pid){
+                $v['level']=$level+1;               
+                $arr[] = $v;
+                unset($data[$k]); //注销当前节点数据，减少已无用的遍历
+                $arr = array_merge($arr,$this->Cate($data,$v['id'],$level+1));
+            }
+        }
+        return $arr;
+    }
+    //添加分类
+    public function addCategory(){
+        Session::set('subNav','goods');
+        //$this->assign('button',Config::get('func'.Session::get('authId').'.category'));
+        $this->assign('nav','goods');
+        $this->assign('subNav','category');
+        return $this->fetch();
+    }
+}

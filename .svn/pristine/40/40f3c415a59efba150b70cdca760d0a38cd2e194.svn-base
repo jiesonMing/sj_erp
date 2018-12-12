@@ -1,0 +1,282 @@
+<include file="public/header" title="配置权限组" />
+<include file="nav/nav" />
+<include file="nav/subNav" />
+<div class="sdms_main">
+    <div class="title_name">
+        <h2>权限管理 &nbsp;<span>SDMS SE / 权限 / 列表 / 修改权限组</span></h2>
+        <p>
+            <a href="javascript:location.reload();" class="a_re"><i class="fa fa-refresh"></i> 刷新</a>
+        </p>
+    </div>
+        <ul class="page_text authority_n_e">
+            <li>
+                <span>权限名称：</span>
+                <input type="text" name="authName" value="{$data.authName}" class="w300 text_input" >
+                <span>权限描述：</span>
+                <input type="text" name="remark" value="{$data.remark}" class="w300 text_input"  >
+            </li>
+            <li>
+                <span>全部权限：</span>
+                <input type="checkbox" id="checkbox_a" class="chk_1 checkbox0"/><label for="checkbox_a"></label>
+            </li>
+        </ul>
+        {$modularList}
+        <div class="sdms_save">
+            <a href="javascript:void(0);" class="submit">保存</a>
+        </div>
+</div>
+<script>
+    $(function(){
+        $(".auth_nav").each(function(index,item){
+            $(this).click(function(){
+                if(!$(this).hasClass('a')){
+                    var n=index;
+                    $(".auth_nav").removeClass('a');
+                    $(this).addClass('a');
+                    $(".sdms_table").addClass('sdms_table_hide');
+                    $(".sdms_table").eq(n).removeClass('sdms_table_hide');
+                }
+                $(".check1").eq(index).each(function(){
+                    $(this).click(function(){
+                        if($(this).is(':checked')){
+                            $(".sdms_table").eq(index).find('.check2,.check3,.isFunc').each(function(){
+                                this.checked=true;
+                            });
+                            $(".checkbox0").each(function(){
+                                if(!$(this).is(':checked')){
+                                    this.checked=true;
+                                }
+                            });
+                        }else{
+                            $(".sdms_table").eq(index).find('.check2,.check3,.isFunc').each(function(){
+                                this.checked=false;
+                            });
+                        }
+                    });
+                });
+            });
+        });
+        $(".check2").each(function(){
+            $(this).click(function(){
+                if($(this).is(':checked')){
+                    $(this).closest('.tr2').nextUntil('.tr2').find('.isFunc,.check3').each(function(){
+                        this.checked = true;
+                    });
+                    var i=$(this).closest('.auth_table').index()-2;
+                    $(".check1").each(function(index,item){
+                        if(index==i){
+                            if(!$(this).is(':checked')){
+                                this.checked=true;
+                            }
+                        }
+                    });
+                    $(".checkbox0").each(function(){
+                        if(!$(this).is(':checked')){
+                            this.checked=true;
+                        }
+                    });
+                }else{
+                    $(this).closest('.tr2').nextUntil('.tr2').find('.isFunc,.check3').each(function(){
+                        this.checked = false;
+                    });
+                }
+            });
+        });
+        $(".check3").each(function(){
+            $(this).click(function(){
+                if($(this).is(':checked')){
+                    $(this).parent().nextAll().find('.isFunc').each(function(){
+                        this.checked = true;
+                    });
+                    $(this).closest('.tr3').prevAll('.tr2').first().children().find('.check2').each(function(){
+                        this.checked = true;
+                    });
+                    var i=$(this).closest('.auth_table').index()-2;
+                    $(".check1").each(function(index,item){
+                        if(index==i){
+                            if(!$(this).is(':checked')){
+                                this.checked=true;
+                            }
+                        }
+                    });
+                    $(".checkbox0").each(function(){
+                        if(!$(this).is(':checked')){
+                            this.checked=true;
+                        }
+                    });
+                }else{
+                    $(this).parent().nextAll().find('.isFunc').each(function(){
+                        this.checked = false;
+                    });
+                }
+            });
+        });
+        $(".isFunc").each(function(){
+            $(this).click(function(){
+                if($(this).is(':checked')){
+                    $(this).parent().prevAll().find('.check3').each(function(){
+                        this.checked = true;
+                    });
+                    $(this).closest('.tr3').prevAll('.tr2').first().children().find('.check2').each(function(){
+                        this.checked = true;
+                    });
+                    var i=$(this).closest('.auth_table').index()-2;
+                    $(".check1").each(function(index,item){
+                        if(index==i){
+                            if(!$(this).is(':checked')){
+                                this.checked=true;
+                            }
+                        }
+                    });
+                    $(".checkbox0").each(function(){
+                        if(!$(this).is(':checked')){
+                            this.checked=true;
+                        }
+                    });
+                }
+            });
+        });
+        var isSubmit=true;
+        $('.submit').click(function(){
+            if(isSubmit){
+                isSubmit=false;
+                var authName=$("input[name=authName]").val();
+                if($.trim(authName)==''){
+                    isSubmit=true;
+                    var index=layer.open({
+                        type:0,
+                        icon:'2',
+                        title:'错误提示信息：',
+                        content:'权限组名称不能为空'
+                    });
+                    layer.style(index,{
+                        width:'500px',
+                        top:'120px'
+                    });
+                    return false;
+                }
+                var remark=$("input[name=remark]").val();
+                var check1='';
+                $(".check1").each(function(){
+                    if($(this).is(':checked')){
+                        check1+=','+$(this).val();
+                    }
+                });
+                var check2='';
+                $(".check2").each(function(){
+                    if($(this).is(':checked')){
+                        check2+=','+$(this).val();
+                    }
+                })
+                var check3='';
+                $(".check3").each(function(){
+                    if($(this).is(':checked')){
+                        check3+=','+$(this).val();
+                    }
+                })
+                var isFunc='';
+                $(".isFunc").each(function(){
+                    if($(this).is(':checked')){
+                        isFunc+=','+$(this).val();
+                    }
+                })
+                if($.trim(check1)==''){
+                    isSubmit=true;
+                    var index=layer.open({
+                        type:0,
+                        icon:'2',
+                        title:'错误提示信息：',
+                        content:'请选择模块'
+                    });
+                    layer.style(index,{
+                        width:'500px',
+                        top:'120px'
+                    });
+                    return false;
+                }
+                var referer="{$referer}";
+                var id="{$id}";
+                var postdata={id:id,authName:authName,remark:remark,check1:check1,check2:check2,check3:check3,isFunc:isFunc};
+                $.ajax({
+                    type : 'POST',
+                    url : "/Index/auth/editAuth",
+                    dataType : 'json',
+                    data : postdata,
+                    success : function(el){
+                        if(el.statusCode==200){
+                            var index=layer.open({
+                                type:0,
+                                icon:'1',
+                                title:'成功提示信息：',
+                                content:'配置成功',
+                                end: function(){
+                                    location.href=referer;
+                                }
+                            });
+                            layer.style(index,{
+                                width:'500px',
+                                top:'120px'
+                            });
+                            return false;
+                        }else if(el.statusCode==300){
+                            var index=layer.open({
+                                type:0,
+                                icon:'2',
+                                title:'错误提示信息：',
+                                content:el.retMessage,
+                                end: function(){
+                                    location.href='/Index/User/login';
+                                }
+                            });
+                            layer.style(index,{
+                                width:'500px',
+                                top:'120px'
+                            });
+                            return false;
+                        }else{
+                            isSubmit=true;
+                            var index=layer.open({
+                                type:0,
+                                icon:'2',
+                                title:'错误提示信息：',
+                                content:el.retMessage
+                            });
+                            layer.style(index,{
+                                width:'400px',
+                                top:'120px'
+                            });
+                            return false;
+                        }
+                    },
+                    error: function(el){
+                        isSubmit=true;
+                        var index=layer.open({
+                            type:0,
+                            icon:'2',
+                            title:'错误提示信息：',
+                            content:el.retMessage
+                        });
+                        layer.style(index,{
+                            width:'400px',
+                            top:'120px'
+                        });
+                        return false;
+                    }
+                });
+            }else{
+                var index=layer.open({
+                    type:0,
+                    icon:'2',
+                    title:'错误提示信息：',
+                    content:'提交中，请稍候'
+                });
+                layer.style(index,{
+                    width:'400px',
+                    top:'120px'
+                });
+                return false;
+            }
+        });
+    });
+</script>
+<include file="public/foot" />

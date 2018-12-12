@@ -1,0 +1,183 @@
+<include file="public/header" title="权限组" />
+<include file="nav/nav" />
+<include file="nav/subNav" />
+<div class="sdms_main">
+    <div class="title_name">
+        <h2>权限组管理 &nbsp;&nbsp;<span>SDMS SE / 权限组 / 列表</span></h2>
+        <p>
+            <a href="javascript:location.reload();" class="a_re"><i class="fa fa-refresh"></i> 刷新</a>
+            {$button.authDelList}
+        </p>
+    </div>
+    <div class="button_search">
+        <ul class="dropdown_menu">
+            <li><a href="javascript:void(0);"><i class="fa fa-cog"></i>&nbsp;&nbsp;操作&nbsp;&nbsp;<i class="fa fa-caret-down"></i></a>
+                <ul>
+                    <li class="li">{$button.addAuth}</li>
+                </ul>
+            </li>
+        </ul>
+        <input type="text" value="{$value}" class="input_search" />
+        <input value="搜索" class="button button-primary input_search_b" type="submit" />
+    </div>
+    <table class='table' border="0" cellpadding="0" cellspacing="0">
+        <thead>
+            <tr>
+                <td class="w20"><input type="checkbox" id="checkbox_a0" class="chk_3 checkbox0"/><label for="checkbox_a0"></label></td>
+                <td class="w30">ID</td>
+                <td class="w100">权限名称</td>
+                <td class="w150">权限简介</td>
+                <td class="">已分配用户</td>
+                <td class="w75 text_center">状态</td>
+                <td class="w45 text_center">操作</td>
+            </tr>
+        </thead>
+        <tbody>
+            <volist name="data" id="auth">
+                <tr class="tr1">
+                    <td><input type="checkbox" id="checkbox_a{$auth.authId}" class="chk_3" /><label for="checkbox_a{$auth.authId}"></label></td>
+                    <td>{$auth.authId}</td>
+                    <td>{$auth.authName}</td>
+                    <td>{$auth.remark}</td>
+                    <td class="td1">{$auth.str}</td>
+                    <td class="text_center"><a href="javascript:void(0);" class="status b_28b5d6 C_FFF">启用</a></td>
+                    <td class="text_center">
+                        <input type="hidden" class="authId" value="{$auth.authId}" />
+                        {$button.editAuth}
+                        {$button.delAuth}
+                    </td>
+                </tr>
+                <tr class='trhide'>
+                    <td></td>
+                    <td colspan="3"></td>
+                    <td class="tb_name">
+                        {$auth.strName}
+                    </td>
+                    <td ></td>
+                    <td></td>
+                </tr>
+            </volist>
+        </tbody>
+    </table>
+    <div class="page_size">
+        <div class="button">
+            {$button.addAuth}
+        </div>
+        <div class="page order_1 flex_end">
+            {$list->render()}
+        </div>
+    </div>
+</div>
+<script>
+    $(".input_search_b").click(function(){
+        var value=$(".input_search").val();
+        var url='/Index/Auth/authsList';
+        if(value){
+            url+='/value/'+value;
+        }
+        location.href=url;
+    });
+    $(".edit").each(function(edindex,item){
+        $(this).click(function(){
+            var authId=$(".authId").eq(edindex).val();
+            location.href='/Index/Auth/editAuth/id/'+authId;
+        });
+    });
+    $(".del").each(function(deindex,item){
+        $(this).click(function(){
+            var authId=$(".authId").eq(deindex).val();
+            if(authId){
+                var index=layer.confirm('确定删除当前权限组吗', {icon: 3, title:'提示'}, function(i){
+                    var postdata={authId:authId};
+                    $.ajax({
+                        type : 'POST',
+                        url : "/Index/Auth/delAuth",
+                        dataType : 'json',
+                        data : postdata,
+                        success : function(el){
+                            if(el.statusCode==200){
+                                var index=layer.open({
+                                    type:0,
+                                    icon:'1',
+                                    title:'成功提示信息：',
+                                    content:'删除成功',
+                                    end: function(){
+                                        location.reload();
+                                    }
+                                });
+                                layer.style(index,{
+                                    width:'500px',
+                                    top:'120px'
+                                });
+                            }else if(el.statusCode==300){
+                                var index=layer.open({
+                                    type:0,
+                                    icon:'2',
+                                    title:'错误提示信息：',
+                                    content:el.retMessage,
+                                    end: function(){
+                                        location.href='/Index/User/login';
+                                    }
+                                });
+                                layer.style(index,{
+                                    width:'500px',
+                                    top:'120px'
+                                });
+                                return false;
+                            }else{
+                                var index=layer.open({
+                                    type:0,
+                                    icon:'2',
+                                    title:'错误提示信息：',
+                                    content:el.retMessage,
+                                    end: function(){
+                                        location.reload();
+                                    }
+                                });
+                                layer.style(index,{
+                                    width:'400px',
+                                    top:'120px'
+                                });
+                            }
+                        },
+                        error: function(el){
+                            var index=layer.open({
+                                type:0,
+                                icon:'2',
+                                title:'错误提示信息：',
+                                content:el.retMessage,
+                                end: function(){
+                                    location.reload();
+                                }
+                            });
+                            layer.style(index,{
+                                width:'400px',
+                                top:'120px'
+                            });
+                        }
+                    });
+                });
+                layer.style(index,{
+                    width:'500px',
+                    top:'120px'
+                });
+                return false;
+            }else{
+                var index=layer.open({
+                    type:0,
+                    icon:'2',
+                    title:'失败提示信息：',
+                    content:'权限组信息有误',
+                    end: function(){
+                        location.reload();
+                    }
+                });
+                layer.style(index,{
+                    width:'500px',
+                    top:'120px'
+                });
+            }
+        });
+    });
+</script>
+<include file="public/foot" />

@@ -1,0 +1,18 @@
+<ul class="sdms_second_nav">
+<h3>商品</h3>
+<if condition="$subNav eq 'goodsList'">
+<li><a href="/Index/Goods/goodsList" class="a">商品列表</a></li>
+<else />
+<li><a href="/Index/Goods/goodsList">商品列表</a></li>
+</if>
+<if condition="$subNav eq 'category'">
+<li><a href="/Index/Goods/category" class="a">商品分类</a></li>
+<else />
+<li><a href="/Index/Goods/category">商品分类</a></li>
+</if>
+<if condition="$subNav eq 'goodsBrand'">
+<li><a href="/Index/Goods/goodsBrand" class="a">商品品牌</a></li>
+<else />
+<li><a href="/Index/Goods/goodsBrand">商品品牌</a></li>
+</if>
+</ul>

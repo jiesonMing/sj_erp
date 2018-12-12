@@ -1,0 +1,264 @@
+<include file="public/header" title="新增公司" />
+<include file="public/nav" />
+<link href="__JS__/select/select2.min.css" rel="stylesheet" type="text/css">
+<script src="__JS__/select/select2.min.js"></script>
+<div class="sdms_main">
+    <div class="title_name">
+        <h2>新增公司 &nbsp;<span>erp / 公司 / 新增</span></h2>
+        <p>
+            <a href="javascript:location.reload();" class="a_re"><i class="fa fa-refresh"></i> 刷新</a>
+        </p>
+    </div>
+    <div class="tform">
+        <div class="field">
+            <span>公司名称：</span>
+            <div class="control">
+                <input class="input txtVal companyName" type="text" placeholder="公司名称" value="" />
+            </div>
+            <p class="help"></p>
+        </div>
+        <div class="field">
+            <span>公司简称：</span>
+            <div class="control">
+                <input class="input txtVal companyShortName" type="text" placeholder="公司简称" value="" />
+            </div>
+            <p class="help"></p>
+        </div>
+        <div class="field">
+            <span>公司英文名称：</span>
+            <div class="control">
+                <input class="input txtVal companyEnName" type="text" placeholder="公司英文名称" value="" />
+            </div>
+            <p class="help"></p>
+        </div>
+        <div class="field">
+            <span>管理员昵称：</span>
+            <div class="control">
+                <input class="input txtVal nickName" type="text" placeholder="管理员昵称" value="" />
+            </div>
+            <p class="help"></p>
+        </div>
+        <div class="field">
+            <span>管理员登陆手机：</span>
+            <div class="control">
+                <input class="input txtVal mobile" type="text" placeholder="管理员登陆手机" value="" />
+            </div>
+            <p class="help"></p>
+        </div>
+        <div class="field">
+            <span>管理员登陆密码：</span>
+            <div class="control">
+                <input class="input txtVal password" type="password" placeholder="管理员登陆密码" value="" />
+            </div>
+            <p class="help"></p>
+        </div>
+        <div class="field">
+            <span>备注：</span>
+            <div class="control">
+                <input class="input remark" type="text" placeholder="备注" value="" />
+            </div>
+        </div>
+        <div class="field">
+            <span></span>
+            <div class="control">
+                <button class="button is-link submit">提交</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(function(){
+        $('.select2').select2({
+            language: "zh-CN"
+        });
+        $(".txtVal").blur(function(){
+            var val=$(this).val();
+            if($.trim(val)==''){
+                $(this).addClass('is-danger');
+                $(this).parent().next().addClass('is-danger');
+                $(this).parent().next().text('不能为空');
+            }else{
+                $(this).removeClass('is-danger');
+                $(this).addClass('is-success');
+                $(this).parent().next().text('');
+            }
+        });
+        var isSubmit=true;
+        $('.submit').click(function(){
+            if(isSubmit){
+                isSubmit=false;
+                var companyName=$(".companyName").val();
+                if($.trim(companyName)==''){
+                    isSubmit=true;
+                    var index=layer.open({
+                        type:0,
+                        icon:'2',
+                        title:'错误提示信息：',
+                        content:'公司名称不能为空'
+                    });
+                    layer.style(index,{
+                        width:'500px',
+                        top:'120px'
+                    });
+                    return false;
+                }
+                var companyShortName=$(".companyShortName").val();
+                if($.trim(companyShortName)==''){
+                    isSubmit=true;
+                    var index=layer.open({
+                        type:0,
+                        icon:'2',
+                        title:'错误提示信息：',
+                        content:'公司简称不能为空'
+                    });
+                    layer.style(index,{
+                        width:'500px',
+                        top:'120px'
+                    });
+                    return false;
+                }
+                var companyEnName=$(".companyEnName").val();
+                if($.trim(companyEnName)==''){
+                    isSubmit=true;
+                    var index=layer.open({
+                        type:0,
+                        icon:'2',
+                        title:'错误提示信息：',
+                        content:'公司英文名称不能为空'
+                    });
+                    layer.style(index,{
+                        width:'500px',
+                        top:'120px'
+                    });
+                    return false;
+                }
+                var nickName=$(".nickName").val();
+                if($.trim(nickName)==''){
+                    isSubmit=true;
+                    var index=layer.open({
+                        type:0,
+                        icon:'2',
+                        title:'错误提示信息：',
+                        content:'管理员昵称不能为空'
+                    });
+                    layer.style(index,{
+                        width:'500px',
+                        top:'120px'
+                    });
+                    return false;
+                }
+                var mobile=$(".mobile").val();
+                if($.trim(mobile)==''){
+                    isSubmit=true;
+                    var index=layer.open({
+                        type:0,
+                        icon:'2',
+                        title:'错误提示信息：',
+                        content:'管理员登陆手机号码不能为空'
+                    });
+                    layer.style(index,{
+                        width:'500px',
+                        top:'120px'
+                    });
+                    return false;
+                }
+                var password=$(".password").val();
+                if($.trim(password)==''){
+                    isSubmit=true;
+                    var index=layer.open({
+                        type:0,
+                        icon:'2',
+                        title:'错误提示信息：',
+                        content:'管理员登陆密码不能为空'
+                    });
+                    layer.style(index,{
+                        width:'500px',
+                        top:'120px'
+                    });
+                    return false;
+                }
+                var remark=$(".remark").val();
+                var postdata={companyName:companyName,companyShortName:companyShortName,companyEnName:companyEnName,nickName:nickName,mobile:mobile,password:password,remark:remark};
+                $.ajax({
+                    type : 'POST',
+                    url : "/Admin/Index/addCompany",
+                    dataType : 'json',
+                    data : postdata,
+                    success : function(el){
+                        if(el.statusCode==200){
+                            var index=layer.open({
+                                type:0,
+                                icon:'1',
+                                title:'成功提示信息：',
+                                content:'新增成功',
+                                end: function(){
+                                    location.reload();
+                                }
+                            });
+                            layer.style(index,{
+                                width:'500px',
+                                top:'120px'
+                            });
+                            return false;
+                        }else if(el.statusCode==300){
+                            var index=layer.open({
+                                type:0,
+                                icon:'2',
+                                title:'错误提示信息：',
+                                content:el.retMessage,
+                                end: function(){
+                                    location.href='/Admin/User/login';
+                                }
+                            });
+                            layer.style(index,{
+                                width:'500px',
+                                top:'120px'
+                            });
+                            return false;
+                        }else{
+                            isSubmit=true;
+                            var index=layer.open({
+                                type:0,
+                                icon:'2',
+                                title:'错误提示信息：',
+                                content:el.retMessage
+                            });
+                            layer.style(index,{
+                                width:'400px',
+                                top:'120px'
+                            });
+                            return false;
+                        }
+                    },
+                    error: function(el){
+                        isSubmit=true;
+                        var index=layer.open({
+                            type:0,
+                            icon:'2',
+                            title:'错误提示信息：',
+                            content:el.retMessage
+                        });
+                        layer.style(index,{
+                            width:'400px',
+                            top:'120px'
+                        });
+                        return false;
+                    }
+                });
+            }else{
+                var index=layer.open({
+                    type:0,
+                    icon:'2',
+                    title:'错误提示信息：',
+                    content:'提交中，请稍候'
+                });
+                layer.style(index,{
+                    width:'400px',
+                    top:'120px'
+                });
+                return false;
+            }
+        });
+    });
+</script>
+<include file="public/foot" />

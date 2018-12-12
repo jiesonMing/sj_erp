@@ -1,0 +1,8 @@
+<ul class="sdms_second_nav">
+<h3>库存</h3>
+<if condition="$subNav eq 'stockList'">
+<li><a href="/Index/Stock/stockList" class="a">库存详情</a></li>
+<else />
+<li><a href="/Index/Stock/stockList">库存详情</a></li>
+</if>
+</ul>

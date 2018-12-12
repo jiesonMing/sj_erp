@@ -1,0 +1,139 @@
+<include file="public/header" title="商品批量导入" />
+<include file="nav/nav" />
+<include file="nav/subNav" />
+<link href="__JS__/select/select2.min.css" rel="stylesheet" type="text/css">
+<script src="__JS__/select/select2.min.js"></script>
+<script type="text/javascript" src="__JS__/ajaxupload.js"></script>
+<style type="text/css">
+table{border: 1px #c1c1c1 solid;border-top: 3px #c1c1c1 solid;border-bottom: 3px #c1c1c1 solid;clear: both;border-collapse: collapse;border-spacing: 0px;}
+thead,tbody{display: table-row-group;vertical-align: middle;border-color: inherit;}
+tr{display: table-row;vertical-align: inherit;border-color: inherit;}
+th{font-size: 16px;padding: 7px 5px;border-right: 1px #dad8d8 solid;border-left: 1px #fff solid;border-bottom: 1px #dad8d8 solid;text-align: center;}
+td{padding: 7px 5px;font-size: 12px;color: #444444;text-align: center;border-bottom: 1px #dad8d8 solid;border-left: 1px #dad8d8 solid;}
+.f_s{font-size: 16px;}
+
+.import_xls{ margin:30px; border-left:1px solid #eee;border-top:1px solid #eee;border-right:1px solid #eee; }
+.import_xls li{ padding:10px 0 10px 30px; line-height:25px; border-bottom:1px solid #eee; }
+.import_xls li .button{ padding:5px 20px;}
+
+.import_xls .input{ padding:5px;  border:1px solid #ccc; color:#666;}
+
+.import_xls .import{ display:block; padding:5px 20px; background:#1785c8; color:#FFF; border-radius:2px;}
+.import_xls .import:hover{background:#28b5d6;  -webkit-transition-duration: .5s; transition-duration: .5s;}
+
+.import_xls .cancel{ display:block; padding:4px 19px; color:#666; border:1px solid #ddd; background:#eee; border-radius:2px;}
+.import_xls .cancel:hover{background:#ddd;  -webkit-transition-duration: .5s; transition-duration: .5s;}
+</style>
+<div class="sdms_main">
+	<div class="title_name">
+        <h2>商品 &nbsp;&nbsp;<span>SDMS SE / 商品 / 商品批量导入</span></h2>
+        <p>
+            <a href="javascript:location.reload();" class="a_re"><i class="fa fa-refresh"></i> 刷新</a>
+
+        </p>
+    </div>
+    <ul class="import_xls">
+        <li>导入商品：</li>
+        <li class="flex">
+            <a href="javascript:void(0)" class="import" id="selector"><i class="fa fa-file-excel-o"></i> 选择文件</a>
+            <input type="text" value="" placeholder="路径" id="filepath" class="mg_left_10px w250 input"> 
+        </li>
+        <li>
+            1、订单文件为Excel文档(2003格式/.xls后缀)，需严遵守规定的模板格式； <br>
+            2、模板格式中不能有隐藏列、不可以有运算列、不可以有加红加粗等着色处理；  <br>
+            3、可下载模板参照 <a href="__PUBLIC__/temp/Goods.xls" class="a_c_1785c8">Goods.xls</a>。 
+        </li>
+        <li class="flex">
+            <a href="javascript:void(0)" class="import" id="up" type="button"><i class="fa fa-upload"></i> 开始上传</a>
+            <a href="javascript:void(0)" class="cancel mg_left_10px"><i class="fa fa-ban"></i> 取消</a>
+        </li>
+    </ul>
+    <div id="resultlist" style='display:none;'>
+        <table width="100%" border="0" cellspacing="0" cellpadding="0" class="dataTbl" id='tablelist'>
+            <thead>
+                <tr>
+                    <th>商品名称</th>
+                    <th>商品编码</th>
+                    <th>上传状态(原因)</th>
+                </tr>
+            </thead>
+            <tbody id="rtbody"></tbody>
+        </table>
+        <div>
+            <td colspan="2" align="left"><a href='javascript:location.reload();' class="btns c_1785c8 f_s"><i class="fa fa-upload"></i> 返回 </a></td>
+        </div>
+    </div>
+</div>
+<include file="public/foot" />
+<script type="text/javascript" src="/public/static/functionJS/goods.js"></script>
+<script type="text/javascript">
+    $(function ()
+    {
+        // 创建一个上传参数
+        var uploadOption =
+        {
+            // 提交目标
+            action: "/Index/Goods/goodsImport_handle",
+            // 服务端接收的名称
+            name: "file",
+            // 自动提交
+            autoSubmit: false,
+            responseType: 'json',
+            // 选择文件之后…
+            onChange: function (file, extension) {
+                if (new RegExp(/(xls)|(xlsx)/i).test(extension)) {
+                    $("#filepath").val(file);
+                } else {
+                    layer.msg('只限上传excel文件!');
+                }
+            },
+            // 开始上传文件
+            onSubmit: function (file, extension) {
+                //$("#state").val("正在上传" + file + "...");
+                var clos=layer.msg('正在上传'+file+'...',{time:3000});
+            },
+            // 上传完成之后
+            onComplete: function (file, response) {
+                layer.close();
+                var successNum=0;//成功次数
+                var failNum=0;//失败次数
+                if(response.statusCode==400){
+                    layer.msg(response.retMessage);return false;
+                }
+                console.log(response);
+                $.each(response.data,function(index,value){
+                    var tbodystr=null;                    
+                    if(value['status']==200){
+                        tbodystr+='<tr>';
+                        tbodystr+='<td>'+value['goodsName']+'</td>';
+                        tbodystr+='<td>'+value['goodsCode']+'</td>';   
+                        tbodystr+='<td style="color:#1785c8;">'+value['info']+'</td>';                    
+                        tbodystr+='</tr>';                      
+                        successNum++;
+                    }else{
+                        tbodystr+='<tr>';
+                        tbodystr+='<td>'+value['goodsName']+'</td>';
+                        tbodystr+='<td>'+value['goodsCode']+'</td>';   
+                        tbodystr+='<td style="color:red;">'+value['info']+'</td>';                    
+                        tbodystr+='</tr>';
+                        failNum++;   
+                    }
+                    $("#rtbody").append(tbodystr);
+                });
+                var lastStr='';
+                lastStr+="<tr><td>成功次数</td><td colspan='3' style='color:#1785c8;'>"+successNum+"</td></tr>";
+                lastStr+="<tr><td>失败次数</td><td colspan='3' style='color:red;'>"+failNum+"</td></tr>";
+                $("#rtbody").append(lastStr);
+                $('.title_name').hide();$('.import_xls').hide();
+                $("#resultlist").show();
+            }
+        }
+        // 初始化图片上传框
+        var oAjaxUpload = new AjaxUpload('#selector', uploadOption);
+        // 给上传按钮增加上传动作
+        $("#up").click(function ()
+        {
+            oAjaxUpload.submit();
+        });
+    });
+</script>

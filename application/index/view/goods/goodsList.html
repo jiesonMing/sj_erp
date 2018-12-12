@@ -1,0 +1,119 @@
+<include file="public/header" title="商品列表" />
+<include file="nav/nav" />
+<include file="nav/subNav" />
+<link href="__JS__/select/select2.min.css" rel="stylesheet" type="text/css">
+<script src="__JS__/select/select2.min.js"></script>
+<div class="sdms_main">
+	<div class="title_name">
+        <h2>商品 &nbsp;&nbsp;<span>SDMS SE / 商品 / 商品列表</span></h2>
+        <p>
+            <a href="javascript:location.reload();" class="a_re"><i class="fa fa-refresh"></i> 刷新</a>
+
+        </p>
+    </div>
+    <div class="button_search">
+        <ul class="dropdown_menu">
+            <li><a href="javascript:void(0);"><i class="fa fa-cog"></i>&nbsp;&nbsp;操作&nbsp;&nbsp;<i class="fa fa-caret-down"></i></a>
+                <ul>
+                    <li class="li">{$button.addGoods}</li>
+                </ul>
+            </li>
+        </ul>
+        <form action="/Index/Goods/goodsList" method='post'>
+        	<input type="text" placeholder="搜索..." value="{$search_goods}" class="input_search" name="search_goods"/>
+        	<input value="搜索" class="button button-primary input_search_b" type="submit" />
+    	</form>
+    </div>
+    <table class="table" border='0' cellspacing="0" cellpadding="0">
+		<thead>
+			<tr>
+				<td class="w20"><input type="checkbox" id="checkbox_a0" class="chk_3"/><label for="checkbox_a0"></label>
+				</td>
+				<td class="w35">ID</td>
+				<td class="w100">商品编码</td>
+				<td><a href="" class="a_c_1785c8">商品名称</a></td>
+				<td class="w120">品牌</td>
+				<td class="w60">规格型号</td>
+				<td class="w35 text_center">单位</td>
+				<td class="w50">售价</td>
+				<td class="w75">原产地</td>
+				<td class="w35 text_center">修改</td>
+				<td class="w75 text_center">新增SKU</td>
+			</tr>
+		</thead>
+
+		<tbody>
+			<volist name="goodsList" id="v">
+			<tr class="tr1">
+				<td><input type="checkbox" id="checkbox_a{$key+1}" class="chk_3" title="{$v.id}" /><label for="checkbox_a{$key+1}"></label></td>
+				<td>{$key+1}</td>
+				<td>{$v.goodsCode}</td>
+				<td class="td1">{$v.goodsName}</td>
+				<td>{$v.brand}</td>
+				<td>{$v.specType}</td>
+				<td class="text_center">{$v.unitName}</td>
+				<td>{$v.price}</td>
+				<td>{$v.cname}</td>
+				<td class="text_center" title="{$v.id}">{$button.editGoods}</a></td>
+				<td class="text_center addgoodsSKU" title={$v.id}>{$button.addGoodsSKU}</td>
+			</tr>
+
+			<tr class='trhide'>
+				<td></td>
+				<td colspan="9">
+					<ul class="table_ul">
+						<li><span>商品名称：</span>{$v['goodsName']}&nbsp;</li>
+                        <li><span>品牌：</span>{$v['brand']}&nbsp;</li>
+                        <li><span>商品分类：</span>{$v['cateName']}&nbsp;</li>
+                        <li><span>商品自编码：</span>{$v['goodsCode']}&nbsp;</li>
+                        <if condition="$v['goodsBarcode'] eq ''">
+                            <li class="C_F00"><span>商品条形码：</span>{$v['goodsBarcode']}&nbsp;</li>
+                        <else/>
+                            <li><span>商品条形码：</span>{$v['goodsBarcode']}&nbsp;</li>
+                        </if>
+                        <li><span>商品规格：</span>{$v['specType']}&nbsp;</li>
+                        <li><span>海关商品申报系数：</span>{$v['conversionFactor']}&nbsp;</li>
+                        <li><span>第二数量</span>{$v['secondNumber']}&nbsp;</li>
+                        <li><span>计量单位：</span>{$v['unitName']}&nbsp;</li>
+                        <li><span>毛重：</span>{$v['unitGrossWeight']}kg&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;净重：{$v['unitNetWeight']}kg&nbsp;</li>
+                        <li>
+                            <span>长：</span>
+                            <if condition="$v['length'] eq '0.00'"><i class="C_F00">{$v['length']}cm</i><else/>{$v['length']}cm</if>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;宽：<if condition="$v['width'] eq '0.00'"><i class="C_F00">{$v['width']}cm</i><else/>{$v['width']}cm</if>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;高：<if condition="$v['height'] eq '0.00'"><i class="C_F00">{$v['height']}cm</i><else/>{$v['height']}cm</if>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;体积：<if condition="$v['unitVol'] eq '0.00'"><i class="C_F00">{$v['unitVol']}cm</i><else/>{$v['unitVol']}BCM</if>&nbsp;
+                        </li>
+                        <li><span>备案价：</span>{$v['recordPrice']}&nbsp;</li>
+                        <li><span>代理价：</span>{$v['agentPrice']}&nbsp;</li>
+                        <if condition="($v['price'] eq '') or ($v['price'] eq '0.00')">
+                            <li class="C_F00"><span>销售价：</span>{$v['price']}&nbsp;</li>
+                        <else/>
+                            <li><span>销售价：</span>{$v['price']}&nbsp;</li>
+                        </if>
+                        <li><span>行邮税：</span>{$v['postNo']} {$v['postName']}&nbsp;</li>
+                        <li><span>hs编码：</span>{$v['Hscode']}&nbsp;</li>
+                        <li><span>海关备案名称：</span>{$v['cusName']}&nbsp;</li>
+                        <li><span>成份：</span>{$v['ingredient']}&nbsp;</li>
+                        <li><span>超范围使用添加剂：</span>{$v['additives']}&nbsp;</li>
+                        <li><span>含有害物质：</span>{$v['nasties']}&nbsp;</li>
+                        <li><span>原产国：</span>{$v['country']}.{$v['cname']}&nbsp;</li>
+                        <li><span>生产厂家：</span>{$v['producer']}&nbsp;</li>
+                        <li><span>生产厂家地址：</span>{$v['producerAdr']}&nbsp;</li>
+					</ul>
+				</td>
+				<td colspan="2"></td>
+			</tr>
+			</volist>
+		</tbody>
+
+	</table>
+	<div class="page_size">
+		<div class="button">
+			{$button.delGoods}
+			{$button.addGoods}
+			{$button.goodsImport}
+		</div>
+		<div class="page order_1 flex_end">
+            {$goodsList->render()}
+        </div>
+	</div>
+</div>
+<include file="public/foot" />
+<script type="text/javascript" src="/public/static/functionJS/goods.js"></script>

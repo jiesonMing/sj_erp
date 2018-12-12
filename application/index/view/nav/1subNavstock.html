@@ -1,0 +1,33 @@
+<ul class="sdms_second_nav">
+<h3>库存</h3>
+<if condition="$subNav eq 'onStock'">
+<li><a href="/Index/Stock/onStock" class="a">商品上架</a></li>
+<else />
+<li><a href="/Index/Stock/onStock">商品上架</a></li>
+</if>
+<if condition="$subNav eq 'stockGoods'">
+<li><a href="/Index/Stock/stockGoods" class="a">库存(商品)</a></li>
+<else />
+<li><a href="/Index/Stock/stockGoods">库存(商品)</a></li>
+</if>
+<if condition="$subNav eq 'stockMyWare'">
+<li><a href="/Index/Stock/stockMyWare" class="a">库存(自营仓)</a></li>
+<else />
+<li><a href="/Index/Stock/stockMyWare">库存(自营仓)</a></li>
+</if>
+<if condition="$subNav eq 'stockThirdWare'">
+<li><a href="/Index/Stock/stockThirdWare" class="a">库存(第三方仓)</a></li>
+<else />
+<li><a href="/Index/Stock/stockThirdWare">库存(第三方仓)</a></li>
+</if>
+<if condition="$subNav eq 'stockLog'">
+<li><a href="/Index/Stock/stockLog" class="a">库存日志</a></li>
+<else />
+<li><a href="/Index/Stock/stockLog">库存日志</a></li>
+</if>
+<if condition="$subNav eq 'allocation'">
+<li><a href="/Index/Stock/allocation" class="a">调拨</a></li>
+<else />
+<li><a href="/Index/Stock/allocation">调拨</a></li>
+</if>
+</ul>

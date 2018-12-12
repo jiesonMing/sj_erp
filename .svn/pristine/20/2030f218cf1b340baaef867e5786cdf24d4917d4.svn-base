@@ -1,0 +1,8 @@
+<ul class="sdms_second_nav">
+<h3>客户</h3>
+<if condition="$subNav eq 'dealer'">
+<li><a href="/Index/Dealer/index" class="a">客户详情</a></li>
+<else />
+<li><a href="/Index/Dealer/index">客户详情</a></li>
+</if>
+</ul>

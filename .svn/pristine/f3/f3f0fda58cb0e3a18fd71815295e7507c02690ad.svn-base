@@ -1,0 +1,18 @@
+<ul class="sdms_second_nav">
+<h3>采购</h3>
+<if condition="$subNav eq 'purchaserList'">
+<li><a href="/Index/Purchase/purchaserList" class="a">采购报价单</a></li>
+<else />
+<li><a href="/Index/Purchase/purchaserList">采购报价单</a></li>
+</if>
+<if condition="$subNav eq 'order'">
+<li><a href="/Index/Purchase/order" class="a">采购订单</a></li>
+<else />
+<li><a href="/Index/Purchase/order">采购订单</a></li>
+</if>
+<if condition="$subNav eq 'reback'">
+<li><a href="/Index/Purchase/reback" class="a">采购退货</a></li>
+<else />
+<li><a href="/Index/Purchase/reback">采购退货</a></li>
+</if>
+</ul>

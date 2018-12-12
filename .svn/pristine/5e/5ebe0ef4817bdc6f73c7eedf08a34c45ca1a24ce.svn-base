@@ -1,0 +1,16 @@
+<include file="public/header" title="添加商品分类" />
+<include file="nav/nav" />
+<include file="nav/subNav" />
+<link href="__JS__/select/select2.min.css" rel="stylesheet" type="text/css">
+<script src="__JS__/select/select2.min.js"></script>
+<div class="sdms_main">
+	<div class="title_name">
+        <h2>商品 &nbsp;&nbsp;<span>SDMS SE / 商品分类 / 添加商品分类</span></h2>
+        <p>
+            <a href="javascript:location.reload();" class="a_button_white"><i class="fa fa-refresh"></i> 刷新</a>
+            
+        </p>
+    </div>
+    
+</div>
+<include file="public/foot" />

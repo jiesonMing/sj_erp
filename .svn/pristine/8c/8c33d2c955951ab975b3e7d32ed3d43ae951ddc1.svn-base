@@ -1,0 +1,106 @@
+<?php
+
+namespace app\index\controller;
+
+use think\Controller;
+use think\Session;
+use think\Config;
+use app\index\model\Users;
+
+class BaseController extends Controller
+{
+    protected $referer='';
+    protected $userId=0;
+    protected $authId=0;
+    protected $isAdmin=0;
+    protected $companyId=0;
+
+    public function _initialize()
+    {
+        $this->userId=Session::get('userId');
+        $this->authId=Session::get('authId');
+        $this->isAdmin=Session::get('isAdmin');
+        $this->companyId=Session::get('companyId');
+
+        //如果该用户id或者权限id异常，则重新登陆
+        if(!$this->userId){
+            Session::clear();
+            if(request()->isPost()){
+                errorMsg(300,'请先登陆！');
+            }else{
+                $this->error('请先登陆','/Index/User/login');
+            }
+        }
+
+        //如果该用户id或者权限id异常，则重新登陆
+        if(!$this->authId && !$this->isAdmin){
+            $this->logout();
+            if(request()->isPost()){
+                errorMsg(300,'请先登陆！');
+            }else{
+                $this->error('请先登陆','/Index/User/login');
+            }
+        }
+
+        //判断会话是否过期
+        if (time() - session::get('session_start_time') > Config::get('session.expire')) {
+            $this->logout();
+            if(request()->isPost()){
+                errorMsg(300,'登陆已经过期，请重新登陆！');
+            }else {
+                $this->error('登陆已经过期', '/Index/User/login');
+            }
+        }
+
+        //非管理员验证权限
+        if(!$this->isAdmin){
+            $this->checkAuth(request()->action());
+        }
+
+        //设置二级导航的
+        Session::set('subNav',strtolower(request()->controller()));
+
+        //顶部按钮
+        $topNav=Config::get('func'.$this->authId.'.top');
+        $this->assign('topNav',$topNav);
+
+        //上一页url
+        $this->referer=request()->server('HTTP_REFERER');
+        if(!$this->referer){
+            //如果上一页url不存在，则设为主页
+            $this->referer=request()->server('SERVER_NAME');
+        }
+        $this->assign('referer',$this->referer);
+    }
+
+    //验证当前用户是否有权限使用该模块
+    protected function checkAuth($authName){
+        $str='';
+        if(!$this->authId){
+            $str='当前员工没有权限使用系统，请重新登陆！';
+        }else{
+            $result=db('modular')->alias('m')->join('erp_auth_modular am',"am.modularId=m.modularId and am.authId='{$this->authId}'",'left')->field('m.modularId,am.modularId as amoudlarId')->where("m.modularEnName='{$authName}'")->find();
+            if($result){
+                if(!$result['amoudlarId']){
+                    $str='当前员工没有使用该功能的权限，请验证！';
+                }
+            }
+        }
+        if($str) {
+            if (request()->isPost()) {
+                errorMsg(400, $str);
+            } else {
+                $this->error($str, '/Index/Index/index');
+            }
+        }
+    }
+
+    //退出登陆
+    protected function logout(){
+        $users=Users::get($this->userId);
+        $users->isLogin=0;
+        $users->save();
+        Session::clear();
+    }
+
+}

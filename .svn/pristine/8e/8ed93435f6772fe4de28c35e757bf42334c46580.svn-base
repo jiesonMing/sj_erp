@@ -1,0 +1,98 @@
+<include file="public/header" title="自营仓管理" />
+<include file="nav/nav" />
+<include file="nav/subNav" />
+<div class="sdms_main"> 
+    <div class="title_name">
+    	<h2>自营仓管理 &nbsp;<span>SDMS SE/ 仓库管理 / 列表</span></h2>
+        <p>
+            <a href="javascript:location.reload();" class="a_re"><i class="fa fa-refresh"></i> 刷新</a>
+            {$button.selfDelList}
+        </p>
+    </div>
+    
+    <div class="button_search">
+        <ul class="dropdown_menu">
+            <li><a href="#"><i class="fa fa-cog"></i>&nbsp;&nbsp;操作&nbsp;&nbsp;<i class="fa fa-caret-down"></i></a>
+                <ul>
+                    <li class="li">{$button.addSelfWarehouse}</li>
+                </ul>
+            </li>
+        </ul>
+        <input type="text" name="search" value="{$value}" class="input_search" />
+        <input class="button button-primary input_search_b" value="搜索" type="submit" />
+    </div>
+    
+    <table class="table" border='0' cellspacing="0" cellpadding="0">
+    	<thead>
+            <tr>
+                <td class="w35"><input type="checkbox" id="checkbox_a0" class="chk_1"/><label for="checkbox_a0"></label></td>
+                <td class="w35">ID</td>
+                <td class="w75">仓库编码</td>
+                <td class="w150">仓库名称</td>
+                <td class="w150">仓库类型</td>
+                <td>仓库地址</td>
+                <td class="w180">仓储公司名称</td>
+                <td class="w150">仓库负责人/电话</td>
+                <td class="w130">最新更新</td>
+                <td class="text_center w45">操作</td>
+                <td class="w35 text_center">货架</td>
+            </tr>
+        </thead>
+        
+        <tbody>
+        	<volist name="result" id="ware">
+	            <tr class="tr1">
+	                <td><input type="checkbox" id="checkbox_a1" class="chk_1" /><label for="checkbox_a1"></label></td>
+	                <td>{$ware.id}</td>
+	                <td>{$ware.warehouseCode}</td>
+	                <td>{$ware.warehouseName}</td>
+                    <td>{$ware.wareType}</td>
+	                <td>{$ware.warehouseAddr}</td>
+	                <td>{$ware.companyName}</td>
+	                <td>{$ware.contName}/{$ware.conTel}</td>
+	                <td>{$ware.updateTime}</td>
+	                <td class="text_center">
+                        <input type="hidden" class="warehouseId" value="{$ware.id}" />
+	                	{$button.editSelfWarehouse}
+	                </td>
+                    <td class="text_center">
+                        {$button.goodsShelvesList}
+                    </td>
+	            </tr>
+	        </volist>    
+        </tbody>
+    </table>
+    <div class="page_size">
+        <div class="button">
+            {$button.addSelfWarehouse}
+        </div>
+        <div class="page order_1 flex_end">
+            {$result->render()}
+        </div>
+    </div>
+
+ </div>
+<script>
+    $(".input_search_b").click(function(){
+        var value=$(".input_search").val();
+        var url='/Index/Warehouse/selfWarehouse';
+        if(value){
+            url+='/value/'+value;
+        }
+        location.href=url;
+    });
+    $(".selfWarehouse").each(function(edindex,item){
+        $(this).click(function(){
+            var warehouseId=$(".warehouseId").eq(edindex).val();
+            location.href='/Index/Warehouse/editSelfWarehouse/id/'+warehouseId;
+        });
+    });
+
+    $(".selfStorage").each(function(edindex,item){
+        $(this).click(function(){
+            var warehouseId=$(".warehouseId").eq(edindex).val();
+            location.href='/Index/Warehouse/storageList/id/'+warehouseId;
+        });
+    });
+</script>
+<include file="public/foot" />

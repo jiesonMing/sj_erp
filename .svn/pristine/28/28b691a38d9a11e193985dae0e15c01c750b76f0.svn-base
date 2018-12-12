@@ -1,0 +1,216 @@
+<include file="public/header" title="商品入仓单" />
+<include file="nav/nav" />
+<include file="nav/subNav" />
+<div class="sdms_main">
+    <div class="title_name">
+        <h2>商品入仓单 &nbsp;&nbsp;<span>SDMS SE / 入出仓 / 列表</span></h2>
+        <p>
+            <a href="javascript:location.reload();" class="a_re"><i class="fa fa-refresh"></i> 刷新</a>
+            {$button.inwareDelList}
+        </p>
+    </div>
+    <div class="button_search">
+        <ul class="dropdown_menu">
+            <li><a href="javascript:void(0);"><i class="fa fa-cog"></i>&nbsp;&nbsp;操作&nbsp;&nbsp;<i class="fa fa-caret-down"></i></a>
+                <ul>
+                    <li class="li">{$button.addInware}</li>
+                </ul>
+            </li>
+        </ul>
+        <input type="text" value="{$value}" class="input_search" />
+        <input value="搜索" class="button button-primary input_search_b" type="submit" />
+    </div>
+    <table class='table' border="0" cellpadding="0" cellspacing="0">
+        <thead>
+            <tr>
+                <td class="w20"><input type="checkbox" id="checkbox_a0" class="chk_3 checkbox0"/><label for="checkbox_a0"></label></td>
+                <td class="w30 text_center">ID</td>
+                <td class="w130 text_center">入仓单号</td>
+                <td class="w100 text_center">关联类型/单号</td>
+                <td class="w100 text_center">供应商</td>
+                <td class="w100 text_center">店铺</td>
+                <td class="w100 text_center">仓库</td>
+                <td class="w100 text_center">总金额</td>
+                <td class="w100 text_center">创建时间</td>
+                <td class="w100 text_center">状态</td>
+                <td class="w45 text_center">操作</td>
+                <td class="w45 text_center">QC质检</td>
+            </tr>
+        </thead>
+        <tbody>
+            <volist name="list" id="inwarehouse">
+                <tr class="tr1">
+                    <td><input type="checkbox" id="checkbox_a{$inwarehouse.inwareId}" class="chk_3" /><label for="checkbox_a{$inwarehouse.inwareId}"></label></td>
+                    <td class="text_center">{$inwarehouse.inwareId}</td>
+                    <td class="text_center">{$inwarehouse.inwareCode}</td>
+                    <if condition="$inwarehouse['parentType'] eq 0">
+                        <td class="text_center">无关联</td>
+                    <elseif condition="$inwarehouse['parentType'] eq 1" />
+                        <td class="text_center">采购单/{$inwarehouse.contractNum}</td>
+                    <elseif condition="$inwarehouse['parentType'] eq 2" />
+                        <td class="text_center">欠货单/{$inwarehouse.oweCode}</td>
+                    <else />
+                        <td class="text_center">其他</td>
+                    </if>
+                    <td class="text_center">{$inwarehouse.supplierName}</td>
+                    <td class="text_center">{$inwarehouse.shopName}</td>
+                    <td class="text_center">{$inwarehouse.warehouseName}</td>
+                    <td class="text_center">{$inwarehouse.payMoney}</td>
+                    <td class="text_center">{$inwarehouse.createTime}</td>
+                    <td class="text_center">{$statusArr[$inwarehouse.status]}</td>
+                    <td class="text_center">
+                        <input type="hidden" class="inwarehouse" value="{$inwarehouse.inwareId}" />
+                        {$button.editInware}
+                    </td>
+                    <td class="text_center">
+                        <if condition="$inwarehouse['inBatch'] gt 0">
+                            {$button.addBatch}
+                        <else />
+                            {$button.batchList}
+                        </if>
+                    </td>
+                </tr>
+            </volist>
+        </tbody>
+    </table>
+    <div class="page_size">
+        <div class="tbutton">
+
+        </div>
+        <div class="page">
+            {$list->render()}
+        </div>
+    </div>
+</div>
+<script>
+    //搜索
+    $(".input_search_b").click(function(){
+        var value=$(".input_search").val();
+        var url='/Index/Declaration/inwarehouse';
+        if(value){
+            url+='/value/'+value;
+        }
+        location.href=url;
+    });
+    //查看、编辑入仓单
+    $(".editInware").each(function(editInware,item){
+        $(this).click(function(){
+            var inwareId=$(".inwarehouse").eq(editInware).val();
+            var url='/Index/Declaration/editInware/inwareId/'+inwareId;
+            location.href=url;
+        });
+    });
+    //QC质检
+    $(".addBatch").each(function(){
+        $(this).click(function(){
+            var inwareId=$(this).parent().prev().find(".inwarehouse").val();
+            var url='/Index/Declaration/addBatch/inwareId/'+inwareId;
+            location.href=url;
+        });
+    });
+    //QC批次详情
+    $(".batchList").each(function(){
+        $(this).click(function(){
+            var inwareId=$(this).parent().prev().find(".inwarehouse").val();
+            var url='/Index/Declaration/batch/inwareId/'+inwareId;
+            location.href=url;
+        });
+    });
+    $(".delInware").each(function(delInware,item){
+        $(this).click(function(){
+            var inwareId=$(".inwarehouse").eq(delInware).val();
+            if(inwareId){
+                var index=layer.confirm('确定启用当前模块吗', {icon: 3, title:'提示'}, function(i){
+                    var postdata={inwareId:inwareId};
+                    $.ajax({
+                        type : 'POST',
+                        url : "/Index/Declaration/delInware",
+                        dataType : 'json',
+                        data : postdata,
+                        success : function(el){
+                            if(el.statusCode==200){
+                                var index=layer.open({
+                                    type:0,
+                                    icon:'1',
+                                    title:'成功提示信息：',
+                                    content:'删除成功',
+                                    end: function(){
+                                        location.reload();
+                                    }
+                                });
+                                layer.style(index,{
+                                    width:'500px',
+                                    top:'120px'
+                                });
+                            }else if(el.statusCode==300){
+                                var index=layer.open({
+                                    type:0,
+                                    icon:'2',
+                                    title:'错误提示信息：',
+                                    content:el.retMessage,
+                                    end: function(){
+                                        location.href='/Index/User/login';
+                                    }
+                                });
+                                layer.style(index,{
+                                    width:'500px',
+                                    top:'120px'
+                                });
+                                return false;
+                            }else{
+                                isSubmit=true;
+                                var index=layer.open({
+                                    type:0,
+                                    icon:'2',
+                                    title:'错误提示信息：',
+                                    content:el.retMessage,
+                                    end: function(){
+                                        location.reload();
+                                    }
+                                });
+                                layer.style(index,{
+                                    width:'400px',
+                                    top:'120px'
+                                });
+                            }
+                        },
+                        error: function(el){
+                            var index=layer.open({
+                                type:0,
+                                icon:'2',
+                                title:'错误提示信息：',
+                                content:'操作失败，请刷新重试',
+                                end: function(){
+                                    location.reload();
+                                }
+                            });
+                            layer.style(index,{
+                                width:'400px',
+                                top:'120px'
+                            });
+                        }
+                    });
+                });
+                layer.style(index,{
+                    width:'400px',
+                    top:'120px'
+                });
+            }else{
+                var index=layer.open({
+                    type:0,
+                    icon:'2',
+                    title:'失败提示信息：',
+                    content:'入仓单信息有误',
+                    end: function(){
+                        location.reload();
+                    }
+                });
+                layer.style(index,{
+                    width:'500px',
+                    top:'120px'
+                });
+            }
+        });
+    });
+</script>
+<include file="public/foot" />

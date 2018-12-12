@@ -1,0 +1,66 @@
+<?php
+return [
+'purchaserList'=>[
+'addQuotation'=>'',
+'editQuotation'=>'',
+'delQuotation'=>'',
+],
+'modularList'=>[
+'addModular'=>'',
+'editModular'=>'',
+'delModular'=>'',
+'modularDelList'=>'',
+'useModular'=>'',
+'purgeModular'=>'',
+],
+'authsList'=>[
+'addAuth'=>'',
+'editAuth'=>'',
+'delAuth'=>'',
+'authDelList'=>'',
+'useAuth'=>'',
+'purgeAuth'=>'',
+],
+'order'=>[
+'delModular'=>'',
+'checkOrder'=>'',
+],
+'dealer'=>[
+'addDealer'=>'',
+'editDealerDetails'=>'',
+],
+'top'=>[
+'goodsServer'=>'<a href="/Index/Top/goodsServer" class="">商品与服务 <i class="fa fa-caret-down"></i></a>',
+'search'=>'<a href="/Index/Top/search" class="">搜索</a>',
+'workOrder'=>'<a href="/Index/Top/workOrder" class="">工单服务</a>',
+'help'=>'<a href="/Index/Top/help" class="">帮助与文档</a>',
+],
+'goodsList'=>[
+'delGoods'=>'',
+],
+'packageList'=>[
+'addPackage'=>'',
+],
+'userList'=>[
+'addUser'=>'',
+'editUser'=>'',
+'delUser'=>'',
+'userDelList'=>'',
+'useUser'=>'',
+'purgeUser'=>'',
+],
+'roleList'=>[
+'addRole'=>'',
+'editRole'=>'',
+'delRole'=>'',
+'roleDelList'=>'',
+'useRole'=>'',
+'purgeRole'=>'',
+],
+'reback'=>[
+'addReback'=>'',
+],
+'myUser'=>[
+'editMyUser'=>'',
+],
+];

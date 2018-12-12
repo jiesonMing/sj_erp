@@ -1,0 +1,264 @@
+<include file="public/header" title="权限组回收站" />
+<include file="nav/nav" />
+<include file="nav/subNav" />
+<div class="sdms_main">
+    <div class="title_name">
+        <h2>权限组回收站 &nbsp;&nbsp;<span>SDMS SE / 权限 / 列表</span></h2>
+        <p>
+            <a href="javascript:location.reload();" class="a_re"><i class="fa fa-refresh"></i> 刷新</a>
+        </p>
+    </div>
+    <div class="button_search">
+        <ul class="dropdown_menu">
+            <li><a href="javascript:void(0);"><i class="fa fa-cog"></i>&nbsp;&nbsp;操作&nbsp;&nbsp;<i class="fa fa-caret-down"></i></a>
+                <ul>
+                    <li class="li">{$button.addAuth}</li>
+                </ul>
+            </li>
+        </ul>
+        <input type="text" value="{$value}" class="input_search" />
+        <a class="a_button_white mg_left_5 search">搜索</a>
+    </div>
+    <table class='table' border="0" cellpadding="0" cellspacing="0">
+        <thead>
+            <tr>
+                <td class="w20"><input type="checkbox" id="checkbox_a0" class="chk_3 checkbox0"/><label for="checkbox_a0"></label></td>
+                <td class="w30 has-text-centered">编号</td>
+                <td class="w100 has-text-centered">权限组名称</td>
+                <td class="w130 has-text-centered">创建时间</td>
+                <td class="w100 has-text-centered">备注</td>
+                <td class="w45 has-text-centered">状态</td>
+                <td class="w45 has-text-centered">操作</td>
+            </tr>
+        </thead>
+        <tbody>
+            <volist name="list" id="auth">
+                <tr class="tr1">
+                    <td><input type="checkbox" id="checkbox_a{$auth.authId}" class="chk_3" /><label for="checkbox_a{$auth.authId}"></label></td>
+                    <td class="has-text-centered">{$auth.authId}</td>
+                    <td class="has-text-centered">{$auth.authName}</td>
+                    <td class="has-text-centered">{$auth.createTime}</td>
+                    <td class="has-text-centered">{$auth.remark}</td>
+                    <td class="has-text-centered">
+                        <input type="hidden" class="authId" value="{$auth.authId}" />
+                        {$button.useAuth}
+                    </td>
+                    <td class="has-text-centered">
+                        {$button.purgeAuth}
+                    </td>
+                </tr>
+            </volist>
+        </tbody>
+    </table>
+    <div class="page_size">
+        <div class="tbutton">
+
+        </div>
+        <div class="page">
+            {$list->render()}
+        </div>
+    </div>
+</div>
+<script>
+    $(".search").click(function(){
+        var value=$(".input_search").val();
+        var url='/Index/Auth/modularDelList';
+        if(value){
+            url+='/value/'+value;
+        }
+        location.href=url;
+    });
+    $(".useAuth").each(function(authindex,item){
+        $(this).click(function(){
+            var authId=$(".authId").eq(authindex).val();
+            if(authId){
+                var index=layer.confirm('确定启用当前权限组吗', {icon: 3, title:'提示'}, function(i){
+                    var postdata={authId:authId};
+                    $.ajax({
+                        type : 'POST',
+                        url : "/Index/Auth/useAuth",
+                        dataType : 'json',
+                        data : postdata,
+                        success : function(el){
+                            if(el.statusCode==200){
+                                var index=layer.open({
+                                    type:0,
+                                    icon:'1',
+                                    title:'成功提示信息：',
+                                    content:'启用成功',
+                                    end: function(){
+                                        location.reload();
+                                    }
+                                });
+                                layer.style(index,{
+                                    width:'500px',
+                                    top:'120px'
+                                });
+                            }else if(el.statusCode==300){
+                                var index=layer.open({
+                                    type:0,
+                                    icon:'2',
+                                    title:'错误提示信息：',
+                                    content:el.retMessage,
+                                    end: function(){
+                                        location.href='/Index/User/login';
+                                    }
+                                });
+                                layer.style(index,{
+                                    width:'500px',
+                                    top:'120px'
+                                });
+                                return false;
+                            }else{
+                                isSubmit=true;
+                                var index=layer.open({
+                                    type:0,
+                                    icon:'2',
+                                    title:'错误提示信息：',
+                                    content:el.retMessage,
+                                    end: function(){
+                                        location.reload();
+                                    }
+                                });
+                                layer.style(index,{
+                                    width:'400px',
+                                    top:'120px'
+                                });
+                            }
+                        },
+                        error: function(el){
+                            var index=layer.open({
+                                type:0,
+                                icon:'2',
+                                title:'错误提示信息：',
+                                content:'操作失败，请刷新重试',
+                                end: function(){
+                                    location.reload();
+                                }
+                            });
+                            layer.style(index,{
+                                width:'400px',
+                                top:'120px'
+                            });
+                        }
+                    });
+                });
+                layer.style(index,{
+                    width:'400px',
+                    top:'120px'
+                });
+            }else{
+                var index=layer.open({
+                    type:0,
+                    icon:'2',
+                    title:'失败提示信息：',
+                    content:'用户信息有误',
+                    end: function(){
+                        location.reload();
+                    }
+                });
+                layer.style(index,{
+                    width:'500px',
+                    top:'120px'
+                });
+            }
+        });
+    });
+    $(".purge").each(function(purgindex,item){
+        $(this).click(function(){
+            var authId=$(".authId").eq(purgindex).val();
+            if(authId){
+                var index=layer.confirm('确定彻底删除当前权限组吗', {icon: 3, title:'提示'}, function(i){
+                    var postdata={authId:authId};
+                    $.ajax({
+                        type : 'POST',
+                        url : "/Index/Auth/purgeAuth",
+                        dataType : 'json',
+                        data : postdata,
+                        success : function(el){
+                            if(el.statusCode==200){
+                                var index=layer.open({
+                                    type:0,
+                                    icon:'1',
+                                    title:'成功提示信息：',
+                                    content:'彻底删除成功',
+                                    end: function(){
+                                        location.reload();
+                                    }
+                                });
+                                layer.style(index,{
+                                    width:'500px',
+                                    top:'120px'
+                                });
+                            }else if(el.statusCode==300){
+                                var index=layer.open({
+                                    type:0,
+                                    icon:'2',
+                                    title:'错误提示信息：',
+                                    content:el.retMessage,
+                                    end: function(){
+                                        location.href='/Index/User/login';
+                                    }
+                                });
+                                layer.style(index,{
+                                    width:'500px',
+                                    top:'120px'
+                                });
+                                return false;
+                            }else{
+                                isSubmit=true;
+                                var index=layer.open({
+                                    type:0,
+                                    icon:'2',
+                                    title:'错误提示信息：',
+                                    content:el.retMessage,
+                                    end: function(){
+                                        location.reload();
+                                    }
+                                });
+                                layer.style(index,{
+                                    width:'400px',
+                                    top:'120px'
+                                });
+                            }
+                        },
+                        error: function(el){
+                            var index=layer.open({
+                                type:0,
+                                icon:'2',
+                                title:'错误提示信息：',
+                                content:'操作失败，请刷新重试',
+                                end: function(){
+                                    location.reload();
+                                }
+                            });
+                            layer.style(index,{
+                                width:'400px',
+                                top:'120px'
+                            });
+                        }
+                    });
+                });
+                layer.style(index,{
+                    width:'400px',
+                    top:'120px'
+                });
+            }else{
+                var index=layer.open({
+                    type:0,
+                    icon:'2',
+                    title:'失败提示信息：',
+                    content:'用户信息有误',
+                    end: function(){
+                        location.reload();
+                    }
+                });
+                layer.style(index,{
+                    width:'500px',
+                    top:'120px'
+                });
+            }
+        });
+    })
+</script>
+<include file="public/foot" />

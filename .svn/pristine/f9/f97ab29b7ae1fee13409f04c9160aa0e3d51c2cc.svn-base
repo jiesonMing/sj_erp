@@ -1,0 +1,8 @@
+<ul class="sdms_second_nav">
+<h3>用户中心</h3>
+<if condition="$subNav eq 'myUser'">
+<li><a href="/Index/Ucenter/myUser" class="a">我的资料</a></li>
+<else />
+<li><a href="/Index/Ucenter/myUser">我的资料</a></li>
+</if>
+</ul>

@@ -1,0 +1,82 @@
+<?php
+
+namespace app\index\controller;
+
+use think\Controller;
+use think\Session;
+use think\Config;
+use app\index\model\Users;
+
+class BaseController extends Controller
+{
+    protected $referer='';
+    public function _initialize()
+    {
+        $userId=Session::get('userId');
+        $authId=Session::get('authId');
+        //如果该用户id或者权限id异常，则重新登陆
+        if(!($userId && $authId)){
+            Session::clear();
+            if(request()->isPost()){
+                errorMsg(300,'请先登陆！');
+            }else{
+                $this->error('请先登陆','/Index/User/login');
+            }
+        }
+        //判断会话是否过期
+        if (time() - session::get('session_start_time') > Config::get('session.expire')) {
+            $users=Users::get($userId);
+            $users->isLogin=0;
+            $users->save();
+            Session::clear();
+            if(request()->isPost()){
+                errorMsg(300,'登陆已经过期，请重新登陆！');
+            }else {
+                $this->error('登陆已经过期', '/Index/User/login');
+            }
+        }
+        //验证权限
+        $this->checkAuth(request()->action());
+
+        Session::set('subNav',request()->controller());
+
+        $this->assign('userId',$userId);
+        $this->assign('nickName',Session::get('nickName'));
+
+        //顶部按钮
+        $topNav=Config::get('func'.Session::get('authId').'.top');
+        $this->assign('topNav',$topNav);
+
+        //上一页url
+        $this->referer=request()->server('HTTP_REFERER');
+        if(!$this->referer){
+            //如果上一页url不存在，则设为主页
+            $this->referer=request()->server('SERVER_NAME');
+        }
+        $this->assign('referer',$this->referer);
+    }
+
+    //验证当前用户是否有权限使用该模块
+    protected function checkAuth($authName){
+        $authId=Session::get('authId');
+        $str='';
+        if($authId>0){
+            $result=db('modular')->alias('m')->join('erp_auth_modular am',"am.modularId=m.modularId and am.authId={$authId}",'left')->field('m.modularId,am.modularId as amoudlarId')->where("m.modularEnName='{$authName}'")->find();
+            if($result){
+                if(!$result['amoudlarId']){
+                    $str='当前用户没有使用该功能的权限，请验证！';
+                }
+            }
+        }else{
+            $str='当前用户没有权限使用系统，请重新登陆！';
+        }
+        if($str) {
+            if (request()->isPost()) {
+                errorMsg(400, $str);
+            } else {
+                $this->error($str, '/Index/Index/index');
+            }
+        }
+    }
+
+}

@@ -1,0 +1,44 @@
+<include file="public/header" title="添加商品分类" />
+<include file="nav/nav" />
+<include file="nav/subNav" />
+<link href="__JS__/select/select2.min.css" rel="stylesheet" type="text/css">
+<script src="__JS__/select/select2.min.js"></script>
+<div class="sdms_main">
+	<div class="title_name">
+        <h2>商品 &nbsp;&nbsp;<span>SDMS SE / 商品分类 / 添加商品分类</span></h2>
+        <p>
+            <a href="javascript:location.reload();" class="a_button_white"><i class="fa fa-refresh"></i> 刷新</a>
+            
+        </p>
+    </div>
+    <ul class="edit_add">
+        <li></li>
+        <li>
+        	<p>上级分类：</p>
+            <select class="select2 w180 topCate" name="topId">
+            	<option value="0" selected="selected">0.顶级分类</option>  
+            	<volist name="topCate" id="v">        
+                	<option value="{$v['id']}">{$key+1}.{$v['cName']}</option>
+                </volist>
+                
+            </select>
+            
+            <select class="select2 w180 secondCate" name="secondId">
+            	<option value="0">二级分类</option>
+            </select>
+
+        </li>
+        <li><p>类别名称：</p><input type="text" name="cName" value="" class="w200"></li>
+
+        <li><p>&nbsp;</p><a href="#" class="ok_send_a addCate_submit"><i class="fa fa-check" style="padding: 14px 4px"></i> 提交</a></li>
+    </ul>
+</div>
+<script type="text/javascript">
+	$(function(){
+		$('.select2').select2({
+            language: "zh-CN"
+        });
+	})
+</script>
+<include file="public/foot" />
+<script type="text/javascript" src="/public/static/functionJS/goods.js"></script>

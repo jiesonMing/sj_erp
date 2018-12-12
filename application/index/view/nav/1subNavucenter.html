@@ -1,0 +1,18 @@
+<ul class="sdms_second_nav">
+<h3>用户中心</h3>
+<if condition="$subNav eq 'myUser'">
+<li><a href="/Index/Ucenter/myUser" class="a">我的资料</a></li>
+<else />
+<li><a href="/Index/Ucenter/myUser">我的资料</a></li>
+</if>
+<if condition="$subNav eq 'userList'">
+<li><a href="/Index/Ucenter/userList" class="a">员工管理</a></li>
+<else />
+<li><a href="/Index/Ucenter/userList">员工管理</a></li>
+</if>
+<if condition="$subNav eq 'roleList'">
+<li><a href="/Index/Ucenter/roleList" class="a">组织架构</a></li>
+<else />
+<li><a href="/Index/Ucenter/roleList">组织架构</a></li>
+</if>
+</ul>

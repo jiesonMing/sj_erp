@@ -1,0 +1,82 @@
+<meta charset="utf-8">
+
+<script type="application/x-javascript" src="__JS__/jquery-3.2.1.min.js"></script>
+<link href="__JS__/select/select2.min.css" rel="stylesheet" type="text/css">
+<script src="__JS__/select/select2.min.js"></script>
+<link rel="stylesheet" href="__CSS__/font-awesome.min.css">
+<link rel="stylesheet" href="__CSS__/open.css">
+<script type="application/x-javascript" src="__JS__/layer/layer.js"></script>
+<script>
+	$( function () {
+		$( ".trhide" ).hide();
+		$( ".tr1" ).each( function ( i ) {
+			if ( i % 2 == 0 ) {
+				$( this ).addClass( "tr_2" );
+			} else {
+				$( this ).addClass( "tr_1" );
+			}
+			$( this ).click( function () {
+				if ( $( ".trhide" ).eq( i ).is( ":hidden" ) ) {
+					$( ".trhide" ).eq( i ).show();
+				} else {
+					$( ".trhide" ).eq( i ).hide();
+				}
+			} );
+		} );
+		$( '.select2' ).select2( {
+			language: "zh-CN"
+		} );
+
+		$(".ok_open").click(function(){
+			var stype = $("#stype option:selected").val();
+			var shelfNumber = $("input[name='shelfNumber']").val();
+	        var savepath = "/Index/Open/editStorage";
+	        var storageId = "{$storageId}";
+	        $.ajax({
+	           	type: "post",
+	           	dataType:'json',
+	           	url: savepath,
+	           	data: {storageId:storageId,stype:stype,shelfNumber:shelfNumber},
+	           	success: function(el){
+	           		// console.log(el);return false;
+	                if(el) {
+	                    if (el.statusCode == 200) {
+	                        layer.msg("修改成功！",{icon:0,time:1000},function(){
+	                            window.parent.location.reload();
+	                        });
+	                    }else{
+	                        layer.msg(el.retMessage,{icon:0,time:2000});
+	                    }
+	                }else{
+	                    layer.msg('未知错误，请重试！',{icon:0,time:2000});
+	                }                                                           
+	           	}
+	        });
+		});
+	} );
+</script>
+
+<body>
+	<ul class="loading_ul edit_list">
+		<li>货架信息：{$list['warehouseName']}</li>
+		<li>
+			<p>货架层数：</p>
+			<select class="select2 w100" id="stype">
+				<option value="1" <if condition="$list['stype'] eq 1">selected="selected"</if> >1.一层</option>
+				<option value="2" <if condition="$list['stype'] eq 2">selected="selected"</if> >2.二层</option>
+				<option value="3" <if condition="$list['stype'] eq 3">selected="selected"</if> >3.三层</option>
+				<option value="4" <if condition="$list['stype'] eq 4">selected="selected"</if> >4.四层</option>
+			</select>
+		</li>
+		<li>
+			<p>货架编码：</p><input class="w250" type="text" name="shelfNumber" value="{$list['shelfNumber']}" />
+		</li>
+		<li class="li_1">
+			<div>
+				<a href="javascript:void(0);" class="ok_open"><i class="fa fa-check"></i> 确认提交</a>
+			</div>
+
+		</li>
+
+	</ul>
+</body>

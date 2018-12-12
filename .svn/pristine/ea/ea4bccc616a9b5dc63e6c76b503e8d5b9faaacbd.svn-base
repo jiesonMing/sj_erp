@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>登陆</title>
+    <link rel="stylesheet" href="__CSS__/font-awesome.min.css">
+    <link rel="stylesheet" href="__CSS__/bulma.min.css">
+    <link rel="stylesheet" href="__CSS__/Manage.font.css">
+    <script type="application/x-javascript" src="__JS__/jquery-3.2.1.min.js"></script>
+    <script type="application/x-javascript" src="__JS__/layer/layer.js"></script>
+</head>
+<body>
+    <ul class="login_ul">
+        <li class="sdms_logo text_center">S<span>erp </span>管理员</li>
+        <li><input class="input_text" name="mobile" type="text" value=""  placeholder="登陆手机" /></li>
+        <li><input class="input_text" name="password" type="password" value=""  placeholder="密码"/></li>
+        <li class="h30 login_font_color"><input type="checkbox" id="checkbox_Login" value="on" class="chk_2"/><label for="checkbox_Login"></label> 记住我</li>
+        <li><input class="input_button font_b" id="btn-submit" type="button" value=" - 登 录 - " /></li>
+        <li class="h30 login_font_color"><a href="#">忘记了密码？</a></li>
+        <li class="login_font_color">您是否还没账户？ <a href="#">请点击这里</a></li>
+        <li class="h30 login_font_color alpha_50">&copy; by sdms.</li>
+    </ul>
+<script>
+    $(function(){
+        $("#btn-submit").click(function(){
+            var isSubmit=true;
+            if(isSubmit){
+                isSubmit=false;
+                var mobile=$("input[name=mobile]").val();
+                if($.trim(mobile)==''){
+                    isSubmit=true;
+                    var index=layer.open({
+                        type:0,
+                        icon:'2',
+                        title:'错误提示信息：',
+                        content:'登陆手机不能为空'
+                    });
+                    layer.style(index,{
+                        width:'400px',
+                        top:'120px'
+                    });
+                    return false;
+                }
+                var password=$("input[name=password]").val();
+                if($.trim(password)==''){
+                    isSubmit=true;
+                    var index=layer.open({
+                        type:0,
+                        icon:'2',
+                        title:'错误提示信息：',
+                        content:'密码不能为空'
+                    });
+                    layer.style(index,{
+                        width:'400px',
+                        top:'120px'
+                    });
+                    return false;
+                }
+                var postdata={mobile:mobile,password:password};
+                $.ajax({
+                    type : 'POST',
+                    url : "/Admin/User/login",
+                    dataType : 'json',
+                    data : postdata,
+                    success : function(el){
+                        if(el.statusCode==200){
+                            var index=layer.open({
+                                type:0,
+                                icon:'1',
+                                title:'成功提示信息：',
+                                content:'登陆成功',
+                                end: function(){
+                                    location.href='/Admin/index/index';
+                                }
+                            });
+                            layer.style(index,{
+                                width:'500px',
+                                top:'120px'
+                            });
+                        }else{
+                            isSubmit=true;
+                            var index=layer.open({
+                                type:0,
+                                icon:'2',
+                                title:'错误提示信息：',
+                                content:el.retMessage
+                            });
+                            layer.style(index,{
+                                width:'400px',
+                                top:'120px'
+                            });
+                        }
+                    },
+                    error: function(el){
+                        isSubmit=true;
+                        var index=layer.open({
+                            type:0,
+                            icon:'2',
+                            title:'错误提示信息：',
+                            content:el.retMessage
+                        });
+                        layer.style(index,{
+                            width:'400px',
+                            top:'120px'
+                        });
+                    }
+                });
+            }else{
+                var index=layer.open({
+                    type:0,
+                    icon:'0',
+                    title:'提示信息：',
+                    content:'登陆中，请稍等！'
+                });
+                layer.style(index,{
+                    width:'500px',
+                    top:'120px'
+                });
+                return false;
+            }
+        });
+    });
+</script>
+</body>
+</html>

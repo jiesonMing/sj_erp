@@ -1,0 +1,134 @@
+<div class="tbody">
+<dl class="sdms_nav_spread sdms_nav" id="sdmsnav">
+<a href="javascript:changeNav();" class="zooming"><i class="fa fa-bars fa-rotate-90"></i></a>
+<if condition="($nav eq 'purchase') or ($nav eq 'order') or ($nav eq 'goods')">
+<dt class="tips" data-tipso="产品与服务"><a href="javascript:void(0);" class="nav_a"><i class="fa fa-caret-down"></i><span>产品与服务</span></a></dt>
+<div class="nav_dd">
+<else />
+<dt class="tips" data-tipso="产品与服务"><a href="javascript:void(0);" class="nav_a"><i class="fa fa-caret-right"></i><span>产品与服务</span></a></dt>
+<div class="nav_dd nav_none">
+</if>
+<if condition="$nav eq 'purchase'">
+<dd class="tips" data-tipso="采购"><a href="/Index/Purchase/purchaserList" class='a'><i class="fa fa-shopping-cart"></i><span>采购</span></a></dd>
+<else />
+<dd class="tips" data-tipso="采购"><a href="/Index/Purchase/purchaserList"><i class="fa fa-shopping-cart"></i><span>采购</span></a></dd>
+</if>
+<if condition="$nav eq 'order'">
+<dd class="tips" data-tipso="订单"><a href="/Index/Order/b2c" class='a'><i class="fa fa-truck"></i><span>订单</span></a></dd>
+<else />
+<dd class="tips" data-tipso="订单"><a href="/Index/Order/b2c"><i class="fa fa-truck"></i><span>订单</span></a></dd>
+</if>
+<if condition="$nav eq 'goods'">
+<dd class="tips" data-tipso="商品"><a href="/Index/Goods/index" class='a'><i class="fa fa-navicon"></i><span>商品</span></a></dd>
+<else />
+<dd class="tips" data-tipso="商品"><a href="/Index/Goods/index"><i class="fa fa-navicon"></i><span>商品</span></a></dd>
+</if>
+</div>
+<if condition="($nav eq 'dealer') or ($nav eq 'supplier') or ($nav eq 'client')">
+<dt class="tips" data-tipso="关系管理"><a href="javascript:void(0);" class="nav_a"><i class="fa fa-caret-down"></i><span>关系管理</span></a></dt>
+<div class="nav_dd">
+<else />
+<dt class="tips" data-tipso="关系管理"><a href="javascript:void(0);" class="nav_a"><i class="fa fa-caret-right"></i><span>关系管理</span></a></dt>
+<div class="nav_dd nav_none">
+</if>
+<if condition="$nav eq 'dealer'">
+<dd class="tips" data-tipso="客户"><a href="/Index/Dealer/index" class='a'><i class="fa fa-user-plus"></i><span>客户</span></a></dd>
+<else />
+<dd class="tips" data-tipso="客户"><a href="/Index/Dealer/index"><i class="fa fa-user-plus"></i><span>客户</span></a></dd>
+</if>
+<if condition="$nav eq 'supplier'">
+<dd class="tips" data-tipso="供应商"><a href="/Index/Supplier/index" class='a'><i class="fa fa-user-secret"></i><span>供应商</span></a></dd>
+<else />
+<dd class="tips" data-tipso="供应商"><a href="/Index/Supplier/index"><i class="fa fa-user-secret"></i><span>供应商</span></a></dd>
+</if>
+<if condition="$nav eq 'client'">
+<dd class="tips" data-tipso="C端客户"><a href="/Index/Client/index" class='a'><i class="fa fa-users"></i><span>C端客户</span></a></dd>
+<else />
+<dd class="tips" data-tipso="C端客户"><a href="/Index/Client/index"><i class="fa fa-users"></i><span>C端客户</span></a></dd>
+</if>
+</div>
+<if condition="($nav eq 'warehouse') or ($nav eq 'declaration') or ($nav eq 'stock') or ($nav eq 'package')">
+<dt class="tips" data-tipso="仓储"><a href="javascript:void(0);" class="nav_a"><i class="fa fa-caret-down"></i><span>仓储</span></a></dt>
+<div class="nav_dd">
+<else />
+<dt class="tips" data-tipso="仓储"><a href="javascript:void(0);" class="nav_a"><i class="fa fa-caret-right"></i><span>仓储</span></a></dt>
+<div class="nav_dd nav_none">
+</if>
+<if condition="$nav eq 'warehouse'">
+<dd class="tips" data-tipso="仓库"><a href="/Index/Warehouse/warehouseList" class='a'><i class="fa fa-university"></i><span>仓库</span></a></dd>
+<else />
+<dd class="tips" data-tipso="仓库"><a href="/Index/Warehouse/warehouseList"><i class="fa fa-university"></i><span>仓库</span></a></dd>
+</if>
+<if condition="$nav eq 'declaration'">
+<dd class="tips" data-tipso="入出仓"><a href="/Index/Declaration/index" class='a'><i class="fa fa-truck"></i><span>入出仓</span></a></dd>
+<else />
+<dd class="tips" data-tipso="入出仓"><a href="/Index/Declaration/index"><i class="fa fa-truck"></i><span>入出仓</span></a></dd>
+</if>
+<if condition="$nav eq 'stock'">
+<dd class="tips" data-tipso="库存"><a href="/Index/Stock/index" class='a'><i class="fa fa-cubes"></i><span>库存</span></a></dd>
+<else />
+<dd class="tips" data-tipso="库存"><a href="/Index/Stock/index"><i class="fa fa-cubes"></i><span>库存</span></a></dd>
+</if>
+<if condition="$nav eq 'package'">
+<dd class="tips" data-tipso="包材"><a href="/Index/Package/index" class='a'><i class="fa fa-cubes"></i><span>包材</span></a></dd>
+<else />
+<dd class="tips" data-tipso="包材"><a href="/Index/Package/index"><i class="fa fa-cubes"></i><span>包材</span></a></dd>
+</if>
+</div>
+<if condition="($nav eq 'receivables') or ($nav eq 'payment') or ($nav eq 'chart')">
+<dt class="tips" data-tipso="财务与报表"><a href="javascript:void(0);" class="nav_a"><i class="fa fa-caret-down"></i><span>财务与报表</span></a></dt>
+<div class="nav_dd">
+<else />
+<dt class="tips" data-tipso="财务与报表"><a href="javascript:void(0);" class="nav_a"><i class="fa fa-caret-right"></i><span>财务与报表</span></a></dt>
+<div class="nav_dd nav_none">
+</if>
+<if condition="$nav eq 'receivables'">
+<dd class="tips" data-tipso="应收账款"><a href="/Index/Receivables/index" class='a'><i class="fa fa-cog"></i><span>应收账款</span></a></dd>
+<else />
+<dd class="tips" data-tipso="应收账款"><a href="/Index/Receivables/index"><i class="fa fa-cog"></i><span>应收账款</span></a></dd>
+</if>
+<if condition="$nav eq 'payment'">
+<dd class="tips" data-tipso="应付账款"><a href="/Index/Payment/index" class='a'><i class="fa fa-file-text-o"></i><span>应付账款</span></a></dd>
+<else />
+<dd class="tips" data-tipso="应付账款"><a href="/Index/Payment/index"><i class="fa fa-file-text-o"></i><span>应付账款</span></a></dd>
+</if>
+<if condition="$nav eq 'chart'">
+<dd class="tips" data-tipso="报表"><a href="/Index/Chart/index" class='a'><i class="fa fa-bar-chart"></i><span>报表</span></a></dd>
+<else />
+<dd class="tips" data-tipso="报表"><a href="/Index/Chart/index"><i class="fa fa-bar-chart"></i><span>报表</span></a></dd>
+</if>
+</div>
+<if condition="($nav eq 'ucenter') or ($nav eq 'auth') or ($nav eq 'basic') or ($nav eq 'log') or ($nav eq 'notice')">
+<dt class="tips" data-tipso="系统与设置"><a href="javascript:void(0);" class="nav_a"><i class="fa fa-caret-down"></i><span>系统与设置</span></a></dt>
+<div class="nav_dd">
+<else />
+<dt class="tips" data-tipso="系统与设置"><a href="javascript:void(0);" class="nav_a"><i class="fa fa-caret-right"></i><span>系统与设置</span></a></dt>
+<div class="nav_dd nav_none">
+</if>
+<if condition="$nav eq 'ucenter'">
+<dd class="tips" data-tipso="用户中心"><a href="/Index/Ucenter/userList" class='a'><i class="fa fa-cog"></i><span>用户中心</span></a></dd>
+<else />
+<dd class="tips" data-tipso="用户中心"><a href="/Index/Ucenter/userList"><i class="fa fa-cog"></i><span>用户中心</span></a></dd>
+</if>
+<if condition="$nav eq 'auth'">
+<dd class="tips" data-tipso="权限"><a href="/Index/Auth/authsList" class='a'><i class="fa fa-file-text-o"></i><span>权限</span></a></dd>
+<else />
+<dd class="tips" data-tipso="权限"><a href="/Index/Auth/authsList"><i class="fa fa-file-text-o"></i><span>权限</span></a></dd>
+</if>
+<if condition="$nav eq 'basic'">
+<dd class="tips" data-tipso="基础数据"><a href="/Index/Basic/index" class='a'><i class="fa fa-bar-chart"></i><span>基础数据</span></a></dd>
+<else />
+<dd class="tips" data-tipso="基础数据"><a href="/Index/Basic/index"><i class="fa fa-bar-chart"></i><span>基础数据</span></a></dd>
+</if>
+<if condition="$nav eq 'log'">
+<dd class="tips" data-tipso="日志"><a href="/Index/Log/index" class='a'><i class="fa fa-paste"></i><span>日志</span></a></dd>
+<else />
+<dd class="tips" data-tipso="日志"><a href="/Index/Log/index"><i class="fa fa-paste"></i><span>日志</span></a></dd>
+</if>
+<if condition="$nav eq 'notice'">
+<dd class="tips" data-tipso="公告"><a href="/Index/Notice/index" class='a'><i class="fa fa-volume-up"></i><span>公告</span></a></dd>
+<else />
+<dd class="tips" data-tipso="公告"><a href="/Index/Notice/index"><i class="fa fa-volume-up"></i><span>公告</span></a></dd>
+</if>
+</div>
+</dl>

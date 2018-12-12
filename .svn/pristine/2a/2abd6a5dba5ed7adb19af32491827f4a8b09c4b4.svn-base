@@ -1,0 +1,66 @@
+<?php
+return [
+'purchaserList'=>[
+'addQuotation'=>'<a href="/Index/Purchase/addQuotation" class=""><i class="fa fa-shopping-cart"></i> 新增</a>',
+'editQuotation'=>'<a href="/Index/Purchase/editQuotation" class="a_list c_1785c8"><i class="fa fa-pencil-square"></i> 修改</a>',
+'delQuotation'=>'<a href="/Index/Purchase/delQuotation" class=""><i class="fa fa-shopping-cart"></i> 删除</a>',
+],
+'modularList'=>[
+'addModular'=>'',
+'editModular'=>'',
+'delModular'=>'',
+'modularDelList'=>'',
+'useModular'=>'',
+'purgeModular'=>'',
+],
+'authsList'=>[
+'addAuth'=>'',
+'editAuth'=>'',
+'delAuth'=>'',
+'authDelList'=>'',
+'useAuth'=>'',
+'purgeAuth'=>'',
+],
+'order'=>[
+'delModular'=>'<a href="/Index/Auth/delModular" class=""><i class="fa fa-shopping-cart"></i> 删除采购报价单</a>',
+'checkOrder'=>'<a href="/Index/Order/checkOrder" class=""><i class="fa fa-shopping-cart"></i> 查看订单</a>',
+],
+'dealer'=>[
+'addDealer'=>'',
+'editDealerDetails'=>'',
+],
+'top'=>[
+'goodsServer'=>'<a href="/Index/Top/goodsServer" class="">商品与服务 <i class="fa fa-caret-down"></i></a>',
+'search'=>'',
+'workOrder'=>'',
+'help'=>'',
+],
+'goodsList'=>[
+'delGoods'=>'<a href="/Index/Goods/delGoods" class=""><i class="fa fa-shopping-cart"></i> 删除商品</a>',
+],
+'packageList'=>[
+'addPackage'=>'<a href="/Index/Package/addPackage" class="a_button_green"><i class="fa fa-plus"></i> 新增包材</a>',
+],
+'userList'=>[
+'addUser'=>'',
+'editUser'=>'',
+'delUser'=>'',
+'userDelList'=>'',
+'useUser'=>'',
+'purgeUser'=>'',
+],
+'roleList'=>[
+'addRole'=>'',
+'editRole'=>'',
+'delRole'=>'',
+'roleDelList'=>'',
+'useRole'=>'',
+'purgeRole'=>'',
+],
+'reback'=>[
+'addReback'=>'',
+],
+'myUser'=>[
+'editMyUser'=>'',
+],
+];

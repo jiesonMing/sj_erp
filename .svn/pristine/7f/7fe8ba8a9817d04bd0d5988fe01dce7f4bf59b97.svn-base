@@ -1,0 +1,185 @@
+<include file="public/header" title="QC批次列表" />
+<include file="nav/nav" />
+<include file="nav/subNav" />
+<link href="__JS__/select/select2.min.css" rel="stylesheet" type="text/css">
+<script src="__JS__/select/select2.min.js"></script>
+<div class="sdms_main">
+    <div class="title_name">
+        <h2>QC批次列表 &nbsp;<span>SDMS SE / QC批次列表 / 列表</span></h2>
+        <p>
+            <a href="javascript:location.reload();" class="a_re"><i class="fa fa-refresh"></i> 刷新</a>
+            {$button.batchDelList}
+        </p>
+    </div>
+    <div class="button_search">
+        <ul class="dropdown_menu m_r_10">
+            <li><a href="javascript:void(0);"><i class="fa fa-cog"></i>&nbsp;&nbsp;操作&nbsp;&nbsp;<i class="fa fa-caret-down"></i></a>
+                <ul>
+                    <li class="li">{$button.addBatch}</li>
+                </ul>
+            </li>
+        </ul>
+        <select class="select2 w130">
+            <if condition="$stockType eq 1">
+                <option value="3">0.全部</option>
+                <option value="1" selected="selected">1.有可用库存</option>
+                <option value="2">2.无库存</option>
+            <elseif condition="$stockType eq 2" />
+                <option value="3">0.全部</option>
+                <option value="1">1.有可用库存</option>
+                <option value="2" selected="selected">2.无库存</option>
+            <else />
+                <option value="3" selected="selected">0.全部</option>
+                <option value="1">1.有可用库存</option>
+                <option value="2">2.无库存</option>
+            </if>
+        </select>
+        <input type="text" value="{$value}" class="input_search" />
+        <input value="搜索" class="button button-primary input_search_b" type="submit" />
+    </div>
+    <table class='table' border="0" cellpadding="0" cellspacing="0">
+        <thead>
+            <tr>
+                <td class="w20"><input type="checkbox" id="checkbox_a0" class="chk_3 checkbox0"/><label for="checkbox_a0"></label></td>
+                <td class="w30 text_center">ID</td>
+                <td class="w100 text_center">批次号</td>
+                <td class="w130 text_center">商品编码</td>
+                <td class="text_center">商品名称</td>
+                <td class="w100 text_center">仓库</td>
+                <td class="w100 text_center">店铺</td>
+                <td class="w70 text_center">总数量</td>
+                <td class="w70 text_center">可上架数</td>
+                <td class="w70 text_center">可用数</td>
+                <td class="w70 text_center">占用数</td>
+                <td class="w100 text_center">有效期</td>
+                <td class="w45 text_center">状态</td>
+                <td class="w45 text_center">上架情况</td>
+                <td class="w45 text_center">操作</td>
+            </tr>
+        </thead>
+        <tbody>
+            <empty name="list">
+                <tr><td colspan="15">没有符合条件的数据</td></tr>
+            <else />
+                <volist name="list" id="batch">
+                    <tr class="tr1">
+                        <td><input type="checkbox" id="checkbox_a{$batch.batchId}" value="{$batch.batchId}" class="chk_3 batch" /><label for="checkbox_a{$batch.batchId}"></label></td>
+                        <td class="text_center">{$batch.batchId}</td>
+                        <td class="text_center">{$batch.batch}</td>
+                        <td class="text_center">{$batch.goodsCode}</td>
+                        <td class="text_center">{$batch.goodsName}</td>
+                        <td class="text_center">{$batch.warehouseName}</td>
+                        <td class="text_center">{$batch.shopName}</td>
+                        <td class="text_center">{$batch.amount}</td>
+                        <if condition="$batch.warehouseType eq 1">
+                            <td class="text_center">{$batch.shelves}</td>
+                        <else />
+                            <td class="text_center tips" data-tipso="无需上架"><a href="javascript:void(0);" class="c_999"><i class="fa fa-ban"></i></a></td>
+                        </if>
+                        <td class="text_center">{$batch.bSurStock}</td>
+                        <td class="text_center">{$batch.bUsingStock}</td>
+                        <td class="text_center">{$batch.expireDate}</td>
+                        <td class="text_center">
+                            <if condition="$batch.type eq 2">
+                                <a href="javascript:typeOpen({$batch.batchId});" class="a_c00_line">破损（可用）</a>
+                            <elseif condition="$batch['type'] eq 3" />
+                                <a href="javascript:typeOpen({$batch.batchId});" class="a_c00_line">破损（不可用）</a>
+                            <else />
+                                {$statusArr[$batch.status]}
+                            </if>
+                        </td>
+                        <td class="text_center">
+                            <if condition="($batch.shelves gt 0) and ($batch.warehouseType eq 1) and ($button.onStock) neq ''">
+                                {$button.onStock}
+                            <else />
+                                已完成
+                            </if>
+                        </td>
+                        <td class="text_center">
+                            <if condition="$batch.bSurStock eq 0">
+                                {$button.editBatch}
+                            </if>
+                            {$button.delBatch}
+                        </td>
+                    </tr>
+                </volist>
+            </empty>
+        </tbody>
+    </table>
+    <div class="page_size">
+        <div class="button">
+
+        </div>
+        <div class="page flex_end">
+            {$list->render()}
+        </div>
+    </div>
+</div>
+<script>
+    $( function () {
+        $( '.select2' ).select2( {
+            language: "zh-CN"
+        } );
+        $(".input_search_b").click(function(){
+            var value=$(".input_search").val();
+            var stockType="{$stockType}";
+            var url='/Index/Declaration/batch/stockType/'+stockType;
+            if(value){
+                url+='/value/'+value;
+            }
+            location.href=url;
+        });
+        $(".select2").on('change',function(){
+            var stockType=$(this).val();
+            var value=$(".input_search").val();
+            var inwareId="{$inwareId}";
+            var url='/Index/Declaration/batch/stockType/'+stockType;
+            if(value){
+                url+='/value/'+value;
+            }
+            if(inwareId>0){
+                url+='/inwareId/'+inwareId;
+            }
+            location.href=url;
+        });
+        $(".onStock").click(function(){
+            var batchId=$(this).closest('.tr1').children().find('.batch').val();
+            var url='/Index/Stock/onStock/batchId/'+batchId;
+            location.href=url;
+        });
+        $( '.edit' ).each( function () {
+            $(this).click(function(){
+                var batchId=$(this).closest('.tr1').children().find('.batch').val();
+                layer.open( {
+                    type: 2,
+                    title: '编辑批次',
+                    area: [ '1150px', '520px' ],
+                    offset:'100px',
+                    fixed: false, //不固定
+                    maxmin: true,
+                    content: '/Index/Open/editBatch/batchId/'+batchId,
+                    end:function(){
+                        location.reload();
+                    }
+                } );
+            });
+        } );
+    } );
+    function typeOpen(batchId){
+        url='/Index/Open/typeOpen/batchId/'+batchId;
+        layer.open( {
+            type: 2,
+            title: '状态查看',
+            area: [ '1150px', '600px' ],
+            offset:'100px',
+            fixed: false, //不固定
+            maxmin: true,
+            content: url,
+            anim:5,
+            end:function(){
+                location.reload();
+            }
+        } );
+    }
+</script>
+<include file="public/foot" />

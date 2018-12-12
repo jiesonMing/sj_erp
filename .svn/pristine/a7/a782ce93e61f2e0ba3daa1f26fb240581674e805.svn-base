@@ -1,0 +1,69 @@
+<include file="public/header" title="添加品牌" />
+<include file="nav/nav" />
+<include file="nav/subNav" />
+<link href="__JS__/select/select2.min.css" rel="stylesheet" type="text/css">
+<script src="__JS__/select/select2.min.js"></script>
+<script type="text/javascript" src="__JS__/ajaxupload.js"></script>
+<div class="sdms_main">
+	<div class="title_name">
+        <h2>商品 &nbsp;&nbsp;<span>SDMS SE / 商品品牌 / 添加品牌</span></h2>
+        <p>
+            <a href="javascript:location.reload();" class="a_button_white"><i class="fa fa-refresh"></i> 刷新</a>
+        </p>
+    </div>
+    <ul class="edit_add">
+    	<form>
+    	<li><p><b>*</b>品牌名称：</p><input type="text" name="name" value="" class="w500"></li>
+        <li><p>品牌描述：</p><input type="text" name="desc" value="" class="w500"></li>
+        <li><p>品牌地址：</p><input type="text" name="url" value="" class="w500"></li>
+        <li><p>品牌logo：</p>
+        	<input type="text" value="" placeholder="路径" id="filepath" class=" w250 input">
+        	<a href="javascript:void(0)" class="import ok_send_a" id="selector"><i class="fa fa-file-excel-o" style="padding:14px 4px;"></i> 选择文件</a>
+        </li>
+        <!-- <li><p>品牌分类</p><input type="text" name="cat_name" value="" class="w500"></li> -->
+        <!-- <li>
+        	<p>商品分类：</p>
+            <select class="select2 w180">
+            	<option value="" selected="selected">1.母婴用品</option>
+                
+            </select>
+        </li> -->
+    	</form>
+        <li><p>&nbsp;</p><a href="#" class="ok_send_a addGoodsBrand_submit"><i class="fa fa-check" style="padding:14px 4px;"></i> 提交</a></li>
+    </ul>
+
+
+</div>
+<include file="public/foot" />
+<script type="text/javascript">
+	$(function(){
+		$('.select2').select2({
+            language: "zh-CN"
+        });
+        var uploadOption =
+	    {
+	        action: "/Index/Goods/addGoodsBrand_handle",
+	        name: "file",
+	        autoSubmit: true,
+	        responseType: 'json',
+	        onChange: function (file, extension) {
+	            if (new RegExp(/(jpg)|(png)|(jpeg)/i).test(extension)) {
+	                $("#filepath").val(file);
+	            } else {
+	                layer.msg('只限上传jpg/png/jpeg文件!');
+	            }
+	        },
+	        // 开始上传文件
+	        onSubmit: function (file, extension) {},
+	        // 上传完成之后
+	        onComplete: function (file, response) {}
+	    }
+	    // 初始化图片上传框
+	    var oAjaxUpload = new AjaxUpload('#selector', uploadOption);
+	    $('.ok_send_a').click(function(){
+	    	oAjaxUpload.submit();
+	    })
+	    
+		})
+</script>
+<script type="text/javascript" src="/public/static/functionJS/goods.js"></script>

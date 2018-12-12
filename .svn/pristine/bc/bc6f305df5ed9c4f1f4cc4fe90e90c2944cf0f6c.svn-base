@@ -1,0 +1,4 @@
+<include file="public/header" title="仓库" />
+<include file="nav/nav" />
+<div class="sdms_main"> 仓库 </div>
+<include file="public/foot" />

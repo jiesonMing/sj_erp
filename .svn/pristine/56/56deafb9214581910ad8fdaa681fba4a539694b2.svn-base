@@ -1,0 +1,167 @@
+<include file="public/header" title="员工管理" />
+<include file="nav/nav" />
+<include file="nav/subNav" />
+<div class="sdms_main">
+    <div class="title_name">
+        <h2>员工资料 &nbsp;&nbsp;<span>SDMS SE / 用户中心 / 列表</span></h2>
+        <p>
+            <a href="javascript:location.reload();" class="a_re"><i class="fa fa-refresh"></i> 刷新</a>
+            {$button.userDelList}
+        </p>
+    </div>
+    <div class="button_search">
+        <ul class="dropdown_menu">
+            <li><a href="javascript:void(0);"><i class="fa fa-cog"></i>&nbsp;&nbsp;操作&nbsp;&nbsp;<i class="fa fa-caret-down"></i></a>
+                <ul>
+                    <li class="li">{$button.addUser}</li>
+                </ul>
+            </li>
+        </ul>
+        <input type="text" value="{$value}" class="input_search" />
+        <a class="a_button_white mg_left_5 search">搜索</a>
+    </div>
+    <table class='table is-bordered'>
+        <thead>
+            <tr>
+                <td class="w20"><input type="checkbox" id="checkbox_a0" class="chk_3 checkbox0"/><label for="checkbox_a0"></label></td>
+                <td class="w30 has-text-centered">编号</td>
+                <td class="w100 has-text-centered">用户名</td>
+                <td class="w130 has-text-centered">登陆手机</td>
+                <td class="w100 has-text-centered">所属部门</td>
+                <td class="w100 has-text-centered">所属职位</td>
+                <td class="w75 has-text-centered">权限组</td>
+                <td class="w85 has-text-centered">登陆次数</td>
+                <td class="w130 has-text-centered">最后登陆时间</td>
+                <td class="w130 has-text-centered">备注</td>
+                <td class="w45 has-text-centered">操作</td>
+            </tr>
+        </thead>
+        <tbody>
+            <volist name="list" id="user">
+                <tr class="tr1">
+                    <td><input type="checkbox" id="checkbox_a{$user.userId}" class="chk_3" /><label for="checkbox_a{$user.userId}"></label></td>
+                    <td class="has-text-centered">{$user.userId}</td>
+                    <td class="has-text-centered">{$user.nickName}</td>
+                    <td class="has-text-centered">{$user.mobile}</td>
+                    <td class="has-text-centered">{$user.proleName}</td>
+                    <td class="has-text-centered">{$user.roleName}</td>
+                    <td class="has-text-centered">{$user.authName}</td>
+                    <td class="has-text-centered">{$user.loginTimes}</td>
+                    <td class="has-text-centered">{$user.loginTime}</td>
+                    <td class="has-text-centered">{$user.remark}</td>
+                    <td class="has-text-centered">
+                        <input type="hidden" class="userId" value="{$user.userId}" />
+                        {$button.editUser}
+                        {$button.delUser}
+                    </td>
+                </tr>
+            </volist>
+        </tbody>
+    </table>
+    <div class="page_size">
+        <div class="tbutton">
+            {$button.addUser}
+        </div>
+        <div class="page">
+            {$list->render()}
+        </div>
+    </div>
+</div>
+<script>
+    $(".search").click(function(){
+        var value=$(".input_search").val();
+        var url='/Index/Ucenter/userList';
+        if(value){
+            url+='/value/'+value;
+        }
+        location.href=url;
+    });
+    $(".edit").each(function(edindex,item){
+        $(this).click(function(){
+            var userId=$(".userId").eq(edindex).val();
+            location.href='/Index/Ucenter/editUser/id/'+userId;
+        });
+    });
+    $(".del").each(function(delindex,item){
+        $(this).click(function(){
+            var userId=$(".userId").eq(delindex).val();
+            if(userId){
+                var index=layer.confirm('确定删除当前员工吗', {icon: 3, title:'提示'}, function(i){
+                    var postdata={userId:userId};
+                    $.ajax({
+                        type : 'POST',
+                        url : "/Index/Ucenter/delUser",
+                        dataType : 'json',
+                        data : postdata,
+                        success : function(el){
+                            if(el.statusCode==200){
+                                var index=layer.open({
+                                    type:0,
+                                    icon:'1',
+                                    title:'成功提示信息：',
+                                    content:'删除成功',
+                                    end: function(){
+                                        location.reload();
+                                    }
+                                });
+                                layer.style(index,{
+                                    width:'500px',
+                                    top:'120px'
+                                });
+                            }else{
+                                isSubmit=true;
+                                var index=layer.open({
+                                    type:0,
+                                    icon:'2',
+                                    title:'错误提示信息：',
+                                    content:el.retMessage,
+                                    end: function(){
+                                        location.reload();
+                                    }
+                                });
+                                layer.style(index,{
+                                    width:'400px',
+                                    top:'120px'
+                                });
+                            }
+                        },
+                        error: function(el){
+                            var index=layer.open({
+                                type:0,
+                                icon:'2',
+                                title:'错误提示信息：',
+                                content:'操作失败，请刷新重试',
+                                end: function(){
+                                    location.reload();
+                                }
+                            });
+                            layer.style(index,{
+                                width:'400px',
+                                top:'120px'
+                            });
+                        }
+                    });
+                });
+                layer.style(index,{
+                    width:'400px',
+                    top:'120px'
+                });
+            }else{
+                var index=layer.open({
+                    type:0,
+                    icon:'2',
+                    title:'失败提示信息：',
+                    content:'用户信息有误',
+                    end: function(){
+                        location.reload();
+                    }
+                });
+                layer.style(index,{
+                    width:'500px',
+                    top:'120px'
+                });
+            }
+        });
+    });
+</script>
+<include file="public/foot" />

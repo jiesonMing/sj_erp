@@ -1,0 +1,101 @@
+<include file="public/header" title="商品Boom" />
+<include file="nav/nav" />
+<include file="nav/subNav" />
+<link href="__JS__/select/select2.min.css" rel="stylesheet" type="text/css">
+<script src="__JS__/select/select2.min.js"></script>
+<div class="sdms_main">
+	<div class="title_name">
+        <h2>商品 &nbsp;&nbsp;<span>SDMS SE / 商品 / 商品Boom</span></h2>
+        <p>
+            <a href="javascript:location.reload();" class="a_re"><i class="fa fa-refresh"></i> 刷新</a>
+
+        </p>
+    </div>
+    <div class="button_search">
+        <ul class="dropdown_menu">
+            <li><a href="javascript:void(0);"><i class="fa fa-cog"></i>&nbsp;&nbsp;操作&nbsp;&nbsp;<i class="fa fa-caret-down"></i></a>
+                <ul>
+                    <li class="li">{$button.addGoodsBoom}</li>
+                </ul>
+            </li>
+        </ul>
+        <form action="/Index/Goods/goodsBoom" method='post'>
+            <input type="text" placeholder="搜索..." value="{$search_goods}" class="input_search" name="search_goods"/>
+            <input value="搜索" class="button button-primary input_search_b" type="submit" />
+        </form>
+    </div>
+    <table class="table" border='0' cellspacing="0" cellpadding="0">
+        <thead>
+            <tr>
+                <td class="w20"><input type="checkbox" id="checkbox_a0" class="chk_3"/><label for="checkbox_a0"></label>
+                </td>
+                <td class="w35">ID</td>
+                <td class="w100">商品自编码</td>
+                <td><a href="" class="a_c_1785c8">商品名称</a>
+                </td>
+                <td class="w120">品牌</td>
+                <td class="w60">规格型号</td>
+                <td class="w35 text_center">单位</td>
+                <td class="w50">售价</td>
+                <td class="w75">原产地</td>
+                <td class="w35 text_center">修改</td>
+            </tr>
+        </thead>
+
+        <tbody>
+        <volist name="goodsBoom" id="v">
+            <tr class="tr1">
+                <td><input type="checkbox" id="checkbox_a{$key+1}" class="chk_3" title="{$v.boomId}"/><label for="checkbox_a{$key+1}"></label>
+                </td>
+                <td>{$key+1}</td>
+                <td>{$v.goodsCode}</td>
+                <td class="td1">{$v.goodsName}</td>
+                <td>{$v.brand}</td>
+                <td>{$v.specType}</td>
+                <td class="text_center">{$v.stockUnit}</td>
+                <td>{$v.price}</td>
+                <td>{$v.country}</td>
+                <td class="text_center"><a href="#" class="a_list c_1785c8" title="修改"><i class="fa fa-pencil-square"></i></a>
+                </td>
+
+            </tr>
+
+            <tr class='trhide'>
+                <td></td>
+                <td colspan="5">
+                    <ul class="bomlist">
+                        <li class="li">
+                            <bomlist:num>序号</bomlist:num>
+                            <bomlist:goodscode>商品自编码</bomlist:goodscode>
+                            <bomlist:goodsname>商品名称</bomlist:goodsname>
+                            <bomlist:specType>规格</bomlist:specType>
+                            <bomlist:price>售价</bomlist:price>
+                            <bomlist:qty>数量</bomlist:qty>
+                        </li>
+                        <volist name="v.childGoods_arr" id="gs">
+                            <li>
+                                <bomlist:num>{$key+1}</bomlist:num>
+                                <bomlist:goodscode>{$gs.goodsCode}</bomlist:goodscode>
+                                <bomlist:goodsname>{$gs.goodsName}</bomlist:goodsname>
+                                <bomlist:specType>{$gs.specType}</bomlist:specType>
+                                <bomlist:price>{$gs.price}</bomlist:price>
+                                <bomlist:qty>{$gs.num}</bomlist:qty>
+                            </li>
+                        </volist>
+                    </ul>
+                </td>
+                <td colspan="4"></td>
+            </tr>
+        </volist>
+        </tbody>
+    </table>
+    <div class="page_size">
+        <div class="button">
+            <!-- <a href="#"><i class="fa fa-times-circle-o"></i> 删除</a> -->
+            {$button.delGoodsBoom}
+            {$button.addGoodsBoom}
+        </div>
+    </div>
+</div>
+<include file="public/foot" />
+<script type="text/javascript" src="/public/static/functionJS/goods.js"></script>

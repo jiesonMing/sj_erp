@@ -1,0 +1,30 @@
+<include file="public/header" title="商品列表" />
+<include file="nav/nav" />
+<include file="nav/subNav" />
+<link href="__JS__/select/select2.min.css" rel="stylesheet" type="text/css">
+<script src="__JS__/select/select2.min.js"></script>
+<div class="sdms_main">
+	<div class="title_name">
+        <h2>商品 &nbsp;&nbsp;<span>SDMS SE / 商品 / 商品列表</span></h2>
+        <p>
+            <a href="javascript:location.reload();" class="a_button_white"><i class="fa fa-refresh"></i> 刷新</a>
+            {$button.goodsDelList}
+        </p>
+    </div>
+    <div class="button_search">
+        <ul class="dropdown_menu">
+            <li><a href="javascript:void(0);"><i class="fa fa-cog"></i>&nbsp;&nbsp;操作&nbsp;&nbsp;<i class="fa fa-caret-down"></i></a>
+                <ul>
+                    <li class="li"></li>
+                </ul>
+            </li>
+        </ul>
+        <input type="text" value="" class="input_search" />
+        <a class="a_button_white mg_left_5 search">搜索</a>
+    </div>
+    <table class='table'>
+    </table>
+
+</div>
+<include file="public/foot" />
+<script type="text/javascript" src="../static/goods.js"></script>
